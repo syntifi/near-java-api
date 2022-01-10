@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.time.ZonedDateTime;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.syntifi.near.api.model.accesskey.Key;
 import com.syntifi.near.api.model.identifier.Finality;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -23,7 +24,9 @@ public class NearServiceTest {
 
     @BeforeAll
     public static void setUp() throws MalformedURLException {
-        String peerAddress = "rpc.testnet.near.org";
+        // String peerAddress = "rpc.testnet.near.org";
+        String peerAddress = "archival-rpc.testnet.near.org";
+
         LOGGER.debug("======== Running tests with peer {} ========", peerAddress);
         nearService = NearService.usingPeer(peerAddress);
     }
@@ -237,13 +240,62 @@ public class NearServiceTest {
         String receiptId = "7kZk4SggcvTxsayGV1FC8CNEqSTHHnuNcUgw7ZQHJ3w8";
 
         JsonNode transactionReceipt = nearService.getTransactionReceipt(receiptId);
-        
+
         assertNotNull(transactionReceipt.get("receipt_id"));
         assertNotNull(transactionReceipt.get("receipt"));
         assertNotNull(transactionReceipt.get("receipt").get("Action"));
         assertNotNull(transactionReceipt.get("receipt").get("Action").get("signer_id"));
-        
+
         assertEquals(receiptId, transactionReceipt.get("receipt_id").asText());
         assertEquals(accountId, transactionReceipt.get("receipt").get("Action").get("signer_id").asText());
+    }
+
+    // TODO: Missing more tests for viewAccessKey
+    @Test
+    void viewAccessKey_accessKey_notNullAndValid() {
+        String accountId = "client.chainlink.testnet";
+        String publicKey = "ed25519:H9k5eiU4xXS3M4z8HzKJSLaZdqGdGwBG49o7orNC4eZW";
+
+        JsonNode accessKey = nearService.viewAccessKey(Finality.FINAL, accountId, publicKey);
+
+        assertNotNull(accessKey);
+    }
+
+    // TODO: Missing more tests for viewAccessKeyList
+    @Test
+    void viewAccessKeyList_accessKey_notNullAndValid() {
+        String accountId = "client.chainlink.testnet";
+
+        JsonNode accessKey = nearService.viewAccessKeyList(Finality.FINAL, accountId);
+
+        assertNotNull(accessKey);
+    }
+
+    // TODO: Missing more tests for viewSingleAccessKeyChanges
+    @Test
+    void viewSingleAccessKeyChanges_accessKey_notNullAndValid() {
+        Key[] keys = new Key[1];
+
+        Key key0 = new Key("example-acct.testnet", "ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM");
+        keys[0] = key0;
+
+        JsonNode accessKey = nearService.viewSingleAccessKeyChanges(Finality.FINAL, keys);
+
+        assertNotNull(accessKey);
+    }
+
+    // TODO: Missing more tests for viewAllAccessKeyChanges
+    @Test
+    void viewAllAccessKeyChanges_accessKey_notNullAndValid() {
+        JsonNode lastBlock = nearService.getBlock(Finality.FINAL);
+
+        String[] accountIds = new String[1];
+
+        accountIds[0] = "example-acct.testnet";
+
+        JsonNode accessKey = nearService.viewAllAccessKeyChanges(lastBlock.get("header").get("hash").asText(),
+                accountIds);
+
+        assertNotNull(accessKey);
     }
 }
