@@ -7,6 +7,14 @@ import java.util.Map;
 
 import com.googlecode.jsonrpc4j.ReflectionUtil;
 
+/**
+ * Custom jsonrpc4j ReflectionUtils implementation to account for fixed
+ * parameters
+ * 
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
 public class NearReflectionUtil extends ReflectionUtil {
 
     @SuppressWarnings("unchecked")

@@ -9,6 +9,13 @@ import java.util.Map;
 import com.googlecode.jsonrpc4j.IJsonRpcClient;
 import com.googlecode.jsonrpc4j.ProxyUtil;
 
+/**
+ * Custom jsonrpc4j ProxyUtil implementation to account for fixed parameters
+ * 
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
 public class NearProxyUtil extends ProxyUtil {
 
     private static boolean isDeclaringClassAnObject(Method method) {
