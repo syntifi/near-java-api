@@ -11,11 +11,11 @@ import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
 import com.googlecode.jsonrpc4j.JsonRpcMethod;
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import com.googlecode.jsonrpc4j.JsonRpcParamsPassMode;
+import com.googlecode.jsonrpc4j.ProxyUtil;
 import com.syntifi.near.api.model.accesskey.Key;
 import com.syntifi.near.api.model.identifier.Finality;
 import com.syntifi.near.api.service.exception.NearServiceException;
 import com.syntifi.near.api.service.exception.NearServiceExceptionResolver;
-import com.syntifi.near.api.service.jsonrpc4j.NearProxyUtil;
 
 /**
  * RPC client for the Near network
@@ -164,7 +164,8 @@ public interface NearService {
         /**
          * Sends a transaction and immediately returns transaction hash.
          * 
-         * @param base64EncodedSignedTransaction the base64 encoded signed transaction string
+         * @param base64EncodedSignedTransaction the base64 encoded signed transaction
+         *                                       string
          * @return the data holding object
          * @throws NearServiceException rpc call error exception
          */
@@ -175,7 +176,8 @@ public interface NearService {
          * Sends a transaction and waits until transaction is fully complete. (Has a 10
          * second timeout)
          * 
-         * @param base64EncodedSignedTransaction the base64 encoded signed transaction string
+         * @param base64EncodedSignedTransaction the base64 encoded signed transaction
+         *                                       string
          * @return the data holding object
          * @throws NearServiceException rpc call error exception
          */
@@ -263,7 +265,7 @@ public interface NearService {
          * 
          * @param blockHeight the block's height
          * @param accountId   the account id
-         * @param publicKey the associated public key
+         * @param publicKey   the associated public key
          * @return the data holding object
          * @throws NearServiceException rpc call error exception
          */
@@ -321,7 +323,7 @@ public interface NearService {
          * public_key.
          * 
          * @param finality the finality param
-         * @param keys the key data to query for changes
+         * @param keys     the key data to query for changes
          * @return the data holding object
          * @throws NearServiceException rpc call error exception
          */
@@ -337,7 +339,7 @@ public interface NearService {
          * public_key.
          * 
          * @param blockHash the block's hash
-         * @param keys the key data to query for changes
+         * @param keys      the key data to query for changes
          * @return the data holding object
          * @throws NearServiceException rpc call error exception
          */
@@ -353,7 +355,7 @@ public interface NearService {
          * public_key.
          * 
          * @param blockHeight the block's height
-         * @param keys the key data to query for changes
+         * @param keys        the key data to query for changes
          * @return the data holding object
          * @throws NearServiceException rpc call error exception
          */
@@ -697,7 +699,7 @@ public interface NearService {
          * Allows you to call a contract method as a view function.
          * 
          * @param finality   the finality param
-         * @param accountId the account id
+         * @param accountId  the account id
          * @param methodName the name of the method to callthe name of the method to
          *                   call
          * @param argsBase64 the method's base64 encoded arguments
@@ -715,7 +717,7 @@ public interface NearService {
          * Allows you to call a contract method as a view function.
          * 
          * @param blockHash  the block's hash
-         * @param accountId the account id
+         * @param accountId  the account id
          * @param methodName the name of the method to call
          * @param argsBase64 the method's base64 encoded arguments
          * @return the data holding object
@@ -732,7 +734,7 @@ public interface NearService {
          * Allows you to call a contract method as a view function.
          * 
          * @param blockHeight the block's height
-         * @param accountId the account id 
+         * @param accountId   the account id
          * @param methodName  the name of the method to call
          * @param argsBase64  the method's base64 encoded arguments
          * @return the data holding object
@@ -760,6 +762,6 @@ public interface NearService {
 
                 client.setExceptionResolver(new NearServiceExceptionResolver());
 
-                return NearProxyUtil.createClientProxy(NearService.class.getClassLoader(), NearService.class, client);
+                return ProxyUtil.createClientProxy(NearService.class.getClassLoader(), NearService.class, client);
         }
 }

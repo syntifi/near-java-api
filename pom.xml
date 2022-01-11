@@ -7,8 +7,37 @@
   <artifactId>near-java-api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>near</name>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Near Java API for interacting with Near RPC endpoints</description>
   <url>https://github.com/syntifi/near-java-api</url>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Alexandre Carvalho</name>
+      <email>adcarvalho@gmail.com</email>
+      <organization>SyntiFi</organization>
+      <organizationUrl>http://www.syntifi.com</organizationUrl>
+    </developer>
+    <developer>
+      <name>Andre Bertolace</name>
+      <email>bertolace@gmail.com</email>
+      <organization>SyntiFi</organization>
+      <organizationUrl>http://www.syntifi.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/syntifi/near-java-api.git</connection>
+    <developerConnection>scm:git:ssh://github.com/syntifi/near-java-api.git</developerConnection>
+    <url>http://github.com/syntifi/near-java-api/tree/main</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,7 +48,7 @@
     <version.log4j>2.17.1</version.log4j>
     <version.slf4j>1.7.32</version.slf4j>
     <version.lombok>1.18.22</version.lombok>
-    <version.jsonrpc4j>1.6</version.jsonrpc4j>
+    <version.jsonrpc4j>1.6.1-SNAPSHOT</version.jsonrpc4j>
     <version.jackson>2.13.1</version.jackson>
     <version.junit>5.8.2</version.junit>
     <version.jsonassert>1.5.0</version.jsonassert>
@@ -33,7 +62,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.github.briandilley.jsonrpc4j</groupId>
+      <groupId>io.github.oak</groupId>
       <artifactId>jsonrpc4j</artifactId>
       <version>${version.jsonrpc4j}</version>
     </dependency>
