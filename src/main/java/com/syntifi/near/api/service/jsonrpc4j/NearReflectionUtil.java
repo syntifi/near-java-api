@@ -2,18 +2,19 @@ package com.syntifi.near.api.service.jsonrpc4j;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.googlecode.jsonrpc4j.JsonRpcFixedParam;
+import com.googlecode.jsonrpc4j.JsonRpcFixedParams;
 import com.googlecode.jsonrpc4j.ReflectionUtil;
 
 /**
  * Custom jsonrpc4j ReflectionUtils implementation to account for fixed
  * parameters
  * 
- * @author Alexandre Carvalho
- * @author Andre Bertolace
- * @since 0.0.1
+ * Temporary workaround
+ * Pull request https://github.com/briandilley/jsonrpc4j/pull/282
  */
 public class NearReflectionUtil extends ReflectionUtil {
 
@@ -22,24 +23,35 @@ public class NearReflectionUtil extends ReflectionUtil {
         // Call "super"
         Object result = ReflectionUtil.parseArguments(method, arguments);
 
-        JsonRpcFixedStringParam fixedStringParams = getAnnotation(method, JsonRpcFixedStringParam.class);
+        JsonRpcFixedParams jsonRpcFixedParams = getAnnotation(method, JsonRpcFixedParams.class);
+        // WARN: Will only catch first even if multiple annotations present
+        JsonRpcFixedParam jsonRpcFixedParam = getAnnotation(method, JsonRpcFixedParam.class);
 
-        if (fixedStringParams == null || result == null) {
+        if (jsonRpcFixedParams == null && jsonRpcFixedParam == null) {
             return result;
         }
 
+        Map<String, Object> fixedParams = new LinkedHashMap<>();
+        if (jsonRpcFixedParams != null) {
+            for (JsonRpcFixedParam fixedParam : jsonRpcFixedParams.fixedParams()) {
+                fixedParams.put(fixedParam.name(), fixedParam.value());
+            }
+        }
+        if (jsonRpcFixedParam != null) {
+            fixedParams.put(jsonRpcFixedParam.name(), jsonRpcFixedParam.value());
+        }
+
         if (result instanceof Map) {
-            if (fixedStringParams.name().length != fixedStringParams.value().length) {
-                throw new RuntimeException("Different name/value counts");
-            }
-            for (int i = 0; i < fixedStringParams.name().length; i++) {
-                ((HashMap<String, String>) result).put(fixedStringParams.name()[i], fixedStringParams.value()[i]);
-            }
+            ((Map<String, Object>) result).putAll(fixedParams);
 
             return result;
         } else if (result instanceof Object[]) {
-            Object[] finalResult = Arrays.copyOf((Object[]) result, ((Object[]) result).length + 1);
-            finalResult[((Object[]) result).length] = fixedStringParams.value();
+            int currentIndex = ((Object[]) result).length;
+            Object[] finalResult = Arrays.copyOf((Object[]) result, currentIndex + fixedParams.size());
+            for (Map.Entry<String, Object> entry : fixedParams.entrySet()) {
+                finalResult[currentIndex++] = entry.getValue();
+            }
+
             return finalResult;
         } else {
             throw new RuntimeException("Invalid arguments object");

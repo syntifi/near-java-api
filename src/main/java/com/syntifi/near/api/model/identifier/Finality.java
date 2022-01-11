@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * The finality param has two options: optimistic and final.
  * - optimistic uses the latest block recorded on the node that responded to
- * your query (<1 second delay after the transaction is submitted)
+ * your query (&lt;1 second delay after the transaction is submitted)
  * - final is for a block that has been validated on at least 66% of the nodes
  * in the network (usually takes 2 blocks / approx. 2 second delay)
  * 

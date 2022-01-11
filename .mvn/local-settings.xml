@@ -21,6 +21,18 @@
         </repository>
       </repositories>
     </profile>
+
+
+    <profile>
+      <id>ossrh</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+      </properties>
+    </profile>
   </profiles>
 
   <servers>
@@ -28,6 +40,11 @@
       <id>near-java-api-github</id>
       <username>${env.GITHUB_ACTOR}</username>
       <password>${env.GITHUB_TOKEN}</password>
+    </server>
+    <server>
+      <id>ossrh</id>
+      <username>${env.JIRA_ID}</username>
+      <password>${env.JIRA-PWD}</password>
     </server>
   </servers>
 </settings>

@@ -11,10 +11,9 @@ import com.googlecode.jsonrpc4j.ProxyUtil;
 
 /**
  * Custom jsonrpc4j ProxyUtil implementation to account for fixed parameters
- * 
- * @author Alexandre Carvalho
- * @author Andre Bertolace
- * @since 0.0.1
+ *
+ * Temporary workaround
+ * Pull request https://github.com/briandilley/jsonrpc4j/pull/282
  */
 public class NearProxyUtil extends ProxyUtil {
 
