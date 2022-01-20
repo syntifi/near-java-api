@@ -20,6 +20,7 @@ public class Key {
     @JsonProperty("account_id")
     private String accountId;
 
+
     @JsonProperty("public_key")
     private String publicKey;
 }

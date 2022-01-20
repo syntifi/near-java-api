@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class NearServiceErrorData implements Serializable {
     private String name;
-    private NearServiceErrorData cause;
+    private Serializable cause;
     private int code;
     private String message;
     private Serializable data;

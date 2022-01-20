@@ -248,3 +248,4 @@ nbdist/
 !.vscode/*.code-snippets
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,visualstudiocode,eclipse,netbeans,intellij
+.ignore

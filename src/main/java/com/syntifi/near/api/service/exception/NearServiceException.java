@@ -14,7 +14,7 @@ public class NearServiceException extends RuntimeException {
     private final NearServiceErrorData nearServiceErrorData;
 
     public NearServiceException(NearServiceErrorData error) {
-        super(String.format("%s (code: %d)", error.getMessage(), error.getCode()));
+        super(String.format("%s (Code: %d): %s", error.getMessage(), error.getCode(), error.getData().toString()));
         nearServiceErrorData = error;
     }
 
