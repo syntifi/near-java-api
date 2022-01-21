@@ -45,78 +45,78 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <!-- dependencies versions -->
-    <version.log4j>2.17.1</version.log4j>
-    <version.slf4j>1.7.32</version.slf4j>
-    <version.lombok>1.18.22</version.lombok>
-    <version.jsonrpc4j>1.6.1-SNAPSHOT</version.jsonrpc4j>
-    <version.jackson>2.13.1</version.jackson>
-    <version.junit>5.8.2</version.junit>
-    <version.jsonassert>1.5.0</version.jsonassert>
-    <version.maven-gpg-plugin>1.5</version.maven-gpg-plugin>
-    <version.maven-source-plugin>2.2.1</version.maven-source-plugin>
-    <version.maven-javadoc-plugin>2.9.1</version.maven-javadoc-plugin>
-    <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
-    <version.jacoco-maven-plugin>0.8.7</version.jacoco-maven-plugin>
-    <version.nexus-staging-maven-plugin>1.6.7</version.nexus-staging-maven-plugin>
+    <log4j.version>2.17.1</log4j.version>
+    <slf4j.version>1.7.32</slf4j.version>
+    <lombok.version>1.18.22</lombok.version>
+    <jsonrpc4j.version>1.6.1-SNAPSHOT</jsonrpc4j.version>
+    <jackson.version>2.13.1</jackson.version>
+    <junit.version>5.8.2</junit.version>
+    <jsonassert.version>1.5.0</jsonassert.version>
+    <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
+    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+    <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>io.github.oak</groupId>
       <artifactId>jsonrpc4j</artifactId>
-      <version>${version.jsonrpc4j}</version>
+      <version>${jsonrpc4j.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${version.jackson}</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>${version.jackson}</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>${version.jackson}</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${version.lombok}</version>
+      <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${version.slf4j}</version>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>${version.log4j}</version>
+      <version>${log4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>${version.log4j}</version>
+      <version>${log4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
-      <version>${version.log4j}</version>
+      <version>${log4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>${version.junit}</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
-      <version>${version.jsonassert}</version>
+      <version>${jsonassert.version}</version>
     </dependency>
   </dependencies>
 
@@ -135,12 +135,12 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${version.maven-surefire-plugin}</version>
+        <version>${maven-surefire-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${version.jacoco-maven-plugin}</version>
+        <version>${jacoco-maven-plugin.version}</version>
         <executions>
           <execution>
             <id>prepare-agent</id>
@@ -180,7 +180,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>${version.maven-source-plugin}</version>
+            <version>${maven-source-plugin.version}</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -196,7 +196,7 @@
             <configuration>
               <detectJavaApiLink>false</detectJavaApiLink>
             </configuration>
-            <version>${version.maven-javadoc-plugin}</version>
+            <version>${maven-javadoc-plugin.version}</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -209,7 +209,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>${version.maven-gpg-plugin}</version>
+            <version>${maven-gpg-plugin.version}</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -227,7 +227,7 @@
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${version.nexus-staging-maven-plugin}</version>
+            <version>${nexus-staging-maven-plugin.version}</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
