@@ -35,22 +35,6 @@ public enum PermissionTypeData {
                 return t.getClazz();
             }
         }
-        throw new NoSuchTypeException();
-    }
-
-    /**
-     * Retrieve Transform implementation class from Transform name
-     * 
-     * @param clazz the type class
-     * @return the type name of given type class
-     * @throws NoSuchTypeException no such type found
-     */
-    public static String getNameByClass(Class<?> clazz) throws NoSuchTypeException {
-        for (PermissionTypeData t : values()) {
-            if (t.clazz.equals(clazz)) {
-                return t.getName();
-            }
-        }
-        throw new NoSuchTypeException();
+        throw new NoSuchTypeException(String.format("Permission Type %s invalid/not found.", name));
     }
 }

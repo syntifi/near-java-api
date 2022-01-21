@@ -26,7 +26,7 @@ public class PermissionDeserializer extends AbstractAnyOfDeserializer {
 
     @Override
     public TypeDeserializer forProperty(final BeanProperty prop) {
-        return (prop == _property) ? this : new PermissionDeserializer(this, prop);
+        return new PermissionDeserializer(this, prop);
     }
 
     @Override

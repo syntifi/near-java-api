@@ -47,9 +47,7 @@ public abstract class AbstractAnyOfDeserializer extends AsPropertyTypeDeserializ
         JavaType type = factory.constructType(subType);
 
         try (JsonParser jsonParser = new TreeTraversingParser(node, jp.getCodec())) {
-            if (jsonParser.getCurrentToken() == null) {
-                jsonParser.nextToken();
-            }
+            jsonParser.nextToken();
             JsonDeserializer<Object> deser = ctxt.findContextualValueDeserializer(type, _property);
             return deser.deserialize(jsonParser, ctxt);
         }

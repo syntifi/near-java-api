@@ -20,8 +20,5 @@ public class SuccessReceiptIdStatus implements Status {
 
     public SuccessReceiptIdStatus(String successReceiptId) {
         this.successReceiptId = successReceiptId;
-        if (successReceiptId == null) {
-            this.successReceiptId = "";
-        }
     }
 }

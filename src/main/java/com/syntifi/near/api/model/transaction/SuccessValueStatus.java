@@ -20,8 +20,5 @@ public class SuccessValueStatus implements Status {
 
     public SuccessValueStatus(String successValue) {
         this.successValue = successValue;
-        if (successValue == null) {
-            this.successValue = "";
-        }
     }
 }

@@ -1,0 +1,16 @@
+{
+    "jsonrpc": "2.0",
+    "error": {
+        "name": "REQUEST_VALIDATION_ERROR",
+        "cause": {
+            "name": "PARSE_ERROR",
+            "info": {
+                "error_message": "Failed parsing args: data did not match any variant of untagged enum BlockId"
+            }
+        },
+        "code": -32700,
+        "message": "Parse error",
+        "data": "Failed parsing args: data did not match any variant of untagged enum BlockId"
+    },
+    "id": "1305127453"
+}
