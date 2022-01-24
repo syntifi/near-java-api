@@ -11,4 +11,4 @@ baseurl: '/near-java-api'
 remote_theme: oak3dev/architect
 
 exclude: 
-  - docs/pages/templates
+  - .github/templates

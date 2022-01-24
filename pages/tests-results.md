@@ -11,5 +11,5 @@ order: 2
 
 # JUnit Reports
 {% for version in site.data.versions %}
-- [{{version.version}}](versions/test-results-{{version.version}}.html)
-{% endfor %}html
+- [{{version.version}}](versions/tests-results-{{version.version}}.html)
+{% endfor %}
