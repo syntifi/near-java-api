@@ -43,6 +43,7 @@ import com.syntifi.near.api.service.exception.NearServiceExceptionResolver;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -272,32 +273,30 @@ public class NearServiceTest extends BaseNearServiceTest {
         assertNotNull(networkValidationStatus);
     }
 
-    // TODO: No validators found
-    // (https://docs.near.org/docs/api/rpc/network#validation-status)
-    /*
-     * @Test
-     * void getNetworkValidationStatus_byBlockHash_validationStatus_notNull() {
-     * Block lastBlock = nearService.getBlock(Finality.FINAL);
-     * 
-     * ValidationStatus networkValidationStatus = nearService
-     * .getNetworkValidationStatus(lastBlock.getHeader().getHash());
-     * 
-     * assertNotNull(networkValidationStatus);
-     * }
-     * 
-     * // TODO: No validators found
-     * // (https://docs.near.org/docs/api/rpc/network#validation-status)
-     * 
-     * @Test
-     * void getNetworkValidationStatus_byBlockNumber_validationStatus_notNull() {
-     * Block lastBlock = nearService.getBlock(Finality.OPTIMISTIC);
-     * 
-     * ValidationStatus networkValidationStatus = nearService
-     * .getNetworkValidationStatus(lastBlock.getHeader().getHeight());
-     * 
-     * assertNotNull(networkValidationStatus);
-     * }
-     */
+    // TODO: enable this test when working test data is available
+    @Disabled("No validators found! (https://docs.near.org/docs/api/rpc/network#validation-status)")
+    @Test
+    void getNetworkValidationStatus_byBlockHash_validationStatus_notNull() {
+        Block lastBlock = nearService.getBlock(Finality.FINAL);
+
+        ValidationStatus networkValidationStatus = nearService
+                .getNetworkValidationStatus(lastBlock.getHeader().getHash());
+
+        assertNotNull(networkValidationStatus);
+    }
+
+    // TODO: enable this test when working test data is available
+    @Disabled("No validators found! (https://docs.near.org/docs/api/rpc/network#validation-status)")
+    @Test
+    void getNetworkValidationStatus_byBlockNumber_validationStatus_notNull() {
+        Block lastBlock = nearService.getBlock(Finality.OPTIMISTIC);
+
+        ValidationStatus networkValidationStatus = nearService
+                .getNetworkValidationStatus(lastBlock.getHeader().getHeight());
+
+        assertNotNull(networkValidationStatus);
+    }
+
     // From sample response at:
     // https://docs.near.org/docs/api/rpc/gas#gas-price
     @Test
@@ -452,27 +451,21 @@ public class NearServiceTest extends BaseNearServiceTest {
         JSONAssert.assertEquals(inputJson, getPrettyJson(transactionAwait), false);
     }
 
-    // TODO: Error expired
-    // (https://docs.near.org/docs/api/rpc/transactions#send-transaction-await)
-    /*
-     * @Test
-     * void sendTransactionAwait_transaction_notNull() throws IOException,
-     * JSONException {
-     * String signedTransaction =
-     * "DgAAAHNlbmRlci50ZXN0bmV0AOrmAai64SZOv9e/naX4W15pJx0GAap35wTT1T/DwcbbDQAAAAAAAAAQAAAAcmVjZWl2ZXIudGVzdG5ldIODI4YfV/QS++blXpQYT+bOsRblTRW4f547y/LkvMQ9AQAAAAMAAACh7czOG8LTAAAAAAAAAAXcaTJzu9GviPT7AD4mNJGY79jxTrjFLoyPBiLGHgBi8JK1AnhK8QknJ1ourxlvOYJA2xEZE8UR24THmSJcLQw=";
-     * 
-     * TransactionAwait transaction =
-     * nearService.sendTransactionAwait(signedTransaction);
-     * 
-     * assertNotNull(transaction);
-     * 
-     * String inputJson =
-     * loadJsonFromFile("json-test-samples/transaction/send-transaction-await.json")
-     * ;
-     * 
-     * JSONAssert.assertEquals(getPrettyJson(transaction), inputJson, false);
-     * }
-     */
+    // TODO: enable this test when working test data is available
+    @Disabled("Error expired! (https://docs.near.org/docs/api/rpc/transactions#send-transaction-await)")
+    @Test
+    void sendTransactionAwait_transaction_notNull() throws IOException,
+            JSONException {
+        String signedTransaction = "DgAAAHNlbmRlci50ZXN0bmV0AOrmAai64SZOv9e/naX4W15pJx0GAap35wTT1T/DwcbbDQAAAAAAAAAQAAAAcmVjZWl2ZXIudGVzdG5ldIODI4YfV/QS++blXpQYT+bOsRblTRW4f547y/LkvMQ9AQAAAAMAAACh7czOG8LTAAAAAAAAAAXcaTJzu9GviPT7AD4mNJGY79jxTrjFLoyPBiLGHgBi8JK1AnhK8QknJ1ourxlvOYJA2xEZE8UR24THmSJcLQw=";
+
+        TransactionAwait transaction = nearService.sendTransactionAwait(signedTransaction);
+
+        assertNotNull(transaction);
+
+        String inputJson = loadJsonFromFile("json-test-samples/transaction/send-transaction-await.json");
+
+        JSONAssert.assertEquals(getPrettyJson(transaction), inputJson, false);
+    }
 
     // From sample response at:
     // https://docs.near.org/docs/api/rpc/transactions#transaction-status
@@ -972,53 +965,48 @@ public class NearServiceTest extends BaseNearServiceTest {
         JSONAssert.assertEquals(inputJson, getPrettyJson(contractState), false);
     }
 
-    // TODO: Too large contract state
-    // (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)
-    /*
-     * @Test
-     * void viewContractState_byFinality_contractCode_notNull() throws IOException,
-     * JSONException {
-     * ContractState contractState = nearService.viewContractState(Finality.FINAL,
-     * "guest-book.testnet", "");
-     * 
-     * assertNotNull(contractState);
-     * }
-     * 
-     * // TODO: Too large contract state
-     * // (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)
-     * 
-     * @Test
-     * void viewContractState_byHash_contractCode_notNull() throws IOException,
-     * JSONException {
-     * ContractState contractState =
-     * nearService.viewContractState("342bkjvnzoZ7FGRE5BwDVkzSRUYXAScTz3GsDB9sEHXg",
-     * "guest-book.testnet", "");
-     * 
-     * assertNotNull(contractState);
-     * 
-     * String inputJson = loadJsonFromFile(
-     * "json-test-samples/accounts-contracts/view-contract-state.json");
-     * 
-     * JSONAssert.assertEquals(getPrettyJson(contractState), inputJson, false);
-     * }
-     * 
-     * // TODO: Too large contract state
-     * // (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)
-     * 
-     * @Test
-     * void viewContractState_byHeight_contractCode_notNull() throws JSONException,
-     * IOException {
-     * ContractState contractState = nearService.viewContractState(78440679,
-     * "guest-book.testnet", "");
-     * 
-     * assertNotNull(contractState);
-     * 
-     * String inputJson = loadJsonFromFile(
-     * "json-test-samples/accounts-contracts/view-contract-state.json");
-     * 
-     * JSONAssert.assertEquals(getPrettyJson(contractState), inputJson, false);
-     * }
-     */
+    // TODO: enable this test when working test data is available
+    @Disabled("Too large contract state! (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)")
+    @Test
+    void viewContractState_byFinality_contractCode_notNull() throws IOException,
+            JSONException {
+        ContractState contractState = nearService.viewContractState(Finality.FINAL,
+                "guest-book.testnet", "");
+
+        assertNotNull(contractState);
+    }
+
+    // TODO: enable this test when working test data is available
+    @Disabled("Too large contract state! (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)")
+    @Test
+    void viewContractState_byHash_contractCode_notNull() throws IOException,
+            JSONException {
+        ContractState contractState = nearService.viewContractState("342bkjvnzoZ7FGRE5BwDVkzSRUYXAScTz3GsDB9sEHXg",
+                "guest-book.testnet", "");
+
+        assertNotNull(contractState);
+
+        String inputJson = loadJsonFromFile(
+                "json-test-samples/accounts-contracts/view-contract-state.json");
+
+        JSONAssert.assertEquals(getPrettyJson(contractState), inputJson, false);
+    }
+
+    // TODO: enable this test when working test data is available
+    @Disabled("Too large contract state! (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)")
+    @Test
+    void viewContractState_byHeight_contractCode_notNull() throws JSONException,
+            IOException {
+        ContractState contractState = nearService.viewContractState(78440679,
+                "guest-book.testnet", "");
+
+        assertNotNull(contractState);
+
+        String inputJson = loadJsonFromFile(
+                "json-test-samples/accounts-contracts/view-contract-state.json");
+
+        JSONAssert.assertEquals(getPrettyJson(contractState), inputJson, false);
+    }
 
     // From sample response at:
     // https://docs.near.org/docs/api/rpc/contracts#view-contract-state-changes
