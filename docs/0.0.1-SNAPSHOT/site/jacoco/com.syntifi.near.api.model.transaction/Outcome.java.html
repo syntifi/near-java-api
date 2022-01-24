@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Outcome.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.syntifi.near:near-java-api</a> &gt; <a href="index.source.html" class="el_package">com.syntifi.near.api.model.transaction</a> &gt; <span class="el_source">Outcome.java</span></div><h1>Outcome.java</h1><pre class="source lang-java linenums">package com.syntifi.near.api.model.transaction;
+
+import java.util.Collection;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+<span class="fc" id="L19">public class Outcome {</span>
+    @JsonProperty(&quot;logs&quot;)
+    private Collection&lt;String&gt; logs;
+
+    @JsonProperty(&quot;receipt_ids&quot;)
+    private Collection&lt;String&gt; receiptIds;
+
+    @JsonProperty(&quot;gas_burnt&quot;)
+    private long gasBurnt;
+
+    @JsonProperty(&quot;tokens_burnt&quot;)
+    private String tokensBurnt;
+
+    @JsonProperty(&quot;executor_id&quot;)
+    private String executorId;
+
+    @JsonProperty(&quot;status&quot;)
+    private Status status;
+    @JsonInclude(value = Include.NON_NULL)
+
+    @JsonProperty(&quot;metadata&quot;)
+    private Metadata metadata;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

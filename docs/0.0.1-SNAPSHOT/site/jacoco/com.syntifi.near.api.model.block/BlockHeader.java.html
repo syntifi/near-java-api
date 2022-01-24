@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlockHeader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.syntifi.near:near-java-api</a> &gt; <a href="index.source.html" class="el_package">com.syntifi.near.api.model.block</a> &gt; <span class="el_source">BlockHeader.java</span></div><h1>BlockHeader.java</h1><pre class="source lang-java linenums">package com.syntifi.near.api.model.block;
+
+import java.util.Collection;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+<span class="fc" id="L19">public class BlockHeader {</span>
+    @JsonProperty(&quot;height&quot;)
+    private long height;
+
+    @JsonProperty(&quot;prev_height&quot;)
+    @JsonInclude(value = Include.NON_NULL)
+    private Long previousHeight;
+
+    @JsonProperty(&quot;epoch_id&quot;)
+    private String epochId;
+
+    @JsonProperty(&quot;next_epoch_id&quot;)
+    private String nextEpochId;
+
+    @JsonProperty(&quot;hash&quot;)
+    private String hash;
+
+    @JsonProperty(&quot;prev_hash&quot;)
+    private String previousHash;
+
+    @JsonProperty(&quot;prev_state_root&quot;)
+    private String previousStateRoot;
+
+    @JsonProperty(&quot;chunk_receipts_root&quot;)
+    private String chunkReceiptsRoot;
+
+    @JsonProperty(&quot;chunk_headers_root&quot;)
+    private String chunkHeadersRoot;
+
+    @JsonProperty(&quot;chunk_tx_root&quot;)
+    private String chunkTxRoot;
+
+    @JsonProperty(&quot;outcome_root&quot;)
+    private String outcomeRoot;
+
+    @JsonProperty(&quot;chunks_included&quot;)
+    private long chunksIncluded;
+
+    @JsonProperty(&quot;challenges_root&quot;)
+    private String chalengesRoot;
+
+    @JsonProperty(&quot;timestamp&quot;)
+    private long timeStamp;
+
+    @JsonProperty(&quot;timestamp_nanosec&quot;)
+    private String timeStampNanoSeconds;
+
+    @JsonProperty(&quot;random_value&quot;)
+    private String randomValue;
+
+    @JsonProperty(&quot;validator_proposals&quot;)
+    private ValidatorProposal[] validatorProposals;
+
+    @JsonProperty(&quot;chunk_mask&quot;)
+    private Collection&lt;Boolean&gt; chunkMask;
+
+    @JsonProperty(&quot;block_ordinal&quot;)
+    @JsonInclude(value = Include.NON_NULL)
+    private Long blockOrdinal;
+
+    @JsonProperty(&quot;gas_price&quot;)
+    private String gasPrice;
+
+    @JsonProperty(&quot;rent_paid&quot;)
+    private String rentPaid;
+
+    @JsonProperty(&quot;validator_reward&quot;)
+    private String validatorReward;
+
+    @JsonProperty(&quot;total_supply&quot;)
+    private String totalSupply;
+
+    // TODO: find which object represents this
+    @JsonProperty(&quot;challenges_result&quot;)
+    private Object[] challengesResult;
+
+    @JsonProperty(&quot;last_final_block&quot;)
+    private String lastFinalBlock;
+
+    @JsonProperty(&quot;last_ds_final_block&quot;)
+    private String lastDsFinalBlock;
+
+    @JsonProperty(&quot;next_bp_hash&quot;)
+    private String nextBpHash;
+
+    @JsonProperty(&quot;block_merkle_root&quot;)
+    private String blockMerkleRoot;
+
+    @JsonProperty(&quot;epoch_sync_data_hash&quot;)
+    @JsonInclude(value = Include.NON_EMPTY)
+    private String epochSyncDataHash;
+
+    @JsonProperty(&quot;approvals&quot;)
+    private Collection&lt;String&gt; approvals;
+
+    @JsonProperty(&quot;signature&quot;)
+    private String signature;
+
+    @JsonProperty(&quot;latest_protocol_version&quot;)
+    private long latestrotocolVersion;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

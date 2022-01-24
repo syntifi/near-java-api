@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NearServiceExceptionResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.syntifi.near:near-java-api</a> &gt; <a href="index.source.html" class="el_package">com.syntifi.near.api.service.exception</a> &gt; <span class="el_source">NearServiceExceptionResolver.java</span></div><h1>NearServiceExceptionResolver.java</h1><pre class="source lang-java linenums">package com.syntifi.near.api.service.exception;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.googlecode.jsonrpc4j.ExceptionResolver;
+import com.syntifi.near.api.service.NearObjectMapper;
+
+/**
+ * Custom exception handler for jsonrpc4j client
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
+<span class="fc" id="L17">public class NearServiceExceptionResolver implements ExceptionResolver {</span>
+<span class="fc" id="L18">    private static ObjectMapper objectMapper = new NearObjectMapper();</span>
+
+    @Override
+    public Throwable resolveException(ObjectNode response) {
+        try {
+<span class="fc" id="L23">            JsonNode errorNode = response.get(&quot;error&quot;);</span>
+<span class="fc" id="L24">            NearServiceErrorData error = objectMapper.treeToValue(errorNode, NearServiceErrorData.class);</span>
+<span class="fc" id="L25">            return new NearServiceException(error);</span>
+<span class="fc" id="L26">        } catch (JsonProcessingException | IllegalArgumentException e) {</span>
+<span class="fc" id="L27">            return new NearServiceException(String.format(&quot;Could not extract error, response was: %s&quot;, response), e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
