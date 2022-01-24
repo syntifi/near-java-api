@@ -1,0 +1,16 @@
+com.syntifi.near.api.exception
+com.syntifi.near.api.jackson.deserializer
+com.syntifi.near.api.jackson.resolver
+com.syntifi.near.api.model.accesskey
+com.syntifi.near.api.model.accesskey.permission
+com.syntifi.near.api.model.account
+com.syntifi.near.api.model.block
+com.syntifi.near.api.model.common
+com.syntifi.near.api.model.contract
+com.syntifi.near.api.model.gas
+com.syntifi.near.api.model.identifier
+com.syntifi.near.api.model.network
+com.syntifi.near.api.model.protocol
+com.syntifi.near.api.model.transaction
+com.syntifi.near.api.service
+com.syntifi.near.api.service.exception

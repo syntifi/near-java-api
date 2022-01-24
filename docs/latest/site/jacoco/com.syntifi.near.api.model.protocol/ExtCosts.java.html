@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtCosts.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.syntifi.near:near-java-api</a> &gt; <a href="index.source.html" class="el_package">com.syntifi.near.api.model.protocol</a> &gt; <span class="el_source">ExtCosts.java</span></div><h1>ExtCosts.java</h1><pre class="source lang-java linenums">package com.syntifi.near.api.model.protocol;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+<span class="fc" id="L15">public class ExtCosts {</span>
+    @JsonProperty(&quot;base&quot;)
+    private long base;
+
+    @JsonProperty(&quot;contract_compile_base&quot;)
+    private long contractCompileBase;
+
+    @JsonProperty(&quot;contract_compile_bytes&quot;)
+    private long contractCompileBytes;
+
+    @JsonProperty(&quot;read_memory_base&quot;)
+    private long readMemoryBase;
+
+    @JsonProperty(&quot;read_memory_byte&quot;)
+    private long readMemoryByte;
+
+    @JsonProperty(&quot;write_memory_base&quot;)
+    private long writeMemoryBase;
+
+    @JsonProperty(&quot;write_memory_byte&quot;)
+    private long writeMemoryByte;
+
+    @JsonProperty(&quot;read_register_base&quot;)
+    private long readRegisterBase;
+
+    @JsonProperty(&quot;read_register_byte&quot;)
+    private long readRegisterByte;
+
+    @JsonProperty(&quot;write_register_base&quot;)
+    private long writeRegisterBase;
+
+    @JsonProperty(&quot;write_register_byte&quot;)
+    private long writeRegisterByte;
+
+    @JsonProperty(&quot;utf8_decoding_base&quot;)
+    private long utf8DecodingBase;
+
+    @JsonProperty(&quot;utf8_decoding_byte&quot;)
+    private long utf8DecodingByte;
+
+    @JsonProperty(&quot;utf16_decoding_base&quot;)
+    private long utf16DecodingBase;
+
+    @JsonProperty(&quot;utf16_decoding_byte&quot;)
+    private long utf16DecodingByte;
+
+    @JsonProperty(&quot;sha256_base&quot;)
+    private long sha256Base;
+
+    @JsonProperty(&quot;sha256_byte&quot;)
+    private long sha256Byte;
+
+    @JsonProperty(&quot;keccak256_base&quot;)
+    private long keccak256Base;
+
+    @JsonProperty(&quot;keccak256_byte&quot;)
+    private long keccak256Byte;
+
+    @JsonProperty(&quot;keccak512_base&quot;)
+    private long keccak512Base;
+
+    @JsonProperty(&quot;keccak512_byte&quot;)
+    private long keccak512Byte;
+
+    @JsonProperty(&quot;ripemd160_base&quot;)
+    private long ripemd160Base;
+
+    @JsonProperty(&quot;ripemd160_block&quot;)
+    private long ripemd160Block;
+
+    @JsonProperty(&quot;ecrecover_base&quot;)
+    private long ecrecoverBase;
+
+    @JsonProperty(&quot;log_base&quot;)
+    private long logBase;
+
+    @JsonProperty(&quot;log_byte&quot;)
+    private long logByte;
+
+    @JsonProperty(&quot;storage_write_base&quot;)
+    private long storageWriteBase;
+
+    @JsonProperty(&quot;storage_write_key_byte&quot;)
+    private long storageWriteKeyByte;
+
+    @JsonProperty(&quot;storage_write_value_byte&quot;)
+    private long storageWriteValueByte;
+
+    @JsonProperty(&quot;storage_write_evicted_byte&quot;)
+    private long storageWriteEvictedByte;
+
+    @JsonProperty(&quot;storage_read_base&quot;)
+    private long storageReadBase;
+
+    @JsonProperty(&quot;storage_read_key_byte&quot;)
+    private long storageReadKeyByte;
+
+    @JsonProperty(&quot;storage_read_value_byte&quot;)
+    private long storageReadValueByte;
+
+    @JsonProperty(&quot;storage_remove_base&quot;)
+    private long storageRemoveBase;
+
+    @JsonProperty(&quot;storage_remove_key_byte&quot;)
+    private long storageRemoveKeyByte;
+
+    @JsonProperty(&quot;storage_remove_ret_value_byte&quot;)
+    private long storageRemoveRetValueByte;
+
+    @JsonProperty(&quot;storage_has_key_base&quot;)
+    private long storageHasKeyBase;
+
+    @JsonProperty(&quot;storage_has_key_byte&quot;)
+    private long storageHasKeyByte;
+
+    @JsonProperty(&quot;storage_iter_create_prefix_base&quot;)
+    private long storageIterCreatePrefixBase;
+
+    @JsonProperty(&quot;storage_iter_create_prefix_byte&quot;)
+    private long storageIterCreatePrefixByte;
+
+    @JsonProperty(&quot;storage_iter_create_range_base&quot;)
+    private long storageIterCreateRangeBase;
+
+    @JsonProperty(&quot;storage_iter_create_from_byte&quot;)
+    private long storageIterCreateFromByte;
+
+    @JsonProperty(&quot;storage_iter_create_to_byte&quot;)
+    private long storageIterCreateToByte;
+
+    @JsonProperty(&quot;storage_iter_next_base&quot;)
+    private long storageIterNextBase;
+
+    @JsonProperty(&quot;storage_iter_next_key_byte&quot;)
+    private long storageIterNextKeyByte;
+
+    @JsonProperty(&quot;storage_iter_next_value_byte&quot;)
+    private long storageIterNextValueByte;
+
+    @JsonProperty(&quot;touching_trie_node&quot;)
+    private long touchingTrieNode;
+
+    @JsonProperty(&quot;promise_and_base&quot;)
+    private long promiseAndBase;
+
+    @JsonProperty(&quot;promise_and_per_promise&quot;)
+    private long promiseAndPerPromise;
+
+    @JsonProperty(&quot;promise_return&quot;)
+    private long promiseReturn;
+
+    @JsonProperty(&quot;validator_stake_base&quot;)
+    private long validatorStakeBase;
+
+    @JsonProperty(&quot;validator_total_stake_base&quot;)
+    private long validatorTotalStakeBase;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
