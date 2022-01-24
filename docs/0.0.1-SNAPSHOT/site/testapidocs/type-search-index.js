@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.syntifi.near.api.service","l":"BaseNearServiceTest"},{"p":"com.syntifi.near.api.service","l":"NearServiceTest"},{"p":"com.syntifi.near.api.model.accesskey.permission","l":"PermissionTypeDataTest"}]

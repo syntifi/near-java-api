@@ -1,5 +1,5 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-com.syntifi.near:near-java-api,com.syntifi.near.api.jackson.deserializer,AbstractAnyOfDeserializer,0,80,0,2,0,18,0,5,0,4
+com.syntifi.near:near-java-api,com.syntifi.near.api.jackson.deserializer,AbstractAnyOfDeserializer,0,78,0,2,0,18,0,5,0,4
 com.syntifi.near:near-java-api,com.syntifi.near.api.jackson.deserializer,PermissionDeserializer,0,22,0,0,0,6,0,4,0,4
 com.syntifi.near:near-java-api,com.syntifi.near.api.model.block,BlockHeader,0,3,0,0,0,1,0,1,0,1
 com.syntifi.near:near-java-api,com.syntifi.near.api.model.block,BlockChanges,0,3,0,0,0,1,0,1,0,1
