@@ -1,0 +1,14 @@
+# Configurations
+title:            Near Java 8+ API
+longtitle:        Java 8+ library to interact with NEAR Protocol via RPC API
+author:           Alexandre Carvalho
+email:            adcarvalho@gmail.com
+description: >
+  Java 8+ library to interact with NEAR Protocol via RPC API.
+
+baseurl: '/near-java-api'
+
+remote_theme: oak3dev/architect
+
+exclude: 
+  - docs/pages/templates
