@@ -8,7 +8,7 @@ description: >
 
 baseurl: '/near-java-api'
 
-remote_theme: oak3dev/architect
+remote_theme: oak/architect
 
 exclude: 
   - .github/templates
