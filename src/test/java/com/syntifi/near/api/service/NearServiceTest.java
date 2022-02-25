@@ -386,7 +386,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(protocolConfig);
 
-        String inputJson = loadJsonFromFile("json-test-samples/protocol/protocol-config.json");
+        String inputJson = loadJsonFromFile("json-test-samples/protocol/protocol-config-final.json");
 
         JSONAssert.assertEquals(getPrettyJson(protocolConfig), inputJson, false);
     }
