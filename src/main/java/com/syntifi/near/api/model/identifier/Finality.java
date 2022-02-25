@@ -16,9 +16,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Finality {
     OPTIMISTIC("optimistic"), FINAL("final");
 
-    private String type;
+    private final String type;
 
-    private Finality(String type) {
+    Finality(String type) {
         this.type = type;
     }
 

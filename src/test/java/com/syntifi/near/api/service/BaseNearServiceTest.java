@@ -21,9 +21,9 @@ public abstract class BaseNearServiceTest {
     /**
      * Loads test json from resources
      * 
-     * @param filename
-     * @return
-     * @throws IOException
+     * @param filename filename to load
+     * @return file content
+     * @throws IOException thrown if error reading file
      */
     protected String loadJsonFromFile(String filename) throws IOException {
         String fileJson;
@@ -33,11 +33,13 @@ public abstract class BaseNearServiceTest {
             // copy stream
             byte[] buffer = new byte[1024];
             int bytesRead;
-            while ((bytesRead = is.read(buffer)) != -1) {
+            while (true) {
+                assert is != null;
+                if ((bytesRead = is.read(buffer)) == -1) break;
                 baos.write(buffer, 0, bytesRead);
             }
 
-            fileJson = new String(baos.toByteArray());
+            fileJson = baos.toString();
         }
         return fileJson;
     }
@@ -47,8 +49,8 @@ public abstract class BaseNearServiceTest {
      * 
      * @param json json string to prettify
      * @return prettified json
-     * @throws JsonMappingException
-     * @throws JsonProcessingException
+     * @throws JsonMappingException thrown if error mapping json
+     * @throws JsonProcessingException thrown if error processing json
      */
     protected String getPrettyJson(String json) throws JsonMappingException, JsonProcessingException {
         Object jsonObject = OBJECT_MAPPER.readValue(json, Object.class);
@@ -60,10 +62,10 @@ public abstract class BaseNearServiceTest {
      * 
      * @param jsonObject object to serialize and prettify
      * @return prettified json
-     * @throws JsonMappingException
-     * @throws JsonProcessingException
+     * @throws JsonMappingException thrown if error mapping json
+     * @throws JsonProcessingException thrown if error processing json
      */
-    protected String getPrettyJson(Object jsonObject) throws JsonMappingException, JsonProcessingException {
+    protected String getPrettyJson(Object jsonObject) throws JsonProcessingException {
         return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(jsonObject);
     }
 }

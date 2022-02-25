@@ -1,16 +1,5 @@
 package com.syntifi.near.api.service;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Map;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.exception.NoSuchTypeException;
 import com.syntifi.near.api.model.accesskey.AccessKey;
@@ -22,11 +11,7 @@ import com.syntifi.near.api.model.account.AccountChanges;
 import com.syntifi.near.api.model.block.Block;
 import com.syntifi.near.api.model.block.BlockChanges;
 import com.syntifi.near.api.model.block.Chunk;
-import com.syntifi.near.api.model.contract.ContractCode;
-import com.syntifi.near.api.model.contract.ContractCodeChanges;
-import com.syntifi.near.api.model.contract.ContractFunctionCallResult;
-import com.syntifi.near.api.model.contract.ContractState;
-import com.syntifi.near.api.model.contract.ContractStateChanges;
+import com.syntifi.near.api.model.contract.*;
 import com.syntifi.near.api.model.gas.GasPrice;
 import com.syntifi.near.api.model.identifier.Finality;
 import com.syntifi.near.api.model.network.NetworkInfo;
@@ -39,18 +24,23 @@ import com.syntifi.near.api.model.transaction.TransactionAwait;
 import com.syntifi.near.api.model.transaction.TransactionStatus;
 import com.syntifi.near.api.service.exception.NearServiceException;
 import com.syntifi.near.api.service.exception.NearServiceExceptionResolver;
-
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Basic Service call testing
- * 
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -58,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class NearServiceTest extends BaseNearServiceTest {
 
     private static NearService nearService;
-    private static Logger LOGGER = LoggerFactory.getLogger(NearServiceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NearServiceTest.class);
 
     @BeforeAll
     public static void setUp() throws MalformedURLException {
@@ -102,7 +92,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void getBlock_byHash_block_notNull_with_validator_proposals() throws JSONException, IOException {
+    void getBlock_byHash_block_notNull_with_validator_proposals() {
         Block block = nearService.getBlock("BCEqCXnKijpvQfTMJDn6Bh2We1v1sAZoihApTnJsd32B");
 
         assertNotNull(block);
@@ -428,7 +418,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void sendTransactionAsync_transactionHash_notNull() throws IOException, JSONException {
+    void sendTransactionAsync_transactionHash_notNull() {
         String signedTransaction = "DgAAAHNlbmRlci50ZXN0bmV0AOrmAai64SZOv9e/naX4W15pJx0GAap35wTT1T/DwcbbDwAAAAAAAAAQAAAAcmVjZWl2ZXIudGVzdG5ldNMnL7URB1cxPOu3G8jTqlEwlcasagIbKlAJlF5ywVFLAQAAAAMAAACh7czOG8LTAAAAAAAAAGQcOG03xVSFQFjoagOb4NBBqWhERnnz45LY4+52JgZhm1iQKz7qAdPByrGFDQhQ2Mfga8RlbysuQ8D8LlA6bQE=";
         String expectedTransactionHash = "6zgh2u9DqHHiXzdy9ouTP7oGky2T4nugqzqt9wJZwNFm";
 
@@ -564,14 +554,14 @@ public class NearServiceTest extends BaseNearServiceTest {
      * void getTransactionReceipt_transactionReceipt_notNull_InputDataIds() throws
      * JSONException, IOException {
      * String receiptId = "AWbGp5rEPgcQJHfyJXhsseLGaB8nTHD6iCRnMrwiSTF4";
-     * 
+     *
      * Receipt transactionReceipt = nearService.getTransactionReceipt(receiptId);
-     * 
+     *
      * assertNotNull(transactionReceipt);
-     * 
+     *
      * String inputJson =
      * loadJsonFromFile("json-test-samples/transaction/receipt.json");
-     * 
+     *
      * JSONAssert.assertEquals(getPrettyJson(transactionReceipt), inputJson, false);
      * }
      */
@@ -749,7 +739,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
     @Test
     void loadedJson_accessKeyChangesAll_invalidPropertyPermission_shouldThrow_NoSuchTypeException()
-            throws IOException, JSONException {
+            throws IOException {
         String inputJson = loadJsonFromFile(
                 "json-test-samples/access-key/view-access-key-changes-all-invalid-permission-property.json");
 
@@ -820,7 +810,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void viewAccount_byFinality_account_notNull() throws IOException, JSONException {
+    void viewAccount_byFinality_account_notNull() {
         Account account = nearService.viewAccount(Finality.FINAL, "nearkat.testnet");
 
         assertNotNull(account);
@@ -864,7 +854,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: Empty sample account changes
     // (https://docs.near.org/docs/api/rpc/contracts#view-account-changes)
     @Test
-    void viewAccountChanges_byFinality_account_notNull() throws IOException, JSONException {
+    void viewAccountChanges_byFinality_account_notNull() {
         String[] accountIds = new String[1];
 
         accountIds[0] = "nearkat.testnet";
@@ -923,7 +913,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void viewContractCode_byFinality_contractCode_notNull() throws IOException, JSONException {
+    void viewContractCode_byFinality_contractCode_notNull() {
         ContractCode contractCode = nearService.viewContractCode(Finality.FINAL, "guest-book.testnet");
 
         assertNotNull(contractCode);
@@ -968,8 +958,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: enable this test when working test data is available
     @Disabled("Too large contract state! (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)")
     @Test
-    void viewContractState_byFinality_contractCode_notNull() throws IOException,
-            JSONException {
+    void viewContractState_byFinality_contractCode_notNull() {
         ContractState contractState = nearService.viewContractState(Finality.FINAL,
                 "guest-book.testnet", "");
 
@@ -1025,7 +1014,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: Empty sample contract code changes
     // (https://docs.near.org/docs/api/rpc/contracts#view-contract-state-changes)
     @Test
-    void viewContractStateChanges_byFinality_contractStateChanges_notNull() throws IOException, JSONException {
+    void viewContractStateChanges_byFinality_contractStateChanges_notNull() {
         String[] accountIds = new String[1];
 
         accountIds[0] = "guest-book.testnet";
@@ -1089,7 +1078,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: Empty sample contract code changes
     // (https://docs.near.org/docs/api/rpc/contracts#view-contract-code-changes)
     @Test
-    void viewContractCodeChanges_byFinality_contractCodeChanges_notNull() throws IOException, JSONException {
+    void viewContractCodeChanges_byFinality_contractCodeChanges_notNull() {
         String[] accountIds = new String[1];
 
         accountIds[0] = "dev-1602714453032-7566969";
@@ -1151,7 +1140,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void callContractFunction_byFinality_contractFunctionCallResult_notNull() throws IOException, JSONException {
+    void callContractFunction_byFinality_contractFunctionCallResult_notNull() {
         ContractFunctionCallResult contractFunctionCallResult = nearService
                 .callContractFunction(
                         Finality.FINAL,

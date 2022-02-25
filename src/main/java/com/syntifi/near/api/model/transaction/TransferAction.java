@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 /**
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -16,5 +18,5 @@ import lombok.Setter;
 @JsonTypeName("Transfer")
 public class TransferAction implements Action {
     @JsonProperty("deposit")
-    private String deposit;
+    private BigInteger deposit;
 }
