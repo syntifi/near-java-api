@@ -1,13 +1,13 @@
 package com.syntifi.near.api.model.block;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.Signature;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collection;
 
 /**
  * @author Alexandre Carvalho
@@ -112,8 +112,8 @@ public class BlockHeader {
     private Collection<String> approvals;
 
     @JsonProperty("signature")
-    private String signature;
+    private Signature signature;
 
     @JsonProperty("latest_protocol_version")
-    private long latestrotocolVersion;
+    private long latestProtocolVersion;
 }

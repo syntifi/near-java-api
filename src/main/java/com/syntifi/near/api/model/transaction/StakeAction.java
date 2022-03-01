@@ -1,5 +1,6 @@
 package com.syntifi.near.api.model.transaction;
 
+import com.syntifi.near.api.model.key.PublicKey;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,8 @@ import java.math.BigInteger;
 @Setter
 public class StakeAction implements Action {
     private BigInteger stake;
-    private String publicKey;
+
+    private PublicKey publicKey;
 
     public StakeAction() {
     }

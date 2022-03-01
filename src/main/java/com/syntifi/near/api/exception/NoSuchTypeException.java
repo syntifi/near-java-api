@@ -1,7 +1,7 @@
 package com.syntifi.near.api.exception;
 
 /**
- * Thrown in case of a CLType which does not exist being requested
+ * Thrown in case of a type which does not exist being requested
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -10,5 +10,8 @@ package com.syntifi.near.api.exception;
 public class NoSuchTypeException extends RuntimeException {
     public NoSuchTypeException(String message) {
         super(message);
+    }
+    public NoSuchTypeException(String message, Throwable t) {
+        super(message, t);
     }
 }

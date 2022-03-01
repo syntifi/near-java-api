@@ -2,6 +2,7 @@ package com.syntifi.near.api.model.accesskey;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.syntifi.near.api.model.key.PublicKey;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,5 @@ public class Key {
 
 
     @JsonProperty("public_key")
-    private String publicKey;
+    private PublicKey publicKey;
 }

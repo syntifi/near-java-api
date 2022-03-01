@@ -1,6 +1,10 @@
 package com.syntifi.near.api.model.key;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.syntifi.crypto.key.encdec.Base58;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -10,10 +14,19 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class Signature {
-    private KeyType keyType;
-    private byte[] data; // 64 bytes
+@NoArgsConstructor
+public class Signature extends KeySig {
+    public Signature(KeyType keyType, byte[] data) {
+        super(keyType, data);
+    }
 
-    public Signature() {
+    @JsonCreator
+    public static Signature getPublicKeyFromJson(String base58String) {
+        return Signature.fromEncodedBase58String(base58String, Signature.class);
+    }
+
+    @JsonValue
+    public String getJsonPublicKey() {
+        return this.toEncodedBase58String();
     }
 }

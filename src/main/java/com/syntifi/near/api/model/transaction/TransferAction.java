@@ -1,5 +1,6 @@
 package com.syntifi.near.api.model.transaction;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -19,4 +20,14 @@ import java.math.BigInteger;
 public class TransferAction implements Action {
     @JsonProperty("deposit")
     private BigInteger deposit;
+
+    /**
+     * Json expects string, not number
+     *
+     * @return the deposit as string for json serialization
+     */
+    @JsonGetter("deposit")
+    private String getJsonDeposit() {
+        return deposit.toString();
+    }
 }

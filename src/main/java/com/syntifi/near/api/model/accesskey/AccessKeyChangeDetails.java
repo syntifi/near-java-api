@@ -1,7 +1,7 @@
 package com.syntifi.near.api.model.accesskey;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.PublicKey;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class AccessKeyChangeDetails {
     private String accountId;
 
     @JsonProperty("public_key")
-    private String publicKey;
+    private PublicKey publicKey;
 
     @JsonProperty("access_key")
     private AccessKey accessKey;

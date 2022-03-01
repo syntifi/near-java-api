@@ -1,5 +1,6 @@
 package com.syntifi.near.api.model.transaction;
 
+import com.syntifi.near.api.model.key.PublicKey;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeleteKeyAction implements Action {
-    private String publicKey;
+    private PublicKey publicKey;
 
     public DeleteKeyAction() {
     }

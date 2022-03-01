@@ -1,7 +1,7 @@
 package com.syntifi.near.api.model.network;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.PublicKey;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +20,7 @@ public class CurrentProposal {
     private String accountId;
 
     @JsonProperty("public_key")
-    private String publicKey;
+    private PublicKey publicKey;
 
     @JsonProperty("stake")
     private String stake;

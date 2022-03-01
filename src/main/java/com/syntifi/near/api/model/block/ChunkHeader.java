@@ -1,7 +1,7 @@
 package com.syntifi.near.api.model.block;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.Signature;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,5 +65,5 @@ public class ChunkHeader {
     private ValidatorProposal[] validatorProposals;
 
     @JsonProperty("signature")
-    private String signature;
+    private Signature signature;
 }

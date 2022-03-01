@@ -1,11 +1,12 @@
 package com.syntifi.near.api.model.transaction;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.PublicKey;
+import com.syntifi.near.api.model.key.Signature;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collection;
 
 /**
  * @author Alexandre Carvalho
@@ -19,7 +20,7 @@ public class Transaction {
     private String signerId;
 
     @JsonProperty("public_key")
-    private String publicKey;
+    private PublicKey publicKey;
 
     @JsonProperty("nonce")
     private long nonce;
@@ -31,7 +32,7 @@ public class Transaction {
     private Collection<Action> actions;
 
     @JsonProperty("signature")
-    private String signature;
+    private Signature signature;
 
     @JsonProperty("hash")
     private String hash;
