@@ -3,7 +3,10 @@ package com.syntifi.near.api.model.transaction;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -13,15 +16,19 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Proof {
     public enum Direction {
         RIGHT("Right"),
         LEFT("Left");
 
+        @Getter
         @JsonValue
-        private String name;
+        private final String name;
 
-        private Direction(String name) {
+        Direction(String name) {
             this.name = name;
         }
     }

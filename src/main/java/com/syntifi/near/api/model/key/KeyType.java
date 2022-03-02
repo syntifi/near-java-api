@@ -8,12 +8,5 @@ import lombok.Getter;
  * @since 0.0.1
  */
 public enum KeyType {
-    ED25519((byte) 0);
-
-    @Getter
-    private final byte keyTypeValue;
-
-    KeyType(byte keyTypeValue) {
-        this.keyTypeValue = keyTypeValue;
-    }
+    ED25519
 }

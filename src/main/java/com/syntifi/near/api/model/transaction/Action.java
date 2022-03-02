@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.syntifi.near.borshj.Borsh;
 import com.syntifi.near.borshj.annotation.BorshSubTypes;
 
 /**
@@ -24,13 +25,13 @@ import com.syntifi.near.borshj.annotation.BorshSubTypes;
         @BorshSubTypes.BorshSubType(when = Action.DELETE_KEY, use = DeleteKeyAction.class),
         @BorshSubTypes.BorshSubType(when = Action.DELETE_ACCOUNT, use = DeleteAccountAction.class),
         @BorshSubTypes.BorshSubType(when = Action.TRANSFER, use = TransferAction.class)})
-public interface Action {
-    int CREATE_ACCOUNT = 0;
-    int DEPLOY_CONTRACT = 1;
-    int FUNCTION_CALL = 2;
-    int TRANSFER = 3;
-    int STAKE = 4;
-    int ADD_KEY = 5;
-    int DELETE_KEY = 6;
-    int DELETE_ACCOUNT = 7;
+public interface Action extends Borsh {
+    byte CREATE_ACCOUNT = 0;
+    byte DEPLOY_CONTRACT = 1;
+    byte FUNCTION_CALL = 2;
+    byte TRANSFER = 3;
+    byte STAKE = 4;
+    byte ADD_KEY = 5;
+    byte DELETE_KEY = 6;
+    byte DELETE_ACCOUNT = 7;
 }

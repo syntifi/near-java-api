@@ -2,20 +2,30 @@ package com.syntifi.near.api.model.key;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.syntifi.crypto.key.encdec.Base58;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.syntifi.near.borshj.Borsh;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
-@Getter
-@Setter
-@NoArgsConstructor
-public class Signature extends KeySig {
+@EqualsAndHashCode(callSuper = true)
+public class Signature extends KeySig implements Borsh {
+
+    private static final int SIGNATURE_SIZE = 64;
+
+    public Signature() {
+        // This solves the case for borsh deserialization for signatures of
+        // type ED25591 because to read the 'fixed' byte array we must know
+        // its size.
+        // If any other signature (and key) is implemented, a different
+        // approach is needed (like getters and setters annotation on borsh)
+        this.data = new byte[SIGNATURE_SIZE];
+    }
+
+    @Builder
     public Signature(KeyType keyType, byte[] data) {
         super(keyType, data);
     }

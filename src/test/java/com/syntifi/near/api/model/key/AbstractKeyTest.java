@@ -10,6 +10,9 @@ import static com.syntifi.near.api.service.JsonHelper.OBJECT_MAPPER;
 import static com.syntifi.near.api.service.JsonHelper.loadJsonFromResourceFile;
 
 public abstract class AbstractKeyTest {
+    protected static Wallet aliceWallet;
+    protected static Wallet bobWallet;
+
     protected static PrivateKey aliceNearPrivateKey;
     protected static PublicKey aliceNearPublicKey;
     protected static AbstractPrivateKey alicePrivateKey;
@@ -22,8 +25,8 @@ public abstract class AbstractKeyTest {
 
     @BeforeAll
     static void loadKeys() throws IOException {
-        Wallet aliceWallet = OBJECT_MAPPER.readValue(loadJsonFromResourceFile("testnet-wallets/alice.json"), Wallet.class);
-        Wallet bobWallet = OBJECT_MAPPER.readValue(loadJsonFromResourceFile("testnet-wallets/bob.json"), Wallet.class);
+        aliceWallet = OBJECT_MAPPER.readValue(loadJsonFromResourceFile("testnet-wallets/alice.json"), Wallet.class);
+        bobWallet = OBJECT_MAPPER.readValue(loadJsonFromResourceFile("testnet-wallets/bob.json"), Wallet.class);
 
         aliceNearPrivateKey = PrivateKey.fromEncodedBase58String(aliceWallet.getPrivateKey(), PrivateKey.class);
         aliceNearPublicKey = PublicKey.fromEncodedBase58String(aliceWallet.getPublicKey(), PublicKey.class);

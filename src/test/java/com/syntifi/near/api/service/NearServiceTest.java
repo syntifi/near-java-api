@@ -42,6 +42,7 @@ import java.net.MalformedURLException;
 import java.util.Map;
 
 import static com.syntifi.near.api.service.JsonHelper.*;
+import static com.syntifi.near.api.service.NearServiceHelper.nearService;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -53,18 +54,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class NearServiceTest {
 
-    private static NearService nearService;
     private static final Logger LOGGER = LoggerFactory.getLogger(NearServiceTest.class);
-
-    @BeforeAll
-    public static void setUp() throws MalformedURLException {
-        // WARN: Using archival testnet (instead of "rpc.testnet.near.org") for stabler
-        // results
-        String peerAddress = "archival-rpc.testnet.near.org";
-
-        LOGGER.debug("======== Running tests with peer {} ========", peerAddress);
-        nearService = NearService.usingPeer(peerAddress);
-    }
 
     // From sample response at:
     // https://docs.near.org/docs/api/rpc/block-chunk#block-details

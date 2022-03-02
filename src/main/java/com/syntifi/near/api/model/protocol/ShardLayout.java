@@ -2,7 +2,10 @@ package com.syntifi.near.api.model.protocol;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -12,10 +15,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ShardLayout {
     @Getter
     @Setter
-    public class V0 {
+    public static class V0 {
         @JsonProperty("num_shards")
         private long numShards;
 

@@ -1,7 +1,9 @@
 package com.syntifi.near.api.model.key;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.syntifi.crypto.key.encdec.Base58;
 import com.syntifi.near.api.exception.NoSuchTypeException;
+import com.syntifi.near.borshj.annotation.BorshField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +16,15 @@ import java.lang.reflect.InvocationTargetException;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class KeySig {
+
     private static final String SEPARATOR = ":";
 
+    @BorshField(order = 1)
+    @JsonIgnore
     protected KeyType keyType;
+
+    @BorshField(order = 2)
+    @JsonIgnore
     protected byte[] data;
 
     public KeySig(KeyType keyType, byte[] data) {

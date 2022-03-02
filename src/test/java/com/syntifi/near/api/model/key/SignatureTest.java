@@ -16,12 +16,12 @@ public class SignatureTest extends AbstractKeyTest {
 
     @Test
     void loadPrivateAndPublicKey_Sign_and_Verify_should_be_valid() throws GeneralSecurityException {
-        String aliceMessage = "Hello, Bob!";
+        byte[] aliceMessage = "Hello, Bob!".getBytes();
         byte[] aliceSignature = alicePrivateKey.sign(aliceMessage);
 
         assertTrue(alicePublicKey.verify(aliceMessage, aliceSignature));
 
-        String bobMessage = "Hello, Bob!";
+        byte[] bobMessage = "Hello, Alice!".getBytes();
         byte[] bobSignature = bobPrivateKey.sign(bobMessage);
 
         assertTrue(bobPublicKey.verify(bobMessage, bobSignature));

@@ -1,7 +1,13 @@
 package com.syntifi.near.api.model.transaction;
 
 import com.syntifi.near.api.model.key.Signature;
+import com.syntifi.near.borshj.Borsh;
+import com.syntifi.near.borshj.annotation.BorshField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -11,7 +17,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SignedTransaction {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode
+public class SignedTransaction implements Borsh {
+    @BorshField(order = 1)
     private Transaction transaction;
+    @BorshField(order = 2)
     private Signature signature;
 }
