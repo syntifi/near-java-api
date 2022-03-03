@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Map;
 
-import static com.syntifi.near.api.service.JsonHelper.OBJECT_MAPPER;
-import static com.syntifi.near.api.service.JsonHelper.getPrettyJson;
-import static com.syntifi.near.api.service.JsonHelper.loadJsonFromResourceFile;
+import static com.syntifi.near.api.json.JsonHelper.OBJECT_MAPPER;
+import static com.syntifi.near.api.json.JsonHelper.getPrettyJson;
+import static com.syntifi.near.api.json.JsonHelper.loadJsonFromResourceFile;
 import static com.syntifi.near.api.service.NearServiceHelper.nearService;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

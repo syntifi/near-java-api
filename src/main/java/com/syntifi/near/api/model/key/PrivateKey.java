@@ -1,5 +1,7 @@
 package com.syntifi.near.api.model.key;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.syntifi.crypto.key.AbstractPrivateKey;
 import com.syntifi.crypto.key.Ed25519PrivateKey;
 import com.syntifi.near.api.exception.NoSuchTypeException;
@@ -34,5 +36,15 @@ public class PrivateKey extends KeySig {
             return new Ed25519PrivateKey(data);
         }
         throw new NoSuchTypeException(String.format("No implementation found for key type %s", keyType));
+    }
+
+    @JsonCreator
+    public static PrivateKey getPublicKeyFromJson(String base58String) {
+        return PrivateKey.fromEncodedBase58String(base58String, PrivateKey.class);
+    }
+
+    @JsonValue
+    public String getJsonPublicKey() {
+        return this.toEncodedBase58String();
     }
 }

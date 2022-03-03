@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 
 import java.io.IOException;
 
-import static com.syntifi.near.api.service.JsonHelper.OBJECT_MAPPER;
-import static com.syntifi.near.api.service.JsonHelper.loadJsonFromResourceFile;
+import static com.syntifi.near.api.json.JsonHelper.OBJECT_MAPPER;
+import static com.syntifi.near.api.json.JsonHelper.loadJsonFromResourceFile;
 
 public abstract class AbstractKeyTest {
     protected static Wallet aliceWallet;
@@ -28,13 +28,13 @@ public abstract class AbstractKeyTest {
         aliceWallet = OBJECT_MAPPER.readValue(loadJsonFromResourceFile("testnet-wallets/alice.json"), Wallet.class);
         bobWallet = OBJECT_MAPPER.readValue(loadJsonFromResourceFile("testnet-wallets/bob.json"), Wallet.class);
 
-        aliceNearPrivateKey = PrivateKey.fromEncodedBase58String(aliceWallet.getPrivateKey(), PrivateKey.class);
-        aliceNearPublicKey = PublicKey.fromEncodedBase58String(aliceWallet.getPublicKey(), PublicKey.class);
+        aliceNearPrivateKey = aliceWallet.getPrivateKey();
+        aliceNearPublicKey = aliceWallet.getPublicKey();
         alicePrivateKey = aliceNearPrivateKey.getPrivateKey();
         alicePublicKey = aliceNearPublicKey.getPublicKey();
 
-        bobNearPrivateKey = PrivateKey.fromEncodedBase58String(bobWallet.getPrivateKey(), PrivateKey.class);
-        bobNearPublicKey = PublicKey.fromEncodedBase58String(bobWallet.getPublicKey(), PublicKey.class);
+        bobNearPrivateKey = bobWallet.getPrivateKey();
+        bobNearPublicKey = bobWallet.getPublicKey();
         bobPrivateKey = bobNearPrivateKey.getPrivateKey();
         bobPublicKey = bobNearPublicKey.getPublicKey();
     }

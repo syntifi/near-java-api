@@ -6,7 +6,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
 
-import static com.syntifi.near.api.service.JsonHelper.*;
+import static com.syntifi.near.api.json.JsonHelper.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class WalletTest {

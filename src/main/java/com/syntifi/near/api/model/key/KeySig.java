@@ -1,5 +1,6 @@
 package com.syntifi.near.api.model.key;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.syntifi.crypto.key.encdec.Base58;
 import com.syntifi.near.api.exception.NoSuchTypeException;

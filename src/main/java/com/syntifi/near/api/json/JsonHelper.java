@@ -1,12 +1,14 @@
-package com.syntifi.near.api.service;
+package com.syntifi.near.api.json;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.syntifi.near.api.service.NearObjectMapper;
 
 /**
  * Basic support functionality for test case classes
@@ -20,7 +22,31 @@ public final class JsonHelper {
 
     /**
      * Loads test json from resources
-     * 
+     *
+     * @param filename filename to load
+     * @return file content
+     * @throws IOException thrown if error reading file
+     */
+    public static String loadJsonFromFile(String filename) throws IOException {
+        String fileJson;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try (InputStream is = new FileInputStream(filename)) {
+            // copy stream
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+
+            fileJson = baos.toString();
+        }
+        return fileJson;
+    }
+
+    /**
+     * Loads test json from resources
+     *
      * @param filename filename to load
      * @return file content
      * @throws IOException thrown if error reading file

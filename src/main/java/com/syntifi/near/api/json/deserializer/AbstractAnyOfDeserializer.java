@@ -1,4 +1,4 @@
-package com.syntifi.near.api.jackson.deserializer;
+package com.syntifi.near.api.json.deserializer;
 
 import java.io.IOException;
 

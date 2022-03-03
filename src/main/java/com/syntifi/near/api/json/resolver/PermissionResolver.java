@@ -1,4 +1,4 @@
-package com.syntifi.near.api.jackson.resolver;
+package com.syntifi.near.api.json.resolver;
 
 import java.util.Collection;
 
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
-import com.syntifi.near.api.jackson.deserializer.PermissionDeserializer;
+import com.syntifi.near.api.json.deserializer.PermissionDeserializer;
 
 /**
  * @author Alexandre Carvalho

@@ -2,7 +2,7 @@ package com.syntifi.near.api.model.accesskey.permission;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeResolver;
-import com.syntifi.near.api.jackson.resolver.PermissionResolver;
+import com.syntifi.near.api.json.resolver.PermissionResolver;
 import com.syntifi.near.borshj.annotation.BorshSubTypes;
 
 /**
