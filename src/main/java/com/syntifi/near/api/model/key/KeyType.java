@@ -1,7 +1,5 @@
 package com.syntifi.near.api.model.key;
 
-import lombok.Getter;
-
 /**
  * @author Alexandre Carvalho
  * @author Andre Bertolace

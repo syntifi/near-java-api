@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syntifi.near.api.model.accesskey.permission.Permission;
 
+import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,5 +35,5 @@ public class AccessKey {
 
     @JsonProperty("block_hash")
     @JsonInclude(value = Include.NON_EMPTY)
-    private String blockHash;
+    private EncodedHash blockHash;
 }

@@ -3,6 +3,7 @@ package com.syntifi.near.api.model.block;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.syntifi.near.api.model.common.EncodedHash;
 import com.syntifi.near.api.model.key.Signature;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,13 +38,13 @@ public class BlockHeader {
     private String nextEpochId;
 
     @JsonProperty("hash")
-    private String hash;
+    private EncodedHash hash;
 
     @JsonProperty("prev_hash")
-    private String previousHash;
+    private EncodedHash previousHash;
 
     @JsonProperty("prev_state_root")
-    private String previousStateRoot;
+    private EncodedHash previousStateRoot;
 
     @JsonProperty("chunk_receipts_root")
     private String chunkReceiptsRoot;

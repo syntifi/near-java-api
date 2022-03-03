@@ -8,7 +8,6 @@ import com.syntifi.near.api.exception.NoSuchTypeException;
 import com.syntifi.near.borshj.Borsh;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * @author Alexandre Carvalho

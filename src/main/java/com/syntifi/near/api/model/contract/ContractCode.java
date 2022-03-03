@@ -2,6 +2,7 @@ package com.syntifi.near.api.model.contract;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,11 +24,11 @@ public class ContractCode {
     private String codeBase64;
 
     @JsonProperty("hash")
-    private String hash;
+    private EncodedHash hash;
 
     @JsonProperty("block_height")
     private long blockHeight;
 
     @JsonProperty("block_hash")
-    private String blockHash;
+    private EncodedHash blockHash;
 }

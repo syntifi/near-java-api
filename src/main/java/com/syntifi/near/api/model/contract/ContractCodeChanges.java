@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Builder
 public class ContractCodeChanges {
     @JsonProperty("block_hash")
-    private String blockHash;
+    private EncodedHash blockHash;
 
     @JsonProperty("changes")
     private Collection<ContractCodeChange> changes;

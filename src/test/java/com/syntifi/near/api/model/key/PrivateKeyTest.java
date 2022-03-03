@@ -3,14 +3,16 @@ package com.syntifi.near.api.model.key;
 import com.syntifi.near.api.exception.NoSuchTypeException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PrivateKeyTest extends AbstractKeyTest {
 
     @Test
     void getPrivateKey_with_invalidKeyType_should_throw_NoSuchTypeException() {
         PrivateKey key = new PrivateKey();
-        assertThrows(NoSuchTypeException.class, () -> key.getPrivateKey());
+        assertThrows(NoSuchTypeException.class, key::getPrivateKey);
     }
 
     @Test

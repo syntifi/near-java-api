@@ -2,6 +2,7 @@ package com.syntifi.near.api.model.transaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.syntifi.near.api.model.common.EncodedHash;
 import com.syntifi.near.api.model.key.PublicKey;
 import com.syntifi.near.api.model.key.Signature;
 import com.syntifi.near.borshj.Borsh;
@@ -57,5 +58,5 @@ public class Transaction implements Borsh {
     private byte[] blockHash = new byte[BLOCK_HASH_LENGTH];
 
     @JsonProperty("hash")
-    private String hash;
+    private EncodedHash hash;
 }

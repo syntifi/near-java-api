@@ -3,6 +3,7 @@ package com.syntifi.near.api.model.contract;
 import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.syntifi.near.api.model.common.EncodedHash;
 import com.syntifi.near.api.model.transaction.Proof;
 
 import lombok.AllArgsConstructor;
@@ -32,5 +33,5 @@ public class ContractState {
     private long blockHeight;
 
     @JsonProperty("block_hash")
-    private String blockHash;
+    private EncodedHash blockHash;
 }

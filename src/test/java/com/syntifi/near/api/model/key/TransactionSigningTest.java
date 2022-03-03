@@ -37,7 +37,7 @@ public class TransactionSigningTest extends AbstractKeyTest {
                 .publicKey(publicKey)
                 .nonce(0L)
                 .receiverId(receiverId)
-                .blockHash(Base58.decode(block.getHeader().getHash()))
+                .blockHash(block.getHeader().getHash().getDecodedHash())
                 .actions(Arrays.asList(transferAction))
                 .build();
 
@@ -65,7 +65,7 @@ public class TransactionSigningTest extends AbstractKeyTest {
                 .publicKey(publicKey)
                 .nonce(nextNonce)
                 .receiverId(receiverId)
-                .blockHash(Base58.decode(block.getHeader().getHash()))
+                .blockHash(block.getHeader().getHash().getDecodedHash())
                 .actions(Arrays.asList(
                         TransferAction.builder()
                                 .deposit(new BigInteger(amount, 10))
@@ -122,7 +122,7 @@ public class TransactionSigningTest extends AbstractKeyTest {
                 .publicKey(publicKey)
                 .nonce(nextNonce)
                 .receiverId(receiverId)
-                .blockHash(Base58.decode(block.getHeader().getHash()))
+                .blockHash(block.getHeader().getHash().getDecodedHash())
                 .actions(Arrays.asList(
                         TransferAction.builder()
                                 .deposit(new BigInteger(amount, 10))

@@ -1,14 +1,14 @@
 package com.syntifi.near.api.model.contract;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collection;
 
 /**
  * @author Alexandre Carvalho
@@ -22,7 +22,7 @@ import lombok.Setter;
 @Builder
 public class ContractStateChanges {
     @JsonProperty("block_hash")
-    private String blockHash;
+    private EncodedHash blockHash;
 
     @JsonProperty("changes")
     private Collection<ContractStateChange> changes;

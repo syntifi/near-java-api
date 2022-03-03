@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class ReceiptOutcome {
     private Collection<Proof> proof;
 
     @JsonProperty("block_hash")
-    private String blockHash;
+    private EncodedHash blockHash;
 
     @JsonProperty("id")
     private String id;

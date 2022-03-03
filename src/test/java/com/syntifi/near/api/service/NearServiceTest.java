@@ -30,7 +30,6 @@ import com.syntifi.near.api.model.transaction.TransactionStatus;
 import com.syntifi.near.api.service.exception.NearServiceException;
 import com.syntifi.near.api.service.exception.NearServiceExceptionResolver;
 import org.json.JSONException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -38,12 +37,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Map;
 
-import static com.syntifi.near.api.service.JsonHelper.*;
+import static com.syntifi.near.api.service.JsonHelper.OBJECT_MAPPER;
+import static com.syntifi.near.api.service.JsonHelper.getPrettyJson;
+import static com.syntifi.near.api.service.JsonHelper.loadJsonFromResourceFile;
 import static com.syntifi.near.api.service.NearServiceHelper.nearService;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Basic Service call testing
@@ -266,7 +271,7 @@ public class NearServiceTest {
         Block lastBlock = nearService.getBlock(Finality.FINAL);
 
         ValidationStatus networkValidationStatus = nearService
-                .getNetworkValidationStatus(lastBlock.getHeader().getHash());
+                .getNetworkValidationStatus(lastBlock.getHeader().getHash().getEncodedHash());
 
         assertNotNull(networkValidationStatus);
     }

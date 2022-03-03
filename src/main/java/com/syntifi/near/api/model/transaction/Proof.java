@@ -3,6 +3,7 @@ package com.syntifi.near.api.model.transaction;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +35,7 @@ public class Proof {
     }
 
     @JsonProperty("hash")
-    private String hash;
+    private EncodedHash hash;
 
     @JsonProperty("direction")
     private Direction direction;
