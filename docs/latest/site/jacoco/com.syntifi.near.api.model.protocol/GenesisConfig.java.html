@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenesisConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.syntifi.near:near-java-api</a> &gt; <a href="index.source.html" class="el_package">com.syntifi.near.api.model.protocol</a> &gt; <span class="el_source">GenesisConfig.java</span></div><h1>GenesisConfig.java</h1><pre class="source lang-java linenums">package com.syntifi.near.api.model.protocol;
+
+import java.util.Collection;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.syntifi.near.api.model.network.Validator;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+<span class="fc" id="L20">public class GenesisConfig {</span>
+    @JsonProperty(&quot;protocol_version&quot;)
+    private long protocolVersion;
+
+    @JsonProperty(&quot;genesis_time&quot;)
+    private String genesisTime;
+
+    @JsonProperty(&quot;chain_id&quot;)
+    private String chainId;
+
+    @JsonProperty(&quot;genesis_height&quot;)
+    private long genesisHeight;
+
+    @JsonProperty(&quot;num_block_producer_seats&quot;)
+    private long numBlockProducerSeats;
+
+    @JsonProperty(&quot;num_block_producer_seats_per_shard&quot;)
+    private Collection&lt;Long&gt; numBlockProducerSeatsPerShard;
+
+    @JsonProperty(&quot;avg_hidden_validator_seats_per_shard&quot;)
+    private Collection&lt;Long&gt; avgHiddenValidatorSeatsPerShard;
+
+    @JsonProperty(&quot;dynamic_resharding&quot;)
+    private boolean dynamicResharding;
+
+    @JsonProperty(&quot;protocol_upgrade_stake_threshold&quot;)
+    private Collection&lt;Long&gt; protocolUpgradeStakeThreshold;
+
+    @JsonProperty(&quot;protocol_upgrade_num_epochs&quot;)
+    private long protocolUpgradeNumEpochs;
+
+    @JsonProperty(&quot;epoch_length&quot;)
+    private long epochLength;
+
+    @JsonProperty(&quot;gas_limit&quot;)
+    private long gasLimit;
+
+    @JsonProperty(&quot;min_gas_price&quot;)
+    private String minGasPrice;
+
+    @JsonProperty(&quot;max_gas_price&quot;)
+    private String maxGasPrice;
+
+    @JsonProperty(&quot;block_producer_kickout_threshold&quot;)
+    private long blockProducerKickoutThreshold;
+
+    @JsonProperty(&quot;chunk_producer_kickout_threshold&quot;)
+    private long chunkProducerKickoutThreshold;
+
+    @JsonProperty(&quot;online_min_threshold&quot;)
+    private Collection&lt;Long&gt; onlineMinThreshold;
+
+    @JsonProperty(&quot;online_max_threshold&quot;)
+    private Collection&lt;Long&gt; onlineMaxThreshold;
+
+    @JsonProperty(&quot;gas_price_adjustment_rate&quot;)
+    private Collection&lt;Long&gt; gasPriceAdjustmentRate;
+
+    @JsonProperty(&quot;runtime_config&quot;)
+    @JsonInclude(value = Include.NON_NULL)
+    private RuntimeConfig runtimeConfig;
+
+    @JsonProperty(&quot;validators&quot;)
+    private Collection&lt;Validator&gt; validators;
+
+    @JsonProperty(&quot;transaction_validity_period&quot;)
+    private long transactionValidityPeriod;
+
+    @JsonProperty(&quot;protocol_reward_rate&quot;)
+    private Collection&lt;Long&gt; protocolRewardRate;
+
+    @JsonProperty(&quot;max_inflation_rate&quot;)
+    private Collection&lt;Long&gt; maxInflationRate;
+
+    @JsonProperty(&quot;total_supply&quot;)
+    private String totalSupply;
+
+    @JsonProperty(&quot;num_blocks_per_year&quot;)
+    private long numBlocksPerYear;
+
+    @JsonProperty(&quot;protocol_treasury_account&quot;)
+    private String protocolTreasuryAccount;
+
+    @JsonProperty(&quot;fishermen_threshold&quot;)
+    private String fishermenThreshold;
+
+    @JsonProperty(&quot;minimum_stake_divisor&quot;)
+    private long minimumStakeDivisor;
+
+    @JsonProperty(&quot;shard_layout&quot;)
+    private ShardLayout shardLayout;
+
+    @JsonProperty(&quot;simple_nightshade_shard_layout&quot;)
+    private SimpleNightShadeShardLayout simpleNightshadeShardLayout;
+
+    @JsonProperty(&quot;minimum_stake_ratio&quot;)
+    private Collection&lt;Long&gt; minimumStakeRatio;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

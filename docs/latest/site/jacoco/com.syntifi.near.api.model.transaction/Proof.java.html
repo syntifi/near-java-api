@@ -3,11 +3,7 @@
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import com.syntifi.near.api.model.common.EncodedHash;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -17,25 +13,21 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Proof {
-<span class="fc" id="L24">    public enum Direction {</span>
-<span class="fc" id="L25">        RIGHT(&quot;Right&quot;),</span>
-<span class="fc" id="L26">        LEFT(&quot;Left&quot;);</span>
+<span class="fc" id="L16">public class Proof {</span>
+<span class="fc" id="L17">    public enum Direction {</span>
+<span class="fc" id="L18">        RIGHT(&quot;Right&quot;),</span>
+<span class="fc" id="L19">        LEFT(&quot;Left&quot;);</span>
 
-        @Getter
         @JsonValue
-        private final String name;
+        private String name;
 
-<span class="fc" id="L32">        Direction(String name) {</span>
-<span class="fc" id="L33">            this.name = name;</span>
-<span class="fc" id="L34">        }</span>
+<span class="fc" id="L24">        private Direction(String name) {</span>
+<span class="fc" id="L25">            this.name = name;</span>
+<span class="fc" id="L26">        }</span>
     }
 
     @JsonProperty(&quot;hash&quot;)
-    private EncodedHash hash;
+    private String hash;
 
     @JsonProperty(&quot;direction&quot;)
     private Direction direction;

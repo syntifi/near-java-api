@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActionCreationConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.syntifi.near:near-java-api</a> &gt; <a href="index.source.html" class="el_package">com.syntifi.near.api.model.protocol</a> &gt; <span class="el_source">ActionCreationConfig.java</span></div><h1>ActionCreationConfig.java</h1><pre class="source lang-java linenums">package com.syntifi.near.api.model.protocol;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
+@Getter
+@Setter
+<span class="fc" id="L15">public class ActionCreationConfig {</span>
+    @JsonProperty(&quot;create_account_cost&quot;)
+    private Cost createAccountCost;
+
+    @JsonProperty(&quot;deploy_contract_cost&quot;)
+    private Cost deployContractCost;
+
+    @JsonProperty(&quot;deploy_contract_cost_per_byte&quot;)
+    private Cost deployContractCostPerByte;
+
+    @JsonProperty(&quot;function_call_cost&quot;)
+    private Cost functionCallCost;
+
+    @JsonProperty(&quot;function_call_cost_per_byte&quot;)
+    private Cost functionCallCostPerByte;
+
+    @JsonProperty(&quot;transfer_cost&quot;)
+    private Cost transferCost;
+
+    @JsonProperty(&quot;stake_cost&quot;)
+    private Cost stakeCost;
+
+    @JsonProperty(&quot;add_key_cost&quot;)
+    private AddKeyCost addKeyCost;
+
+    @JsonProperty(&quot;delete_key_cost&quot;)
+    private Cost deleteKeyCost;
+
+    @JsonProperty(&quot;delete_account_cost&quot;)
+    private Cost deleteAccountCost;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

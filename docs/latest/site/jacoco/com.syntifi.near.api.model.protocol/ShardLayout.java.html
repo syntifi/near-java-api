@@ -2,10 +2,7 @@
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -15,13 +12,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class ShardLayout {
+<span class="fc" id="L15">public class ShardLayout {</span>
     @Getter
     @Setter
-<span class="fc" id="L24">    public static class V0 {</span>
+<span class="fc" id="L18">    public class V0 {</span>
         @JsonProperty(&quot;num_shards&quot;)
         private long numShards;
 

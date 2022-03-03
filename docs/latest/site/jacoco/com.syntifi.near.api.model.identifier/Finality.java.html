@@ -16,9 +16,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 <span class="fc" id="L16">public enum Finality {</span>
 <span class="fc" id="L17">    OPTIMISTIC(&quot;optimistic&quot;), FINAL(&quot;final&quot;);</span>
 
-    private final String type;
+    private String type;
 
-<span class="fc" id="L21">    Finality(String type) {</span>
+<span class="fc" id="L21">    private Finality(String type) {</span>
 <span class="fc" id="L22">        this.type = type;</span>
 <span class="fc" id="L23">    }</span>
 
