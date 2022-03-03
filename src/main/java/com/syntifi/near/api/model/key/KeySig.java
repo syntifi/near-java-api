@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.regex.Pattern;
 
 /**
  * KeySig holds information about a key or signature.
@@ -52,7 +53,7 @@ public class KeySig {
         KeyType keyType;
         byte[] data;
 
-        String[] key = encodedBase58String.split(SEPARATOR);
+        String[] key = encodedBase58String.split(SEPARATOR, -1);
         try {
             keyType = KeyType.valueOf(key[0].toUpperCase());
         } catch (Exception e) {
