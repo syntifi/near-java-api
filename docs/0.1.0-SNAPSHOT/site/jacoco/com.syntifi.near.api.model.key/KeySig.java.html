@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KeySig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.syntifi.near:near-java-api</a> &gt; <a href="index.source.html" class="el_package">com.syntifi.near.api.model.key</a> &gt; <span class="el_source">KeySig.java</span></div><h1>KeySig.java</h1><pre class="source lang-java linenums">package com.syntifi.near.api.model.key;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.syntifi.crypto.key.encdec.Base58;
+import com.syntifi.near.api.exception.NoSuchTypeException;
+import com.syntifi.near.borshj.annotation.BorshField;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.lang.reflect.InvocationTargetException;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
+public class KeySig {
+
+    private static final String SEPARATOR = &quot;:&quot;;
+
+    @BorshField(order = 1)
+    @JsonIgnore
+    protected KeyType keyType;
+
+    @BorshField(order = 2)
+    @JsonIgnore
+    protected byte[] data;
+
+<span class="fc" id="L31">    public KeySig(KeyType keyType, byte[] data) {</span>
+<span class="fc" id="L32">        this.keyType = keyType;</span>
+<span class="fc" id="L33">        this.data = data;</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Reads from key or signature from base-58 string
+     *
+     * @param encodedBase58String a string base-58 encoded with the key or signature
+     * @param clazz               return class type
+     * @param &lt;T&gt;                 the parameter return class
+     * @return a PublicKey, PrivateKey or Signature object with type and data
+     */
+    public static &lt;T extends KeySig&gt; T fromEncodedBase58String(String encodedBase58String, Class&lt;T&gt; clazz) {
+        KeyType keyType;
+        byte[] data;
+
+<span class="fc" id="L48">        String[] key = encodedBase58String.split(SEPARATOR);</span>
+        try {
+<span class="fc" id="L50">            keyType = KeyType.valueOf(key[0].toUpperCase());</span>
+<span class="fc" id="L51">        } catch (Exception e) {</span>
+<span class="fc" id="L52">            throw new NoSuchTypeException(String.format(&quot;No implementation found for key type %s&quot;, key[0]), e);</span>
+<span class="fc" id="L53">        }</span>
+
+<span class="fc" id="L55">        data = Base58.decode(key[1]);</span>
+
+        try {
+<span class="fc" id="L58">            return clazz.getDeclaredConstructor(KeyType.class, byte[].class).newInstance(keyType, data);</span>
+<span class="fc" id="L59">        } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {</span>
+<span class="fc" id="L60">            throw new NoSuchTypeException(String.format(&quot;Class %s instantiation failed for needed constructor&quot;, clazz.getSimpleName()), e);</span>
+        }
+    }
+
+    public String toEncodedBase58String() {
+<span class="fc" id="L65">        return this.getKeyType().toString().toLowerCase() + SEPARATOR + this;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L70">        return Base58.encode(data);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
