@@ -3,13 +3,16 @@
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.PublicKey;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-<span class="fc" id="L12">public class ValidatorProposal {</span>
+<span class="fc" id="L15">public class ValidatorProposal {</span>
     @JsonInclude(value = Include.NON_EMPTY)
     @JsonProperty(&quot;validator_stake_struct_version&quot;)
     private String validatorStakeStructVersion;
@@ -20,7 +23,7 @@ import lombok.Setter;
 
     @JsonInclude(value = Include.NON_EMPTY)
     @JsonProperty(&quot;public_key&quot;)
-    private String publicKey;
+    private PublicKey publicKey;
 
     @JsonInclude(value = Include.NON_EMPTY)
     @JsonProperty(&quot;stake&quot;)

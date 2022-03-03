@@ -9,8 +9,8 @@
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.syntifi.near.api.model.accesskey.permission;
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> com.fasterxml.jackson.annotation.JsonProperty;
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> lombok.AllArgsConstructor;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> lombok.AllArgsConstructor;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> lombok.Builder;
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> lombok.Getter;
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> lombok.NoArgsConstructor;
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> lombok.Setter;
@@ -24,10 +24,11 @@
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  @Setter
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  @NoArgsConstructor
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  @AllArgsConstructor
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FunctionCallPermission" href="../../../../../../../com/syntifi/near/api/model/accesskey/permission/FunctionCallPermission.html#FunctionCallPermission">FunctionCallPermission</a> <strong class="jxr_keyword">implements</strong> <a name="Permission" href="../../../../../../../com/syntifi/near/api/model/accesskey/permission/Permission.html#Permission">Permission</a> {
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      @JsonProperty(<span class="jxr_string">"FunctionCall"</span>)
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>      <strong class="jxr_keyword">private</strong> <a name="FunctionCallPermissionData" href="../../../../../../../com/syntifi/near/api/model/accesskey/permission/FunctionCallPermissionData.html#FunctionCallPermissionData">FunctionCallPermissionData</a> permissionData;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  }
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  @Builder
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FunctionCallPermission" href="../../../../../../../com/syntifi/near/api/model/accesskey/permission/FunctionCallPermission.html#FunctionCallPermission">FunctionCallPermission</a> <strong class="jxr_keyword">implements</strong> Permission {
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>      @JsonProperty(<span class="jxr_string">"FunctionCall"</span>)
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>      <strong class="jxr_keyword">private</strong> <a name="FunctionCallPermissionData" href="../../../../../../../com/syntifi/near/api/model/accesskey/permission/FunctionCallPermissionData.html#FunctionCallPermissionData">FunctionCallPermissionData</a> permissionData;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2022. All rights reserved.</div>

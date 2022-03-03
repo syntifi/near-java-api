@@ -11,13 +11,13 @@ import lombok.Getter;
  */
 <span class="fc" id="L12">@Getter</span>
 public enum PermissionTypeData {
-<span class="fc" id="L14">    FULL_ACCESS(&quot;FullAccess&quot;, NoDataPermission.class),</span>
+<span class="fc" id="L14">    FULL_ACCESS(&quot;FullAccess&quot;, FullAccessPermission.class),</span>
 <span class="fc" id="L15">    FUNCTION_CALL(&quot;FunctionCall&quot;, FunctionCallPermission.class);</span>
 
     private final String name;
     private final Class&lt;?&gt; clazz;
 
-<span class="fc" id="L20">    private PermissionTypeData(String name, Class&lt;?&gt; clazz) {</span>
+<span class="fc" id="L20">    PermissionTypeData(String name, Class&lt;?&gt; clazz) {</span>
 <span class="fc" id="L21">        this.name = name;</span>
 <span class="fc" id="L22">        this.clazz = clazz;</span>
 <span class="fc" id="L23">    }</span>
