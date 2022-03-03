@@ -1,10 +1,11 @@
 package com.syntifi.near.api.model.accesskey.permission;
 
 import com.syntifi.near.api.exception.NoSuchTypeException;
-
 import lombok.Getter;
 
 /**
+ * PermissionTypeData
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -24,7 +25,7 @@ public enum PermissionTypeData {
 
     /**
      * Retrieve Transform implementation class from Transform name
-     * 
+     *
      * @param name the name of the permission type
      * @return the class of given permission type
      * @throws NoSuchTypeException no such type found

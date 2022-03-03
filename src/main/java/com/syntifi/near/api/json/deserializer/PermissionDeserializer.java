@@ -9,6 +9,8 @@ import com.syntifi.near.api.exception.NoSuchTypeException;
 import com.syntifi.near.api.model.accesskey.permission.PermissionTypeData;
 
 /**
+ * Specific implementacion of AbstractAnyOfDeserializer for Permission type objects
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -16,7 +18,7 @@ import com.syntifi.near.api.model.accesskey.permission.PermissionTypeData;
 public class PermissionDeserializer extends AbstractAnyOfDeserializer {
 
     public PermissionDeserializer(final JavaType bt, final TypeIdResolver idRes, final String typePropertyName,
-            final boolean typeIdVisible, JavaType defaultImpl) {
+                                  final boolean typeIdVisible, JavaType defaultImpl) {
         super(bt, idRes, typePropertyName, typeIdVisible, defaultImpl);
     }
 

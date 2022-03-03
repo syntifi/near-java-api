@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 /**
+ * FullAccessPermission
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

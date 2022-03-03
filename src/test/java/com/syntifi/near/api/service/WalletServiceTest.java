@@ -5,6 +5,7 @@ import com.syntifi.near.api.model.key.Wallet;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,12 +20,12 @@ class WalletServiceTest {
 
     @Test
     void loadWalletFromFile_inexist_should_throw_IOException() {
-        assertThrows(IOException.class, () -> WalletService.loadWalletFromFile(""));
+        assertThrows(IOException.class, () -> WalletService.loadWalletFromFile(new File("")));
     }
 
     @Test
     void writeWalletToFile_invalidPath_should_throw_IOException() {
-        assertThrows(IOException.class, () -> WalletService.writeWalletToFile("", new Wallet()));
+        assertThrows(IOException.class, () -> WalletService.writeWalletToFile(new File(""), new Wallet()));
     }
 
     @Test
@@ -33,11 +34,11 @@ class WalletServiceTest {
 
         Wallet wallet = loadATestWallet();
 
-        assertDoesNotThrow(() -> WalletService.writeWalletToFile(fileName, wallet));
+        assertDoesNotThrow(() -> WalletService.writeWalletToFile(new File(fileName), wallet));
 
         assertTrue(Files.exists(Paths.get(fileName)));
 
-        assertNotNull(WalletService.loadWalletFromFile(fileName));
+        assertNotNull(WalletService.loadWalletFromFile(new File(fileName)));
 
         Files.delete(Paths.get(fileName));
     }
@@ -50,7 +51,7 @@ class WalletServiceTest {
             writer.write(JsonHelper.loadJsonFromResourceFile("testnet-wallets/alice.json"));
         }
 
-        Wallet wallet = WalletService.loadWalletFromFile(fileName);
+        Wallet wallet = WalletService.loadWalletFromFile(new File(fileName));
 
         Files.delete(Paths.get(fileName));
 

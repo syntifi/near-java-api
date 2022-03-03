@@ -17,7 +17,7 @@ public class PrivateKeyTest extends AbstractKeyTest {
 
     @Test
     void loadWalletFromString_and_loadAPrivateKey() {
-        assertEquals(KeyType.ED25519, aliceNearPrivateKey.getKeyType());
+        assertEquals(KeyType.ED25519, aliceNearPrivateKey.getType());
 
         assertDoesNotThrow(aliceNearPrivateKey::getPrivateKey);
     }

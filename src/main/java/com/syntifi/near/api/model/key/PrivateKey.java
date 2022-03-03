@@ -6,9 +6,10 @@ import com.syntifi.crypto.key.AbstractPrivateKey;
 import com.syntifi.crypto.key.Ed25519PrivateKey;
 import com.syntifi.near.api.exception.NoSuchTypeException;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 
 /**
+ * Holds a Near PrivateKey
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -32,10 +33,10 @@ public class PrivateKey extends KeySig {
     }
 
     public AbstractPrivateKey getPrivateKey() {
-        if (keyType == KeyType.ED25519) {
+        if (type == KeyType.ED25519) {
             return new Ed25519PrivateKey(data);
         }
-        throw new NoSuchTypeException(String.format("No implementation found for key type %s", keyType));
+        throw new NoSuchTypeException(String.format("No implementation found for key type %s", type));
     }
 
     @JsonCreator

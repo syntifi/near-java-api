@@ -14,6 +14,8 @@ import lombok.Setter;
 import java.math.BigInteger;
 
 /**
+ * TransferAction
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

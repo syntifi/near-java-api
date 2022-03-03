@@ -1,6 +1,5 @@
 package com.syntifi.near.api.model.key;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.syntifi.crypto.key.encdec.Base58;
 import com.syntifi.near.api.exception.NoSuchTypeException;
@@ -12,6 +11,14 @@ import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * KeySig holds information about a key or signature.
+ * Also, it handles to disassemble and assemble of key and signature structure.
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,14 +29,14 @@ public class KeySig {
 
     @BorshField(order = 1)
     @JsonIgnore
-    protected KeyType keyType;
+    protected KeyType type;
 
     @BorshField(order = 2)
     @JsonIgnore
     protected byte[] data;
 
     public KeySig(KeyType keyType, byte[] data) {
-        this.keyType = keyType;
+        this.type = keyType;
         this.data = data;
     }
 
@@ -62,7 +69,7 @@ public class KeySig {
     }
 
     public String toEncodedBase58String() {
-        return this.getKeyType().toString().toLowerCase() + SEPARATOR + this;
+        return this.getType().toString().toLowerCase() + SEPARATOR + this;
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syntifi.near.api.model.accesskey.permission.Permission;
-
 import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * AccessKey
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

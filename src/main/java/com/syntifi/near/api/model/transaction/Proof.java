@@ -2,7 +2,6 @@ package com.syntifi.near.api.model.transaction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-
 import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * Proof
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

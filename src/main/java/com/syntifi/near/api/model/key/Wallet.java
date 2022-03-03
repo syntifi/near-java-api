@@ -1,13 +1,17 @@
 package com.syntifi.near.api.model.key;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.syntifi.near.api.model.common.EncodedHash;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+/**
+ * Simple structure class mainly to hold information read from json wallets.
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
 @Getter
 @Setter
 public class Wallet {

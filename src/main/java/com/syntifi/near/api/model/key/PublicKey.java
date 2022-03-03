@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 
 /**
+ * Holds a Near PublicKey
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -28,16 +30,22 @@ public class PublicKey extends KeySig implements Borsh {
         this.data = new byte[KEY_SIZE];
     }
 
+    /**
+     * Instantiate a Public Key
+     *
+     * @param keyType the KeyType
+     * @param data    the key bytes
+     */
     @Builder
     public PublicKey(KeyType keyType, byte[] data) {
         super(keyType, data);
     }
 
     public AbstractPublicKey getPublicKey() {
-        if (keyType == KeyType.ED25519) {
+        if (type == KeyType.ED25519) {
             return new Ed25519PublicKey(data);
         }
-        throw new NoSuchTypeException(String.format("No implementation found for key type %s", keyType));
+        throw new NoSuchTypeException(String.format("No implementation found for key type %s", type));
     }
 
     @JsonCreator

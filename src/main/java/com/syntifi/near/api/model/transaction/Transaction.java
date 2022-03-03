@@ -17,6 +17,8 @@ import lombok.Setter;
 import java.util.Collection;
 
 /**
+ * Transaction
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

@@ -1,11 +1,10 @@
 package com.syntifi.near.api.model.accesskey.permission;
 
+import com.syntifi.near.api.exception.NoSuchTypeException;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import com.syntifi.near.api.exception.NoSuchTypeException;
-
-import org.junit.jupiter.api.Test;
 
 public class PermissionTypeDataTest {
     @Test

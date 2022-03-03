@@ -1,16 +1,17 @@
 package com.syntifi.near.api.model.accesskey.permission;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 /**
+ * FunctionCallPermissionData
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

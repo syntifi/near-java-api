@@ -1,7 +1,6 @@
 package com.syntifi.near.api.model.contract;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * ContractCode
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

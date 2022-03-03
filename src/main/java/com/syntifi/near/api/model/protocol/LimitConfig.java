@@ -3,7 +3,6 @@ package com.syntifi.near.api.model.protocol;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * LimitConfig
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

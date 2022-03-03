@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 
 /**
+ * Holds a Near Signature
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

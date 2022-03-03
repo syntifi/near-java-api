@@ -8,6 +8,8 @@ import com.syntifi.near.borshj.Borsh;
 import com.syntifi.near.borshj.annotation.BorshSubTypes;
 
 /**
+ * Action Interface
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

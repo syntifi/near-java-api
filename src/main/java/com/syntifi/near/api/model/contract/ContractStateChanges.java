@@ -11,6 +11,8 @@ import lombok.Setter;
 import java.util.Collection;
 
 /**
+ * ContractStateChanges
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

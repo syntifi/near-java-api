@@ -64,7 +64,7 @@ public class TransactionServiceTest extends AbstractKeyTest {
                 SignedTransaction.builder()
                         .transaction(transaction)
                         .signature(Signature.builder()
-                                .keyType(publicKey.getKeyType())
+                                .keyType(publicKey.getType())
                                 .data(signedTx).build())
                         .build();
 

@@ -1,10 +1,5 @@
 package com.syntifi.near.api.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
-import java.util.TreeMap;
-
 import com.googlecode.jsonrpc4j.JsonRpcFixedParam;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
 import com.googlecode.jsonrpc4j.JsonRpcMethod;
@@ -37,6 +32,11 @@ import com.syntifi.near.api.model.transaction.TransactionAwait;
 import com.syntifi.near.api.model.transaction.TransactionStatus;
 import com.syntifi.near.api.service.exception.NearServiceException;
 import com.syntifi.near.api.service.exception.NearServiceExceptionResolver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * RPC client for the Near network

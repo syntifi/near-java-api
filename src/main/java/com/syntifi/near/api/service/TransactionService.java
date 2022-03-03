@@ -156,7 +156,7 @@ public class TransactionService {
                 SignedTransaction.builder()
                         .transaction(transaction)
                         .signature(Signature.builder()
-                                .keyType(signerPublicKey.getKeyType())
+                                .keyType(signerPublicKey.getType())
                                 .data(signedTx).build())
                         .build();
 

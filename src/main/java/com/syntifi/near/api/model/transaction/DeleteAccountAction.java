@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * DeleteAccountAction
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1

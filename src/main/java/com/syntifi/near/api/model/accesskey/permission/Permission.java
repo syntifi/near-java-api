@@ -6,6 +6,8 @@ import com.syntifi.near.api.json.resolver.PermissionResolver;
 import com.syntifi.near.borshj.annotation.BorshSubTypes;
 
 /**
+ * Permission
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
