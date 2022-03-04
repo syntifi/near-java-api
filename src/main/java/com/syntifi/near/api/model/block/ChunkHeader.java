@@ -1,23 +1,32 @@
 package com.syntifi.near.api.model.block;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.common.EncodedHash;
+import com.syntifi.near.api.model.key.Signature;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * ChunkHeader
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ChunkHeader {
     @JsonProperty("chunk_hash")
-    private String hash;
+    private EncodedHash hash;
 
     @JsonProperty("prev_block_hash")
-    private String previousBlockHash;
+    private EncodedHash previousBlockHash;
 
     @JsonProperty("outcome_root")
     private String outcomeRoot;
@@ -65,5 +74,5 @@ public class ChunkHeader {
     private ValidatorProposal[] validatorProposals;
 
     @JsonProperty("signature")
-    private String signature;
+    private Signature signature;
 }

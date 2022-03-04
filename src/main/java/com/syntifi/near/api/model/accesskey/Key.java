@@ -1,19 +1,21 @@
 package com.syntifi.near.api.model.accesskey;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.PublicKey;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
- * Data structure for access key service calls
- * 
+ * Key
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Key {
@@ -22,5 +24,5 @@ public class Key {
 
 
     @JsonProperty("public_key")
-    private String publicKey;
+    private PublicKey publicKey;
 }

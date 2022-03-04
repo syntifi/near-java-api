@@ -3,10 +3,17 @@ package com.syntifi.near.api.model.block;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.key.PublicKey;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * ValidatorProposal
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
 @Getter
 @Setter
 public class ValidatorProposal {
@@ -20,7 +27,7 @@ public class ValidatorProposal {
 
     @JsonInclude(value = Include.NON_EMPTY)
     @JsonProperty("public_key")
-    private String publicKey;
+    private PublicKey publicKey;
 
     @JsonInclude(value = Include.NON_EMPTY)
     @JsonProperty("stake")

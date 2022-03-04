@@ -15,7 +15,7 @@ import com.syntifi.near.api.service.NearObjectMapper;
  * @since 0.0.1
  */
 public class NearServiceExceptionResolver implements ExceptionResolver {
-    private static ObjectMapper objectMapper = new NearObjectMapper();
+    private static final ObjectMapper objectMapper = new NearObjectMapper();
 
     @Override
     public Throwable resolveException(ObjectNode response) {

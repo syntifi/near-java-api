@@ -1,19 +1,27 @@
 package com.syntifi.near.api.model.contract;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.common.EncodedHash;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 /**
+ * ContractFunctionCallResult
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ContractFunctionCallResult {
     @JsonProperty("result")
     private int[] result;
@@ -25,5 +33,5 @@ public class ContractFunctionCallResult {
     private long blockHeight;
 
     @JsonProperty("block_hash")
-    private String blockHash;
+    private EncodedHash blockHash;
 }

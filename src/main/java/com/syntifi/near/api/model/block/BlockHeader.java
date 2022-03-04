@@ -1,21 +1,30 @@
 package com.syntifi.near.api.model.block;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.common.EncodedHash;
+import com.syntifi.near.api.model.key.Signature;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 /**
+ * BlockHeader
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BlockHeader {
     @JsonProperty("height")
     private long height;
@@ -31,13 +40,13 @@ public class BlockHeader {
     private String nextEpochId;
 
     @JsonProperty("hash")
-    private String hash;
+    private EncodedHash hash;
 
     @JsonProperty("prev_hash")
-    private String previousHash;
+    private EncodedHash previousHash;
 
     @JsonProperty("prev_state_root")
-    private String previousStateRoot;
+    private EncodedHash previousStateRoot;
 
     @JsonProperty("chunk_receipts_root")
     private String chunkReceiptsRoot;
@@ -112,8 +121,8 @@ public class BlockHeader {
     private Collection<String> approvals;
 
     @JsonProperty("signature")
-    private String signature;
+    private Signature signature;
 
     @JsonProperty("latest_protocol_version")
-    private long latestrotocolVersion;
+    private long latestProtocolVersion;
 }

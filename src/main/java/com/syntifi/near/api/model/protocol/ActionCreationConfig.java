@@ -1,17 +1,24 @@
 package com.syntifi.near.api.model.protocol;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * ActionCreationConfig
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ActionCreationConfig {
     @JsonProperty("create_account_cost")
     private Cost createAccountCost;

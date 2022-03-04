@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.syntifi.near</groupId>
     <artifactId>near-java-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Near Java API for interacting with Near RPC endpoints</description>
@@ -14,7 +15,7 @@
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
 
@@ -23,20 +24,20 @@
             <name>Alexandre Carvalho</name>
             <email>adcarvalho@gmail.com</email>
             <organization>SyntiFi</organization>
-            <organizationUrl>http://www.syntifi.com</organizationUrl>
+            <organizationUrl>https://www.syntifi.com</organizationUrl>
         </developer>
         <developer>
             <name>Andre Bertolace</name>
             <email>andre@syntifi.com</email>
             <organization>SyntiFi</organization>
-            <organizationUrl>http://www.syntifi.com</organizationUrl>
+            <organizationUrl>https://www.syntifi.com</organizationUrl>
         </developer>
     </developers>
 
     <scm>
         <connection>scm:git:git://github.com/syntifi/near-java-api.git</connection>
         <developerConnection>scm:git:git://github.com/syntifi/near-java-api.git</developerConnection>
-        <url>http://github.com/syntifi/near-java-api/tree/main</url>
+        <url>https://github.com/syntifi/near-java-api/tree/main</url>
     </scm>
 
     <properties>
@@ -46,22 +47,24 @@
 
         <!-- dependencies versions -->
         <log4j.version>2.17.1</log4j.version>
-        <slf4j.version>1.7.32</slf4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <lombok.version>1.18.22</lombok.version>
         <jsonrpc4j.version>1.6.1-oak</jsonrpc4j.version>
         <jackson.version>2.13.1</jackson.version>
         <junit.version>5.8.2</junit.version>
         <jsonassert.version>1.5.0</jsonassert.version>
+        <borshj.version>0.1.0</borshj.version>
+        <crypto-keys.version>0.1.1</crypto-keys.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-        <maven-source-plugin.version>3.2.0</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
         <maven-site-plugin.version>3.10.0</maven-site-plugin.version>
         <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-jxr-plugin.version>3.1.1</maven-jxr-plugin.version>
         <maven-surefire-report-plugin.version>3.0.0-M1</maven-surefire-report-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -69,6 +72,16 @@
             <groupId>io.github.oak</groupId>
             <artifactId>jsonrpc4j</artifactId>
             <version>${jsonrpc4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.syntifi.near</groupId>
+            <artifactId>borshj</artifactId>
+            <version>${borshj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.syntifi.crypto</groupId>
+            <artifactId>crypto-key-ed25519</artifactId>
+            <version>${crypto-keys.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -121,6 +134,7 @@
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
             <version>${jsonassert.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -177,6 +191,24 @@
     </build>
     <profiles>
         <profile>
+            <id>sonatype-snapshot-repo</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>oss.sonatype.org-snapshot</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        <profile>
             <id>release</id>
             <build>
                 <plugins>
@@ -196,10 +228,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
                             <detectJavaApiLink>false</detectJavaApiLink>
                         </configuration>
-                        <version>${maven-javadoc-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -237,7 +269,6 @@
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                 </plugins>

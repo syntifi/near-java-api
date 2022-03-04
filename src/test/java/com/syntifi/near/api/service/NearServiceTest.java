@@ -1,16 +1,5 @@
 package com.syntifi.near.api.service;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Map;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.exception.NoSuchTypeException;
 import com.syntifi.near.api.model.accesskey.AccessKey;
@@ -29,6 +18,7 @@ import com.syntifi.near.api.model.contract.ContractState;
 import com.syntifi.near.api.model.contract.ContractStateChanges;
 import com.syntifi.near.api.model.gas.GasPrice;
 import com.syntifi.near.api.model.identifier.Finality;
+import com.syntifi.near.api.model.key.PublicKey;
 import com.syntifi.near.api.model.network.NetworkInfo;
 import com.syntifi.near.api.model.network.NodeStatus;
 import com.syntifi.near.api.model.network.ValidationStatus;
@@ -39,42 +29,43 @@ import com.syntifi.near.api.model.transaction.TransactionAwait;
 import com.syntifi.near.api.model.transaction.TransactionStatus;
 import com.syntifi.near.api.service.exception.NearServiceException;
 import com.syntifi.near.api.service.exception.NearServiceExceptionResolver;
-
 import org.json.JSONException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.Map;
+
+import static com.syntifi.near.api.json.JsonHelper.OBJECT_MAPPER;
+import static com.syntifi.near.api.json.JsonHelper.getPrettyJson;
+import static com.syntifi.near.api.json.JsonHelper.loadJsonFromResourceFile;
+import static com.syntifi.near.api.service.NearServiceHelper.nearService;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Basic Service call testing
- * 
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
-public class NearServiceTest extends BaseNearServiceTest {
+public class NearServiceTest {
 
-    private static NearService nearService;
-    private static Logger LOGGER = LoggerFactory.getLogger(NearServiceTest.class);
-
-    @BeforeAll
-    public static void setUp() throws MalformedURLException {
-        // WARN: Using archival testnet (instead of "rpc.testnet.near.org") for stabler
-        // results
-        String peerAddress = "archival-rpc.testnet.near.org";
-
-        LOGGER.debug("======== Running tests with peer {} ========", peerAddress);
-        nearService = NearService.usingPeer(peerAddress);
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(NearServiceTest.class);
 
     // From sample response at:
     // https://docs.near.org/docs/api/rpc/block-chunk#block-details
     @Test
     void loadedFromExample_block() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/example/block-details.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/example/block-details.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, Block.class));
 
@@ -96,13 +87,13 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(block);
 
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/block-details-by-hash.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/block-details-by-hash.json");
 
         JSONAssert.assertEquals(getPrettyJson(block), inputJson, false);
     }
 
     @Test
-    void getBlock_byHash_block_notNull_with_validator_proposals() throws JSONException, IOException {
+    void getBlock_byHash_block_notNull_with_validator_proposals() {
         Block block = nearService.getBlock("BCEqCXnKijpvQfTMJDn6Bh2We1v1sAZoihApTnJsd32B");
 
         assertNotNull(block);
@@ -110,7 +101,7 @@ public class NearServiceTest extends BaseNearServiceTest {
         assertEquals(block.getHeader().getValidatorProposals()[0].getValidatorStakeStructVersion(), "V1");
         assertEquals(block.getHeader().getValidatorProposals()[0].getAccountId(), "pontiff.pool.f863973.m0");
         assertEquals(block.getHeader().getValidatorProposals()[0].getPublicKey(),
-                "ed25519:4i8j7nwNyy18hfARtrVpckT8MiicdCXuWBX1TubdMb5Y");
+                PublicKey.fromEncodedBase58String("ed25519:4i8j7nwNyy18hfARtrVpckT8MiicdCXuWBX1TubdMb5Y", PublicKey.class));
         assertEquals(block.getHeader().getValidatorProposals()[0].getStake(), "478888363238890192732941173068");
     }
 
@@ -120,7 +111,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(block);
 
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/block-details-by-height.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/block-details-by-height.json");
 
         JSONAssert.assertEquals(getPrettyJson(block), inputJson, false);
     }
@@ -129,7 +120,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/block-chunk#changes-in-block
     @Test
     void loadedFromExample_blockChanges() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/example/changes-in-block.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/example/changes-in-block.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, BlockChanges.class));
 
@@ -151,7 +142,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(blockChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/changes-in-block-by-hash.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/changes-in-block-by-hash.json");
 
         JSONAssert.assertEquals(getPrettyJson(blockChanges), inputJson, false);
     }
@@ -162,7 +153,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(blockChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/changes-in-block-by-height.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/changes-in-block-by-height.json");
 
         JSONAssert.assertEquals(getPrettyJson(blockChanges), inputJson, false);
     }
@@ -171,7 +162,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/block-chunk#chunk-details
     @Test
     void loadedFromExample_chunk() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/example/chunk-details.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/example/chunk-details.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, Chunk.class));
 
@@ -186,7 +177,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(chunk);
 
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/chunk-details.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/chunk-details.json");
 
         JSONAssert.assertEquals(getPrettyJson(chunk), inputJson, false);
     }
@@ -197,7 +188,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(chunk);
 
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/chunk-details.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/chunk-details.json");
 
         JSONAssert.assertEquals(getPrettyJson(chunk), inputJson, false);
     }
@@ -208,7 +199,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(chunk);
 
-        String inputJson = loadJsonFromFile("json-test-samples/block-chunk/chunk-details.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/block-chunk/chunk-details.json");
 
         JSONAssert.assertEquals(getPrettyJson(chunk), inputJson, false);
     }
@@ -217,7 +208,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/network#network-info
     @Test
     void loadedFromExample_networkInfo() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/network/example/network-info.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/network/example/network-info.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, NetworkInfo.class));
 
@@ -237,7 +228,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/network#node-status
     @Test
     void loadedFromExample_nodeStatus() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/network/example/node-status.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/network/example/node-status.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, NodeStatus.class));
 
@@ -257,7 +248,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/network#validation-status
     @Test
     void loadedFromExample_validationStatus() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/network/example/validation-status.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/network/example/validation-status.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, ValidationStatus.class));
 
@@ -280,7 +271,7 @@ public class NearServiceTest extends BaseNearServiceTest {
         Block lastBlock = nearService.getBlock(Finality.FINAL);
 
         ValidationStatus networkValidationStatus = nearService
-                .getNetworkValidationStatus(lastBlock.getHeader().getHash());
+                .getNetworkValidationStatus(lastBlock.getHeader().getHash().getEncodedHash());
 
         assertNotNull(networkValidationStatus);
     }
@@ -301,7 +292,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/gas#gas-price
     @Test
     void loadedFromExample_gasPrice() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/gas/example/gas-price.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/gas/example/gas-price.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, GasPrice.class));
 
@@ -316,7 +307,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(gasPrice);
 
-        String inputJson = loadJsonFromFile("json-test-samples/gas/gas-price-by-null.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/gas/gas-price-by-null.json");
 
         JSONAssert.assertEquals(getPrettyJson(gasPrice), inputJson, false);
     }
@@ -327,7 +318,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(gasPrice);
 
-        String inputJson = loadJsonFromFile("json-test-samples/gas/gas-price-by-block-hash.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/gas/gas-price-by-block-hash.json");
 
         JSONAssert.assertEquals(getPrettyJson(gasPrice), inputJson, false);
     }
@@ -338,7 +329,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(gasPrice);
 
-        String inputJson = loadJsonFromFile("json-test-samples/gas/gas-price-by-block-height.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/gas/gas-price-by-block-height.json");
 
         JSONAssert.assertEquals(getPrettyJson(gasPrice), inputJson, false);
     }
@@ -347,7 +338,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/protocol#genesis-config
     @Test
     void loadedFromExample_genesisConfig() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/protocol/example/genesis-config.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/example/genesis-config.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, GenesisConfig.class));
 
@@ -362,7 +353,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(genesisConfig);
 
-        String inputJson = loadJsonFromFile("json-test-samples/protocol/genesis-config.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/genesis-config.json");
 
         JSONAssert.assertEquals(getPrettyJson(genesisConfig), inputJson, false);
     }
@@ -371,7 +362,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/protocol#protocol-config
     @Test
     void loadedFromExample_protocolConfig() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/protocol/example/protocol-config.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/example/protocol-config.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, ProtocolConfig.class));
 
@@ -386,7 +377,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(protocolConfig);
 
-        String inputJson = loadJsonFromFile("json-test-samples/protocol/protocol-config-final.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/protocol-config-final.json");
 
         JSONAssert.assertEquals(getPrettyJson(protocolConfig), inputJson, false);
     }
@@ -397,7 +388,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(protocolConfig);
 
-        String inputJson = loadJsonFromFile("json-test-samples/protocol/protocol-config.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/protocol-config.json");
 
         JSONAssert.assertEquals(getPrettyJson(protocolConfig), inputJson, false);
     }
@@ -408,7 +399,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(protocolConfig);
 
-        String inputJson = loadJsonFromFile("json-test-samples/protocol/protocol-config.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/protocol-config.json");
 
         JSONAssert.assertEquals(getPrettyJson(protocolConfig), inputJson, false);
     }
@@ -417,7 +408,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/transactions#send-transaction-async
     @Test
     void loadedFromExample_transactionAsync() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/transaction/example/send-transaction-async.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/transaction/example/send-transaction-async.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, Map.class));
 
@@ -428,7 +419,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void sendTransactionAsync_transactionHash_notNull() throws IOException, JSONException {
+    void sendTransactionAsync_transactionHash_notNull() {
         String signedTransaction = "DgAAAHNlbmRlci50ZXN0bmV0AOrmAai64SZOv9e/naX4W15pJx0GAap35wTT1T/DwcbbDwAAAAAAAAAQAAAAcmVjZWl2ZXIudGVzdG5ldNMnL7URB1cxPOu3G8jTqlEwlcasagIbKlAJlF5ywVFLAQAAAAMAAACh7czOG8LTAAAAAAAAAGQcOG03xVSFQFjoagOb4NBBqWhERnnz45LY4+52JgZhm1iQKz7qAdPByrGFDQhQ2Mfga8RlbysuQ8D8LlA6bQE=";
         String expectedTransactionHash = "6zgh2u9DqHHiXzdy9ouTP7oGky2T4nugqzqt9wJZwNFm";
 
@@ -442,7 +433,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/transactions#send-transaction-await
     @Test
     void loadedFromExample_transactionAwait() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/transaction/example/send-transaction-await.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/transaction/example/send-transaction-await.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TransactionAwait.class));
 
@@ -462,7 +453,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(transaction);
 
-        String inputJson = loadJsonFromFile("json-test-samples/transaction/send-transaction-await.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/transaction/send-transaction-await.json");
 
         JSONAssert.assertEquals(getPrettyJson(transaction), inputJson, false);
     }
@@ -473,7 +464,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void loadedFromExample_transactionStatus()
             throws IOException, JSONException {
 
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/transaction/example/transaction-status.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TransactionStatus.class));
@@ -492,7 +483,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(transactionStatus);
 
-        String inputJson = loadJsonFromFile("json-test-samples/transaction/transaction-status-by-hash.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/transaction/transaction-status-by-hash.json");
 
         JSONAssert.assertEquals(getPrettyJson(transactionStatus), inputJson, false);
     }
@@ -503,7 +494,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void loadedFromExample_transactionStatusWithReceipts()
             throws IOException, JSONException {
 
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/transaction/example/transaction-status-with-receipts.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TransactionStatus.class));
@@ -524,7 +515,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(transactionStatusWithReceipts);
 
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/transaction/transaction-status-by-hash-with-receipt.json");
 
         JSONAssert.assertEquals(getPrettyJson(transactionStatusWithReceipts), inputJson, false);
@@ -536,7 +527,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void loadedFromExample_transactionReceipt()
             throws IOException, JSONException {
 
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/transaction/example/receipt-by-id.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, Receipt.class));
@@ -554,7 +545,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(transactionReceipt);
 
-        String inputJson = loadJsonFromFile("json-test-samples/transaction/receipt.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/transaction/receipt.json");
 
         JSONAssert.assertEquals(getPrettyJson(transactionReceipt), inputJson, false);
     }
@@ -564,14 +555,14 @@ public class NearServiceTest extends BaseNearServiceTest {
      * void getTransactionReceipt_transactionReceipt_notNull_InputDataIds() throws
      * JSONException, IOException {
      * String receiptId = "AWbGp5rEPgcQJHfyJXhsseLGaB8nTHD6iCRnMrwiSTF4";
-     * 
+     *
      * Receipt transactionReceipt = nearService.getTransactionReceipt(receiptId);
-     * 
+     *
      * assertNotNull(transactionReceipt);
-     * 
+     *
      * String inputJson =
      * loadJsonFromFile("json-test-samples/transaction/receipt.json");
-     * 
+     *
      * JSONAssert.assertEquals(getPrettyJson(transactionReceipt), inputJson, false);
      * }
      */
@@ -580,7 +571,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/access-keys#view-access-key
     @Test
     void loadedFromExample_accessKey() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/example/view-access-key.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/example/view-access-key.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, AccessKey.class));
 
@@ -609,7 +600,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(accessKey);
 
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/view-access-key.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/view-access-key.json");
 
         JSONAssert.assertEquals(getPrettyJson(accessKey), inputJson, false);
     }
@@ -623,7 +614,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(accessKey);
 
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/view-access-key.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/view-access-key.json");
 
         JSONAssert.assertEquals(getPrettyJson(accessKey), inputJson, false);
     }
@@ -632,7 +623,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/access-keys#view-access-key-list
     @Test
     void loadedFromExample_accessKeyList() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/example/view-access-key-list.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/example/view-access-key-list.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, AccessKeyList.class));
 
@@ -659,7 +650,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(accessKeyList);
 
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/view-access-key-list-by-hash.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/view-access-key-list-by-hash.json");
 
         JSONAssert.assertEquals(getPrettyJson(accessKeyList), inputJson, false);
     }
@@ -672,7 +663,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(accessKeyList);
 
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/view-access-key-list-by-height.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/view-access-key-list-by-height.json");
 
         JSONAssert.assertEquals(getPrettyJson(accessKeyList), inputJson, false);
     }
@@ -681,7 +672,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/access-keys#view-access-key-changes-single
     @Test
     void loadedFromExample_accessKeyChangesSingle() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/example/view-access-key-changes-single.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/example/view-access-key-changes-single.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, AccessKeyChanges.class));
 
@@ -696,7 +687,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void viewSingleAccessKeyChanges_byFinality_accessKey_notNull() {
         Key[] keys = new Key[1];
 
-        Key key0 = new Key("example-acct.testnet", "ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM");
+        Key key0 = new Key("example-acct.testnet", PublicKey.fromEncodedBase58String("ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM", PublicKey.class));
         keys[0] = key0;
 
         AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(Finality.FINAL, keys);
@@ -710,7 +701,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void viewSingleAccessKeyChanges_byHash_accessKey_notNull() {
         Key[] keys = new Key[1];
 
-        Key key0 = new Key("example-acct.testnet", "ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM");
+        Key key0 = new Key("example-acct.testnet", PublicKey.fromEncodedBase58String("ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM", PublicKey.class));
         keys[0] = key0;
 
         AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(
@@ -726,7 +717,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void viewSingleAccessKeyChanges_byHeight_accessKey_notNull() {
         Key[] keys = new Key[1];
 
-        Key key0 = new Key("example-acct.testnet", "ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM");
+        Key key0 = new Key("example-acct.testnet", PublicKey.fromEncodedBase58String("ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM", PublicKey.class));
         keys[0] = key0;
 
         AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(78433961, keys);
@@ -738,7 +729,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/access-keys#view-access-key-changes-all
     @Test
     void loadedFromExample_accessKeyChangesAll() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/access-key/example/view-access-key-changes-all.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/access-key/example/view-access-key-changes-all.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, AccessKeyChanges.class));
 
@@ -749,8 +740,8 @@ public class NearServiceTest extends BaseNearServiceTest {
 
     @Test
     void loadedJson_accessKeyChangesAll_invalidPropertyPermission_shouldThrow_NoSuchTypeException()
-            throws IOException, JSONException {
-        String inputJson = loadJsonFromFile(
+            throws IOException {
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/access-key/view-access-key-changes-all-invalid-permission-property.json");
 
         LOGGER.debug(
@@ -810,7 +801,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/contracts#view-account
     @Test
     void loadedFromExample_account() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/example/view-account.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/example/view-account.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, Account.class));
 
@@ -820,7 +811,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void viewAccount_byFinality_account_notNull() throws IOException, JSONException {
+    void viewAccount_byFinality_account_notNull() {
         Account account = nearService.viewAccount(Finality.FINAL, "nearkat.testnet");
 
         assertNotNull(account);
@@ -832,7 +823,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(account);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-account.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-account.json");
 
         JSONAssert.assertEquals(getPrettyJson(account), inputJson, false);
     }
@@ -843,7 +834,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(account);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-account.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-account.json");
 
         JSONAssert.assertEquals(getPrettyJson(account), inputJson, false);
     }
@@ -852,7 +843,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/contracts#view-account-changes
     @Test
     void loadedFromExample_accountChanges() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/example/view-account-changes.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/example/view-account-changes.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, AccountChanges.class));
 
@@ -864,7 +855,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: Empty sample account changes
     // (https://docs.near.org/docs/api/rpc/contracts#view-account-changes)
     @Test
-    void viewAccountChanges_byFinality_account_notNull() throws IOException, JSONException {
+    void viewAccountChanges_byFinality_account_notNull() {
         String[] accountIds = new String[1];
 
         accountIds[0] = "nearkat.testnet";
@@ -887,7 +878,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(accountChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-account-changes.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-account-changes.json");
 
         JSONAssert.assertEquals(getPrettyJson(accountChanges), inputJson, false);
     }
@@ -904,7 +895,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(accountChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-account-changes.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-account-changes.json");
 
         JSONAssert.assertEquals(getPrettyJson(accountChanges), inputJson, false);
     }
@@ -913,7 +904,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/contracts#view-contract-code
     @Test
     void loadedFromExample_contractCode() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/example/view-contract-code.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/example/view-contract-code.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, ContractCode.class));
 
@@ -923,7 +914,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void viewContractCode_byFinality_contractCode_notNull() throws IOException, JSONException {
+    void viewContractCode_byFinality_contractCode_notNull() {
         ContractCode contractCode = nearService.viewContractCode(Finality.FINAL, "guest-book.testnet");
 
         assertNotNull(contractCode);
@@ -936,7 +927,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractCode);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-contract-code.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-contract-code.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractCode), inputJson, false);
     }
@@ -947,7 +938,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractCode);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-contract-code.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-contract-code.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractCode), inputJson, false);
     }
@@ -956,7 +947,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/contracts#view-contract-state
     @Test
     void loadedFromExample_contractState() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/example/view-contract-state.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/example/view-contract-state.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, ContractState.class));
 
@@ -968,8 +959,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: enable this test when working test data is available
     @Disabled("Too large contract state! (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)")
     @Test
-    void viewContractState_byFinality_contractCode_notNull() throws IOException,
-            JSONException {
+    void viewContractState_byFinality_contractCode_notNull() {
         ContractState contractState = nearService.viewContractState(Finality.FINAL,
                 "guest-book.testnet", "");
 
@@ -986,7 +976,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractState);
 
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/accounts-contracts/view-contract-state.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractState), inputJson, false);
@@ -1002,7 +992,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractState);
 
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/accounts-contracts/view-contract-state.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractState), inputJson, false);
@@ -1012,7 +1002,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/contracts#view-contract-state-changes
     @Test
     void loadedFromExample_contractStateChanges() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/accounts-contracts/example/view-contract-state-changes.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, ContractStateChanges.class));
@@ -1025,7 +1015,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: Empty sample contract code changes
     // (https://docs.near.org/docs/api/rpc/contracts#view-contract-state-changes)
     @Test
-    void viewContractStateChanges_byFinality_contractStateChanges_notNull() throws IOException, JSONException {
+    void viewContractStateChanges_byFinality_contractStateChanges_notNull() {
         String[] accountIds = new String[1];
 
         accountIds[0] = "guest-book.testnet";
@@ -1050,7 +1040,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractStateChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-contract-state-changes.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-contract-state-changes.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractStateChanges), inputJson, false);
     }
@@ -1067,7 +1057,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractStateChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-contract-state-changes.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-contract-state-changes.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractStateChanges), inputJson, false);
     }
@@ -1076,7 +1066,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/contracts#view-contract-state-changes
     @Test
     void loadedFromExample_contractCodeChanges() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/accounts-contracts/example/view-contract-code-changes.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, ContractCodeChanges.class));
@@ -1089,7 +1079,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // TODO: Empty sample contract code changes
     // (https://docs.near.org/docs/api/rpc/contracts#view-contract-code-changes)
     @Test
-    void viewContractCodeChanges_byFinality_contractCodeChanges_notNull() throws IOException, JSONException {
+    void viewContractCodeChanges_byFinality_contractCodeChanges_notNull() {
         String[] accountIds = new String[1];
 
         accountIds[0] = "dev-1602714453032-7566969";
@@ -1113,7 +1103,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractCodeChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-contract-code-changes.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-contract-code-changes.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractCodeChanges), inputJson, false);
     }
@@ -1130,7 +1120,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractCodeChanges);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/view-contract-code-changes.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/view-contract-code-changes.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractCodeChanges), inputJson, false);
     }
@@ -1139,7 +1129,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     // https://docs.near.org/docs/api/rpc/contracts#view-contract-state-changes
     @Test
     void loadedFromExample_contractFunctionCallResult() throws IOException, JSONException {
-        String inputJson = loadJsonFromFile(
+        String inputJson = loadJsonFromResourceFile(
                 "json-test-samples/accounts-contracts/example/call-a-contract-function.json");
 
         assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, ContractFunctionCallResult.class));
@@ -1151,7 +1141,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     }
 
     @Test
-    void callContractFunction_byFinality_contractFunctionCallResult_notNull() throws IOException, JSONException {
+    void callContractFunction_byFinality_contractFunctionCallResult_notNull() {
         ContractFunctionCallResult contractFunctionCallResult = nearService
                 .callContractFunction(
                         Finality.FINAL,
@@ -1173,7 +1163,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractFunctionCallResult);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/call-a-contract-function.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/call-a-contract-function.json");
         JSONAssert.assertEquals(getPrettyJson(contractFunctionCallResult), inputJson, false);
     }
 
@@ -1204,7 +1194,7 @@ public class NearServiceTest extends BaseNearServiceTest {
 
         assertNotNull(contractFunctionCallResult);
 
-        String inputJson = loadJsonFromFile("json-test-samples/accounts-contracts/call-a-contract-function.json");
+        String inputJson = loadJsonFromResourceFile("json-test-samples/accounts-contracts/call-a-contract-function.json");
 
         JSONAssert.assertEquals(getPrettyJson(contractFunctionCallResult), inputJson, false);
     }
@@ -1224,7 +1214,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void loadError_validInput_doesHaveErrorData() throws IOException {
         NearServiceExceptionResolver nearServiceExceptionResolver = new NearServiceExceptionResolver();
 
-        String validErrorJson = loadJsonFromFile(
+        String validErrorJson = loadJsonFromResourceFile(
                 "json-test-samples/error/valid-error.json");
 
         Throwable t = nearServiceExceptionResolver
@@ -1239,7 +1229,7 @@ public class NearServiceTest extends BaseNearServiceTest {
     void loadError_invalidInput_doesNotHaveErrorData() throws IOException {
         NearServiceExceptionResolver nearServiceExceptionResolver = new NearServiceExceptionResolver();
 
-        String invalidErrorJson = loadJsonFromFile(
+        String invalidErrorJson = loadJsonFromResourceFile(
                 "json-test-samples/error/invalid-error.json");
 
         Throwable t = nearServiceExceptionResolver

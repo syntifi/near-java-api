@@ -1,6 +1,4 @@
-package com.syntifi.near.api.jackson.deserializer;
-
-import java.io.IOException;
+package com.syntifi.near.api.json.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -15,7 +13,11 @@ import com.fasterxml.jackson.databind.node.TreeTraversingParser;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.syntifi.near.api.exception.NoSuchTypeException;
 
+import java.io.IOException;
+
 /**
+ * AbstractAnyOfDeserializer for deserializing objects with inheritance
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -23,7 +25,7 @@ import com.syntifi.near.api.exception.NoSuchTypeException;
 public abstract class AbstractAnyOfDeserializer extends AsPropertyTypeDeserializer {
 
     protected AbstractAnyOfDeserializer(final JavaType bt, final TypeIdResolver idRes, final String typePropertyName,
-            final boolean typeIdVisible, JavaType defaultImpl) {
+                                        final boolean typeIdVisible, JavaType defaultImpl) {
         super(bt, idRes, typePropertyName, typeIdVisible, defaultImpl);
     }
 
@@ -55,9 +57,9 @@ public abstract class AbstractAnyOfDeserializer extends AsPropertyTypeDeserializ
 
     /**
      * Returns the node which contains the type key.
-     * 
+     * <p>
      * Override if you have a child node which holds the type information.
-     * 
+     *
      * @param currentNode the current deserialization node
      * @return node which contains the type key.
      */
@@ -67,7 +69,7 @@ public abstract class AbstractAnyOfDeserializer extends AsPropertyTypeDeserializ
 
     /**
      * Method that returns the instance of the found type
-     * 
+     *
      * @param classType the name of the class type
      * @return {@link Class} of the type
      * @throws NoSuchTypeException no such type found

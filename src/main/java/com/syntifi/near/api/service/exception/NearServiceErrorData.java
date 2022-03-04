@@ -1,8 +1,8 @@
 package com.syntifi.near.api.service.exception;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * Json RPC service error data

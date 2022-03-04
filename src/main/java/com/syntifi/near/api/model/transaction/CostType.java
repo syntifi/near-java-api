@@ -1,6 +1,8 @@
 package com.syntifi.near.api.model.transaction;
 
 /**
+ * CostType
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -31,5 +33,5 @@ public enum CostType {
     WRITE_MEMORY_BASE,
     WRITE_MEMORY_BYTE,
     WRITE_REGISTER_BASE,
-    WRITE_REGISTER_BYTE;
+    WRITE_REGISTER_BYTE
 }

@@ -1,23 +1,30 @@
 package com.syntifi.near.api.model.protocol;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 /**
+ * SimpleNightShadeShardLayout
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SimpleNightShadeShardLayout {
     @Getter
     @Setter
-    public class V1 {
+    public static class V1 {
         @JsonProperty("fixed_shards")
         private Collection<Long> fixedShards;
 

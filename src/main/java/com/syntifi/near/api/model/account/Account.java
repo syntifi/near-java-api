@@ -1,17 +1,25 @@
 package com.syntifi.near.api.model.account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.syntifi.near.api.model.common.EncodedHash;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * Account
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Account {
     @JsonProperty("amount")
     private String amount;
@@ -20,7 +28,7 @@ public class Account {
     private String locked;
 
     @JsonProperty("code_hash")
-    private String codeHash;
+    private EncodedHash codeHash;
 
     @JsonProperty("storage_usage")
     private long storageUsage;
@@ -32,5 +40,5 @@ public class Account {
     private long blockHeight;
 
     @JsonProperty("block_hash")
-    private String blockHash;
+    private EncodedHash blockHash;
 }
