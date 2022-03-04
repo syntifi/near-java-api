@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.syntifi.near.api.model.accesskey.permission"},{"l":"com.syntifi.near.api.service"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.syntifi.near.api.model.accesskey.permission"},{"l":"com.syntifi.near.api.model.key"},{"l":"com.syntifi.near.api.service"}]

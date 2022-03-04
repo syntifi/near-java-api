@@ -8,40 +8,47 @@
 <div id="overview"><a href="../../../../../../../apidocs/com/syntifi/near/api/model/protocol/TransactionCosts.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.syntifi.near.api.model.protocol;
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   
-<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> java.util.Collection;
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> com.fasterxml.jackson.annotation.JsonProperty;
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> lombok.Getter;
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> com.fasterxml.jackson.annotation.JsonProperty;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> lombok.AllArgsConstructor;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> lombok.Builder;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> lombok.Getter;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> lombok.NoArgsConstructor;
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> lombok.Setter;
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * @author Alexandre Carvalho</em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * @author Andre Bertolace</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * @since 0.0.1</em>
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  @Getter
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  @Setter
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="TransactionCosts" href="../../../../../../com/syntifi/near/api/model/protocol/TransactionCosts.html#TransactionCosts">TransactionCosts</a> {
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>      @JsonProperty(<span class="jxr_string">"action_receipt_creation_config"</span>)
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">private</strong> <a name="Cost" href="../../../../../../com/syntifi/near/api/model/protocol/Cost.html#Cost">Cost</a> actionReceiptCreationConfig;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>      @JsonProperty(<span class="jxr_string">"data_receipt_creation_config"</span>)
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>      <strong class="jxr_keyword">private</strong> <a name="DataReceiptCreationConfig" href="../../../../../../com/syntifi/near/api/model/protocol/DataReceiptCreationConfig.html#DataReceiptCreationConfig">DataReceiptCreationConfig</a> dataReceiptCreationConfig;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>      @JsonProperty(<span class="jxr_string">"action_creation_config"</span>)
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <strong class="jxr_keyword">private</strong> <a name="ActionCreationConfig" href="../../../../../../com/syntifi/near/api/model/protocol/ActionCreationConfig.html#ActionCreationConfig">ActionCreationConfig</a> actionCreationConfig;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>      @JsonProperty(<span class="jxr_string">"storage_usage_config"</span>)
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">private</strong> <a name="StorageUsageConfig" href="../../../../../../com/syntifi/near/api/model/protocol/StorageUsageConfig.html#StorageUsageConfig">StorageUsageConfig</a> storageUsageConfig;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      @JsonProperty(<span class="jxr_string">"burnt_gas_reward"</span>)
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">private</strong> Collection&lt;Long&gt; burntGasReward;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>      @JsonProperty(<span class="jxr_string">"pessimistic_gas_price_inflation_ratio"</span>)
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">private</strong> Collection&lt;Long&gt; pessimisticGasPriceInflationRatio;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  }
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * TransactionCosts</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * @author Alexandre Carvalho</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> * @author Andre Bertolace</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> * @since 0.0.1</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  @Getter
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  @Setter
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  @NoArgsConstructor
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  @AllArgsConstructor
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  @Builder
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="TransactionCosts" href="../../../../../../com/syntifi/near/api/model/protocol/TransactionCosts.html#TransactionCosts">TransactionCosts</a> {
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      @JsonProperty(<span class="jxr_string">"action_receipt_creation_config"</span>)
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">private</strong> <a name="Cost" href="../../../../../../com/syntifi/near/api/model/protocol/Cost.html#Cost">Cost</a> actionReceiptCreationConfig;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      @JsonProperty(<span class="jxr_string">"data_receipt_creation_config"</span>)
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <a name="DataReceiptCreationConfig" href="../../../../../../com/syntifi/near/api/model/protocol/DataReceiptCreationConfig.html#DataReceiptCreationConfig">DataReceiptCreationConfig</a> dataReceiptCreationConfig;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      @JsonProperty(<span class="jxr_string">"action_creation_config"</span>)
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">private</strong> <a name="ActionCreationConfig" href="../../../../../../com/syntifi/near/api/model/protocol/ActionCreationConfig.html#ActionCreationConfig">ActionCreationConfig</a> actionCreationConfig;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      @JsonProperty(<span class="jxr_string">"storage_usage_config"</span>)
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">private</strong> <a name="StorageUsageConfig" href="../../../../../../com/syntifi/near/api/model/protocol/StorageUsageConfig.html#StorageUsageConfig">StorageUsageConfig</a> storageUsageConfig;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      @JsonProperty(<span class="jxr_string">"burnt_gas_reward"</span>)
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">private</strong> Collection&lt;Long&gt; burntGasReward;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      @JsonProperty(<span class="jxr_string">"pessimistic_gas_price_inflation_ratio"</span>)
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">private</strong> Collection&lt;Long&gt; pessimisticGasPriceInflationRatio;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2022. All rights reserved.</div>
