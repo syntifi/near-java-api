@@ -8,6 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * ChangeCause
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.0.1
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,11 +25,11 @@ public class EncodedHash {
     private String encodedHash;
 
     public byte[] getDecodedHash() {
-<span class="fc" id="L21">        return Base58.decode(this.encodedHash);</span>
+<span class="fc" id="L28">        return Base58.decode(this.encodedHash);</span>
     }
 
     public void setEncodedHash(byte[] decodedHash) {
-<span class="nc" id="L25">        this.encodedHash = Base58.encode(decodedHash);</span>
-<span class="nc" id="L26">    }</span>
+<span class="nc" id="L32">        this.encodedHash = Base58.encode(decodedHash);</span>
+<span class="nc" id="L33">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

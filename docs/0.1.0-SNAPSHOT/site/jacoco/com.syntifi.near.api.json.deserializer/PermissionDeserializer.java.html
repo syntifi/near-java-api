@@ -9,6 +9,8 @@ import com.syntifi.near.api.exception.NoSuchTypeException;
 import com.syntifi.near.api.model.accesskey.permission.PermissionTypeData;
 
 /**
+ * Specific implementacion of AbstractAnyOfDeserializer for Permission type objects
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -16,22 +18,22 @@ import com.syntifi.near.api.model.accesskey.permission.PermissionTypeData;
 public class PermissionDeserializer extends AbstractAnyOfDeserializer {
 
     public PermissionDeserializer(final JavaType bt, final TypeIdResolver idRes, final String typePropertyName,
-            final boolean typeIdVisible, JavaType defaultImpl) {
-<span class="fc" id="L20">        super(bt, idRes, typePropertyName, typeIdVisible, defaultImpl);</span>
-<span class="fc" id="L21">    }</span>
+                                  final boolean typeIdVisible, JavaType defaultImpl) {
+<span class="fc" id="L22">        super(bt, idRes, typePropertyName, typeIdVisible, defaultImpl);</span>
+<span class="fc" id="L23">    }</span>
 
     public PermissionDeserializer(final AsPropertyTypeDeserializer src, final BeanProperty property) {
-<span class="fc" id="L24">        super(src, property);</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L26">        super(src, property);</span>
+<span class="fc" id="L27">    }</span>
 
     @Override
     public TypeDeserializer forProperty(final BeanProperty prop) {
-<span class="fc" id="L29">        return new PermissionDeserializer(this, prop);</span>
+<span class="fc" id="L31">        return new PermissionDeserializer(this, prop);</span>
     }
 
     @Override
     protected Class&lt;?&gt; getClassByName(String anyOfType) throws NoSuchTypeException {
-<span class="fc" id="L34">        return PermissionTypeData.getClassByName(anyOfType);</span>
+<span class="fc" id="L36">        return PermissionTypeData.getClassByName(anyOfType);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

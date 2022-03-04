@@ -4,6 +4,7 @@ import com.syntifi.near.api.json.JsonHelper;
 import com.syntifi.near.api.model.key.Wallet;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -14,31 +15,31 @@ import java.io.IOException;
  * @author Andre Bertolace
  * @since 0.0.1
  */
-<span class="nc" id="L17">public class WalletService {</span>
+<span class="nc" id="L18">public class WalletService {</span>
     /**
      * Loads a wallet from filesystem
      *
-     * @param filepath the full path to file
+     * @param file the file to read from
      * @return a wallet with loaded content
      * @throws IOException thrown if file not found or not a valid wallet json
      */
-    public static Wallet loadWalletFromFile(String filepath) throws IOException {
-<span class="fc" id="L26">        return JsonHelper.OBJECT_MAPPER.readValue(</span>
-<span class="fc" id="L27">                JsonHelper.loadJsonFromFile(filepath),</span>
+    public static Wallet loadWalletFromFile(File file) throws IOException {
+<span class="fc" id="L27">        return JsonHelper.OBJECT_MAPPER.readValue(</span>
+<span class="fc" id="L28">                JsonHelper.loadJsonFromFile(file),</span>
                 Wallet.class);
     }
 
     /**
      * Writes a wallet to filesystem
      *
-     * @param filepath the full path to file
-     * @param wallet   the wallet to persist
+     * @param file   the file to write to
+     * @param wallet the wallet to persist
      * @throws IOException thrown if file could not be written
      */
-    public static void writeWalletToFile(String filepath, Wallet wallet) throws IOException {
-<span class="fc" id="L39">        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {</span>
-<span class="fc" id="L40">            writer.write(JsonHelper.OBJECT_MAPPER.writeValueAsString(wallet));</span>
+    public static void writeWalletToFile(File file, Wallet wallet) throws IOException {
+<span class="fc" id="L40">        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {</span>
+<span class="fc" id="L41">            writer.write(JsonHelper.OBJECT_MAPPER.writeValueAsString(wallet));</span>
         }
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L43">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

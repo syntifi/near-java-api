@@ -3,7 +3,6 @@
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * PrevEpochKickout
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -23,10 +24,10 @@ import lombok.Setter;
 public class PrevEpochKickout {
     @Getter
     @Setter
-<span class="fc" id="L26">    public static class Reason {</span>
+<span class="fc" id="L27">    public static class Reason {</span>
         @Getter
         @Setter
-<span class="fc" id="L29">        public static class NotEnough {</span>
+<span class="fc" id="L30">        public static class NotEnough {</span>
             private long produced;
             private long expected;
         }

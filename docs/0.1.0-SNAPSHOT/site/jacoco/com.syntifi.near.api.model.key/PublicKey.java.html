@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 
 /**
+ * Holds a Near PublicKey
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -19,35 +21,41 @@ public class PublicKey extends KeySig implements Borsh {
 
     private static final int KEY_SIZE = 32;
 
-<span class="fc" id="L22">    public PublicKey() {</span>
+<span class="fc" id="L24">    public PublicKey() {</span>
         // This solves the case for borsh deserialization for keys of
         // type ED25591 because to read the 'fixed' byte array we must know
         // its size.
         // If any other key (and signature) is implemented, a different
         // approach is needed (like getters and setters annotation on borsh)
-<span class="fc" id="L28">        this.data = new byte[KEY_SIZE];</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L30">        this.data = new byte[KEY_SIZE];</span>
+<span class="fc" id="L31">    }</span>
 
+    /**
+     * Instantiate a Public Key
+     *
+     * @param keyType the KeyType
+     * @param data    the key bytes
+     */
     @Builder
     public PublicKey(KeyType keyType, byte[] data) {
-<span class="fc" id="L33">        super(keyType, data);</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L41">        super(keyType, data);</span>
+<span class="fc" id="L42">    }</span>
 
     public AbstractPublicKey getPublicKey() {
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (keyType == KeyType.ED25519) {</span>
-<span class="fc" id="L38">            return new Ed25519PublicKey(data);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (type == KeyType.ED25519) {</span>
+<span class="fc" id="L46">            return new Ed25519PublicKey(data);</span>
         }
-<span class="fc" id="L40">        throw new NoSuchTypeException(String.format(&quot;No implementation found for key type %s&quot;, keyType));</span>
+<span class="fc" id="L48">        throw new NoSuchTypeException(String.format(&quot;No implementation found for key type %s&quot;, type));</span>
     }
 
     @JsonCreator
     public static PublicKey getPublicKeyFromJson(String base58String) {
-<span class="fc" id="L45">        return PublicKey.fromEncodedBase58String(base58String, PublicKey.class);</span>
+<span class="fc" id="L53">        return PublicKey.fromEncodedBase58String(base58String, PublicKey.class);</span>
     }
 
     @JsonValue
     public String getJsonPublicKey() {
-<span class="fc" id="L50">        return this.toEncodedBase58String();</span>
+<span class="fc" id="L58">        return this.toEncodedBase58String();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

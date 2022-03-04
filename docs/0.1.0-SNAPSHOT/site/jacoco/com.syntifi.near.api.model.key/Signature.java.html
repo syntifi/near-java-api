@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 
 /**
+ * Holds a Near Signature
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
@@ -16,28 +18,28 @@ public class Signature extends KeySig implements Borsh {
 
     private static final int SIGNATURE_SIZE = 64;
 
-<span class="fc" id="L19">    public Signature() {</span>
+<span class="fc" id="L21">    public Signature() {</span>
         // This solves the case for borsh deserialization for signatures of
         // type ED25591 because to read the 'fixed' byte array we must know
         // its size.
         // If any other signature (and key) is implemented, a different
         // approach is needed (like getters and setters annotation on borsh)
-<span class="fc" id="L25">        this.data = new byte[SIGNATURE_SIZE];</span>
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L27">        this.data = new byte[SIGNATURE_SIZE];</span>
+<span class="fc" id="L28">    }</span>
 
     @Builder
     public Signature(KeyType keyType, byte[] data) {
-<span class="fc" id="L30">        super(keyType, data);</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L32">        super(keyType, data);</span>
+<span class="fc" id="L33">    }</span>
 
     @JsonCreator
     public static Signature getPublicKeyFromJson(String base58String) {
-<span class="fc" id="L35">        return Signature.fromEncodedBase58String(base58String, Signature.class);</span>
+<span class="fc" id="L37">        return Signature.fromEncodedBase58String(base58String, Signature.class);</span>
     }
 
     @JsonValue
     public String getJsonPublicKey() {
-<span class="fc" id="L40">        return this.toEncodedBase58String();</span>
+<span class="fc" id="L42">        return this.toEncodedBase58String();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

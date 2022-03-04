@@ -5,7 +5,7 @@ com.syntifi.near:near-java-api,com.syntifi.near.api.model.key,PublicKey,0,43,0,2
 com.syntifi.near:near-java-api,com.syntifi.near.api.model.key,PrivateKey,0,43,0,2,0,10,0,6,0,5
 com.syntifi.near:near-java-api,com.syntifi.near.api.model.key,Wallet,0,3,0,0,0,1,0,1,0,1
 com.syntifi.near:near-java-api,com.syntifi.near.api.model.key,KeyType,0,14,0,0,0,2,0,1,0,1
-com.syntifi.near:near-java-api,com.syntifi.near.api.model.key,KeySig,0,99,0,0,0,15,0,4,0,4
+com.syntifi.near:near-java-api,com.syntifi.near.api.model.key,KeySig,0,100,0,0,0,15,0,4,0,4
 com.syntifi.near:near-java-api,com.syntifi.near.api.model.accesskey.permission,FullAccessPermission,0,14,0,0,0,2,0,1,0,1
 com.syntifi.near:near-java-api,com.syntifi.near.api.model.accesskey.permission,PermissionTypeData,0,75,0,4,0,11,0,5,0,3
 com.syntifi.near:near-java-api,com.syntifi.near.api.exception,NoSuchTypeException,0,9,0,0,0,4,0,2,0,2
