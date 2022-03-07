@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '8'
-          distribution: 'adopt'
+          distribution: 'temurin'
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }} # Value of the GPG private key to import
       - name: Grant execute permission for mvnw
         run: chmod +x mvnw

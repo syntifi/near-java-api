@@ -4,9 +4,10 @@ on:
   workflow_run:
     workflows: [ Java CI ]
     types: [ completed ]
+    branches: [ main ]
 
 jobs:
-  publish-docs-reports:
+  generate-docs-reports:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
@@ -17,7 +18,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: Grant execute permission for mvnw
         run: chmod +x mvnw
@@ -25,11 +26,11 @@ jobs:
       - name: Export project version
         run: echo "PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
-      - name: Generate reports
-        run: ./mvnw --no-transfer-progress --batch-mode site
+      - name: Run tests and Generate reports
+        run: ./mvnw --no-transfer-progress --batch-mode test site
 
       - name: Deploy maven reports to GitHub Pages as current version
-        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
           clean: true
@@ -37,7 +38,7 @@ jobs:
           target-folder: docs/${{ env.PROJECT_VERSION }}/site
 
       - name: Deploy maven reports to GitHub Pages as latest version
-        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
           clean: true
