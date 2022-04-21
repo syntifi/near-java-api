@@ -2,17 +2,22 @@ package com.syntifi.near.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syntifi.near.api.model.helper.NearValue;
+import com.syntifi.near.api.model.helper.RecentActivity;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface NearHelperService {
 
     @GET("/fiat")
     Call<NearValue> getNearValue();
+
+    @GET("account/{accountId}/activity")
+    Call<RecentActivity> getNearRecentActivity(@Path("accountId") String username);
 
     /**
      * NearHelperService builder
