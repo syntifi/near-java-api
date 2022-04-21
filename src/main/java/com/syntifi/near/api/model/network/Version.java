@@ -25,4 +25,7 @@ public class Version {
 
     @JsonProperty("build")
     private String build;
+
+    @JsonProperty("rustc_version")
+    private String rustcVersion;
 }

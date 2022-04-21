@@ -23,6 +23,12 @@ public class ExtCosts {
     @JsonProperty("base")
     private long base;
 
+    @JsonProperty("contract_loading_base")
+    private long contractLoadingBase;
+
+    @JsonProperty("contract_loading_bytes")
+    private long contractLoadingBytes;
+
     @JsonProperty("contract_compile_base")
     private long contractCompileBase;
 
@@ -160,6 +166,9 @@ public class ExtCosts {
 
     @JsonProperty("touching_trie_node")
     private long touchingTrieNode;
+
+    @JsonProperty("read_cached_trie_node")
+    private long readCachedTrieNode;
 
     @JsonProperty("promise_and_base")
     private long promiseAndBase;
