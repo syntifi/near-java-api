@@ -9,6 +9,8 @@ package com.syntifi.near.api.model.transaction;
  */
 public enum CostType {
     BASE,
+    CONTRACT_LOADING_BASE,
+    CONTRACT_LOADING_BYTES,
     CONTRACT_COMPILE_BASE,
     CONTRACT_COMPILE_BYTES,
     LOG_BASE,

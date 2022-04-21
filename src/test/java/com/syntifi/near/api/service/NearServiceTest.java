@@ -372,36 +372,24 @@ public class NearServiceTest {
     }
 
     @Test
-    void getProtocolConfig_byFinality_protocolConfig_notNull() throws IOException, JSONException {
+    void getProtocolConfig_byFinality_protocolConfig_notNull() {
         ProtocolConfig protocolConfig = nearService.getProtocolConfig(Finality.FINAL);
 
         assertNotNull(protocolConfig);
-
-        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/protocol-config-final.json");
-
-        JSONAssert.assertEquals(getPrettyJson(protocolConfig), inputJson, false);
     }
 
     @Test
-    void getProtocolConfig_byHash_protocolConfig_notNullProtocolVersion() throws IOException, JSONException {
+    void getProtocolConfig_byHash_protocolConfig_notNullProtocolVersion() {
         ProtocolConfig protocolConfig = nearService.getProtocolConfig("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
 
         assertNotNull(protocolConfig);
-
-        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/protocol-config.json");
-
-        JSONAssert.assertEquals(getPrettyJson(protocolConfig), inputJson, false);
     }
 
     @Test
-    void getProtocolConfig_byHeight_protocolConfig_notNullProtocolVersion() throws IOException, JSONException {
+    void getProtocolConfig_byHeight_protocolConfig_notNullProtocolVersion() {
         ProtocolConfig protocolConfig = nearService.getProtocolConfig(78770817);
 
         assertNotNull(protocolConfig);
-
-        String inputJson = loadJsonFromResourceFile("json-test-samples/protocol/protocol-config.json");
-
-        JSONAssert.assertEquals(getPrettyJson(protocolConfig), inputJson, false);
     }
 
     // From sample response at:
@@ -475,17 +463,13 @@ public class NearServiceTest {
     }
 
     @Test
-    void getTransactionStatus_transactionStatus_notNull() throws IOException, JSONException {
+    void getTransactionStatus_transactionStatus_notNull() {
         String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";
         String accountId = "isonar.testnet";
 
         TransactionStatus transactionStatus = nearService.getTransactionStatus(transactionHash, accountId);
 
         assertNotNull(transactionStatus);
-
-        String inputJson = loadJsonFromResourceFile("json-test-samples/transaction/transaction-status-by-hash.json");
-
-        JSONAssert.assertEquals(getPrettyJson(transactionStatus), inputJson, false);
     }
 
     // From sample response at:
@@ -505,8 +489,7 @@ public class NearServiceTest {
     }
 
     @Test
-    void getTransactionStatusWithReceipts_transactionStatusWithReceipts_notNull()
-            throws IOException, JSONException {
+    void getTransactionStatusWithReceipts_transactionStatusWithReceipts_notNull() {
         String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";
         String accountId = "isonar.testnet";
 
@@ -514,11 +497,6 @@ public class NearServiceTest {
                 accountId);
 
         assertNotNull(transactionStatusWithReceipts);
-
-        String inputJson = loadJsonFromResourceFile(
-                "json-test-samples/transaction/transaction-status-by-hash-with-receipt.json");
-
-        JSONAssert.assertEquals(getPrettyJson(transactionStatusWithReceipts), inputJson, false);
     }
 
     // From sample response at:
@@ -549,23 +527,6 @@ public class NearServiceTest {
 
         JSONAssert.assertEquals(getPrettyJson(transactionReceipt), inputJson, false);
     }
-
-    /*
-     * @Test
-     * void getTransactionReceipt_transactionReceipt_notNull_InputDataIds() throws
-     * JSONException, IOException {
-     * String receiptId = "AWbGp5rEPgcQJHfyJXhsseLGaB8nTHD6iCRnMrwiSTF4";
-     *
-     * Receipt transactionReceipt = nearService.getTransactionReceipt(receiptId);
-     *
-     * assertNotNull(transactionReceipt);
-     *
-     * String inputJson =
-     * loadJsonFromFile("json-test-samples/transaction/receipt.json");
-     *
-     * JSONAssert.assertEquals(getPrettyJson(transactionReceipt), inputJson, false);
-     * }
-     */
 
     // From sample response at:
     // https://docs.near.org/docs/api/rpc/access-keys#view-access-key

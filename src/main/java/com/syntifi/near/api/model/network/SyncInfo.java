@@ -22,6 +22,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class SyncInfo {
+    @JsonProperty("epoch_id")
+    private String epochId;
+
+    @JsonProperty("epoch_start_height")
+    private String epochStartHeight;
+
     @JsonProperty("latest_block_hash")
     private String latestBlockHash;
 
