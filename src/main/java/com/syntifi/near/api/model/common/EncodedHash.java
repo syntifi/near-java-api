@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * ChangeCause
+ * EncodedHash
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace

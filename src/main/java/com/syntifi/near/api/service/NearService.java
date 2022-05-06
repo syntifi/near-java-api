@@ -139,8 +139,8 @@ public interface NearService {
                           @JsonRpcParam("shard_id") long shardId) throws NearServiceException;
 
     /**
-     * Returns general status of a given node (sync status, nearcore node version,
-     * protocol version, etc), and the current set of validators.
+     * Returns general status of a given node (sync status, near core node version,
+     * protocol version, etc.), and the current set of validators.
      *
      * @return the data holding object
      * @throws NearServiceException rpc call error exception
@@ -256,8 +256,7 @@ public interface NearService {
     String sendTransactionAsync(String base64EncodedSignedTransaction) throws NearServiceException;
 
     /**
-     * Sends a transaction and waits until transaction is fully complete. (Has a 10
-     * second timeout)
+     * Sends a transaction and waits until transaction is fully complete. (Has a 10-second timeout)
      *
      * @param base64EncodedSignedTransaction the base64 encoded signed transaction
      *                                       string
@@ -295,7 +294,7 @@ public interface NearService {
             throws NearServiceException;
 
     /**
-     * Fetches a receipt by it's ID (as is, without a status or execution outcome)
+     * Fetches a receipt by its ID (as is, without a status or execution outcome)
      *
      * @param receiptId the receipt ID to query for info
      * @return the data holding object
@@ -348,7 +347,7 @@ public interface NearService {
      *
      * @param blockHeight the block's height
      * @param accountId   the account id
-     * @param publicKey the associated public key
+     * @param publicKey   the associated public key
      * @return the data holding object
      * @throws NearServiceException rpc call error exception
      */
@@ -450,7 +449,7 @@ public interface NearService {
 
     /**
      * Returns changes to all access keys of a specific block. Multiple accounts can
-     * be quereied by passing an array of account_ids.
+     * be queried by passing an array of account_ids.
      *
      * @param finality   the finality param
      * @param accountIds the account ids
@@ -465,7 +464,7 @@ public interface NearService {
 
     /**
      * Returns changes to all access keys of a specific block. Multiple accounts can
-     * be quereied by passing an array of account_ids.
+     * be queried by passing an array of account_ids.
      *
      * @param blockHash  the block's hash
      * @param accountIds the account ids
@@ -480,7 +479,7 @@ public interface NearService {
 
     /**
      * Returns changes to all access keys of a specific block. Multiple accounts can
-     * be quereied by passing an array of account_ids.
+     * be queried by passing an array of account_ids.
      *
      * @param blockHeight the block's height
      * @param accountIds  the account ids
@@ -783,7 +782,7 @@ public interface NearService {
      *
      * @param finality   the finality param
      * @param accountId  the account id
-     * @param methodName the name of the method to callthe name of the method to
+     * @param methodName the name of the method to call the name of the method to
      *                   call
      * @param argsBase64 the method's base64 encoded arguments
      * @return the data holding object

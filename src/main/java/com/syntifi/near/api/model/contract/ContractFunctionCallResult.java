@@ -1,5 +1,8 @@
 package com.syntifi.near.api.model.contract;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syntifi.near.api.model.common.EncodedHash;
 import lombok.AllArgsConstructor;
@@ -7,7 +10,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+import javax.management.Query;
 import java.util.Collection;
 
 /**
@@ -22,9 +27,11 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class ContractFunctionCallResult {
     @JsonProperty("result")
-    private int[] result;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private byte[] result;
 
     @JsonProperty("logs")
     private Collection<String> logs;
@@ -34,4 +41,8 @@ public class ContractFunctionCallResult {
 
     @JsonProperty("block_hash")
     private EncodedHash blockHash;
+
+    @JsonProperty("error")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String error;
 }

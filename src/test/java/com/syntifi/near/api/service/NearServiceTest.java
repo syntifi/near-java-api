@@ -1,5 +1,7 @@
 package com.syntifi.near.api.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.exception.NoSuchTypeException;
 import com.syntifi.near.api.model.accesskey.AccessKey;
@@ -27,6 +29,12 @@ import com.syntifi.near.api.model.protocol.ProtocolConfig;
 import com.syntifi.near.api.model.transaction.Receipt;
 import com.syntifi.near.api.model.transaction.TransactionAwait;
 import com.syntifi.near.api.model.transaction.TransactionStatus;
+import com.syntifi.near.api.service.contract.AccountIdParam;
+import com.syntifi.near.api.service.contract.ContractFunctionCall;
+import com.syntifi.near.api.service.contract.FTContractFunctionCall;
+import com.syntifi.near.api.service.contract.NFTContractFunctionCall;
+import com.syntifi.near.api.service.contract.NFTMetadataResult;
+import com.syntifi.near.api.service.contract.StakingContractFunctionCall;
 import com.syntifi.near.api.service.exception.NearServiceException;
 import com.syntifi.near.api.service.exception.NearServiceExceptionResolver;
 import org.json.JSONException;
@@ -37,6 +45,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.syntifi.near.api.json.JsonHelper.OBJECT_MAPPER;
@@ -1199,5 +1209,70 @@ public class NearServiceTest {
         assertInstanceOf(NearServiceException.class, t);
 
         assertNull(((NearServiceException) t).getNearServiceErrorData());
+    }
+
+    @Test
+    void callContractFunction_get_whitelisted_tokens_return_list() throws IOException {
+        ContractFunctionCallResult result =
+                nearService.callContractFunction(Finality.OPTIMISTIC, "ref-finance-101.testnet", "get_whitelisted_tokens", "e30=");
+
+        LOGGER.debug("{}", result.getResult());
+
+        List<String> value = OBJECT_MAPPER.readValue(new String(result.getResult()), ArrayList.class);
+        value.forEach(item -> LOGGER.debug("{}", item));
+    }
+
+    @Test
+    void callContractFunction_builderForAccountTotalBalance_return_list() throws IOException {
+            ContractFunctionCall contractCall = FTContractFunctionCall
+                .builderForBalanceOf(AccountIdParam.builder().accountId("wallet-test.testnet").build())
+                .accountId("meta.pool.testnet").build();
+
+        ContractFunctionCallResult result = contractCall.call(nearService);
+
+        LOGGER.debug("{}", result.getResult());
+
+        JsonNode value = new ObjectMapper().readValue(result.getResult(), JsonNode.class);
+        LOGGER.debug("{}", value);
+    }
+
+    @Test
+    void callContractFunction_FTContractFunctionCall_builderForFTBalance_return_list() throws IOException {
+        ContractFunctionCall contractCall = StakingContractFunctionCall
+                .builderForAccountTotalBalance(AccountIdParam.builder().accountId("wallet-test.testnet").build())
+                .accountId("prophet.pool.f863973.m0").build();
+
+        ContractFunctionCallResult result = contractCall.call(nearService);
+
+        LOGGER.debug("{}", result.getResult());
+
+        JsonNode value = new ObjectMapper().readValue(result.getResult(), JsonNode.class);
+        LOGGER.debug("{}", value);
+    }
+
+    @Test
+    void callContractFunction_FTContractFunctionCall_builderForMetadata_return_list() throws IOException {
+        ContractFunctionCall contractCall = FTContractFunctionCall.builderForMetadata().accountId("paras-marketplace-v2.testnet").build();
+
+        ContractFunctionCallResult result = contractCall.call(nearService);
+
+        LOGGER.debug("{}", result);
+
+        if (result.getResult() != null) {
+            NFTMetadataResult metadata = NFTMetadataResult.fromBytes(result.getResult(), new ObjectMapper());
+            LOGGER.debug("{}", metadata);
+        }
+    }
+
+    @Test
+    void callContractFunction_NFTContractFunctionCall_builderForMetadata_return_list() throws IOException {
+        ContractFunctionCall contractCall = NFTContractFunctionCall.builderForMetadata().accountId("paras-token-v2.testnet").build();
+
+        ContractFunctionCallResult result = contractCall.call(nearService);
+
+        LOGGER.debug("{}", result.getResult());
+
+        NFTMetadataResult metadata = NFTMetadataResult.fromBytes(result.getResult(), new ObjectMapper());
+        LOGGER.debug("{}", metadata);
     }
 }

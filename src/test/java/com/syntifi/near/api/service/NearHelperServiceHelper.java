@@ -12,7 +12,7 @@ public class NearHelperServiceHelper {
     static {
         String peerAddress = "helper.testnet.near.org";
 
-        LOGGER.debug("======== Running tests with peer {} ========", peerAddress);
+        LOGGER.debug("======== Running tests with helper {} ========", peerAddress);
         nearHelperService = NearHelperService.usingPeer(peerAddress);
     }
 }
