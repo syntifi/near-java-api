@@ -2,7 +2,9 @@ package com.syntifi.near.api.rpc.model.contract;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.syntifi.near.api.common.model.common.EncodedHash;
+import com.syntifi.near.api.rpc.json.serializer.ByteArraySerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +30,7 @@ import java.util.Collection;
 public class ContractFunctionCallResult {
     @JsonProperty("result")
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonSerialize(using = ByteArraySerializer.class)
     private byte[] result;
 
     @JsonProperty("logs")
