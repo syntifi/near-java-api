@@ -95,6 +95,9 @@ public class LimitConfig {
     @JsonProperty("max_functions_number_per_contract")
     private long maxFunctionsNumberPerContract;
 
+    @JsonProperty("max_locals_per_contract")
+    private long maxLocalsPerContract;
+
     @JsonProperty("wasmer2_stack_limit")
     private long wasmer2StackLimit;
 }
