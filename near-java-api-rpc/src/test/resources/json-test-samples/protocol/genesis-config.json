@@ -1,0 +1,193 @@
+{
+    "protocol_version": 29,
+    "genesis_time": "2020-07-31T03:39:42.911378Z",
+    "chain_id": "testnet",
+    "genesis_height": 42376888,
+    "num_block_producer_seats": 200,
+    "num_block_producer_seats_per_shard": [
+        200
+    ],
+    "avg_hidden_validator_seats_per_shard": [
+        0
+    ],
+    "dynamic_resharding": false,
+    "protocol_upgrade_stake_threshold": [
+        4,
+        5
+    ],
+    "protocol_upgrade_num_epochs": 2,
+    "epoch_length": 43200,
+    "gas_limit": 1000000000000000,
+    "min_gas_price": "5000",
+    "max_gas_price": "10000000000000000000000",
+    "block_producer_kickout_threshold": 80,
+    "chunk_producer_kickout_threshold": 90,
+    "online_min_threshold": [
+        90,
+        100
+    ],
+    "online_max_threshold": [
+        99,
+        100
+    ],
+    "gas_price_adjustment_rate": [
+        1,
+        100
+    ],
+    "validators": [
+        {
+            "account_id": "masternode24.pool.f863973.m0",
+            "public_key": "ed25519:9E3JvrQN6VGDGg1WJ3TjBsNyfmrU6kncBcDvvJLj6qHr",
+            "amount": "2096547887468158804726149840014"
+        },
+        {
+            "account_id": "lunanova.pool.f863973.m0",
+            "public_key": "ed25519:2fZ59qfo9QHNLijoht9cwUb9enSNcnRmXbQn1gKZxvkw",
+            "amount": "6023592217250515747116857534108"
+        },
+        {
+            "account_id": "node0",
+            "public_key": "ed25519:7PGseFbWxvYVgZ89K1uTJKYoKetWs7BJtbyXDzfbAcqX",
+            "amount": "7017386808510582905904716139001"
+        },
+        {
+            "account_id": "node1",
+            "public_key": "ed25519:6DSjZ8mvsRZDvFqFxo8tCKePG96omXW7eVYVSySmDk8e",
+            "amount": "7021733510638228632380895173752"
+        },
+        {
+            "account_id": "nodeasy.pool.f863973.m0",
+            "public_key": "ed25519:25Dhg8NBvQhsVTuugav3t1To1X1zKiomDmnh8yN9hHMb",
+            "amount": "350028003459257633077889642325"
+        },
+        {
+            "account_id": "valeraverim.pool.f863973.m0",
+            "public_key": "ed25519:3686ABqNUZc1qhLWLHg5xZpBzrWPiUCMNZxcCNmg3e2s",
+            "amount": "2460437541222457077732687804254"
+        },
+        {
+            "account_id": "node2",
+            "public_key": "ed25519:GkDv7nSMS3xcqA45cpMvFmfV1o4fRF6zYo1JRR6mNqg5",
+            "amount": "7022280566885326956797181813724"
+        },
+        {
+            "account_id": "orangeclub.pool.f863973.m0",
+            "public_key": "ed25519:HezFeSzcwuR5wvkqccgMCMnpf1eQkVCfk52tXZEdKZHz",
+            "amount": "3073208665436498671483798256985"
+        },
+        {
+            "account_id": "tribe-pool.pool.f863973.m0",
+            "public_key": "ed25519:CRS4HTSAeiP8FKD3c3ZrCL5pC92Mu1LQaWj22keThwFY",
+            "amount": "502021509894008520748060961431"
+        },
+        {
+            "account_id": "staked.pool.f863973.m0",
+            "public_key": "ed25519:D2afKYVaKQ1LGiWbMAZRfkKLgqimTR74wvtESvjx5Ft2",
+            "amount": "1835541810883701332840668361355"
+        },
+        {
+            "account_id": "node3",
+            "public_key": "ed25519:ydgzeXHJ5Xyt7M1gXLxqLBW1Ejx6scNV5Nx2pxFM8su",
+            "amount": "7025309465335462891886410729905"
+        },
+        {
+            "account_id": "moonlet.pool.f863973.m0",
+            "public_key": "ed25519:3e1nVCVGNS3yr6CcUvpDAs3BhiWtyM9uTBWkyVR5Xn3K",
+            "amount": "396044187712024170314465720781"
+        },
+        {
+            "account_id": "sweden.pool.f863973.m0",
+            "public_key": "ed25519:2RVUnsMEZhGCj1A3vLZBGjj3i9SQ2L46Z1Z41aEgBzXg",
+            "amount": "385869819054217573549654420144"
+        },
+        {
+            "account_id": "shawnpool.pool.f863973.m0",
+            "public_key": "ed25519:6dfAfW3oy1kp4u9ePuticHy3Y2WDcHwx8yKSdyLNMPSr",
+            "amount": "326196336737920044305254508558"
+        },
+        {
+            "account_id": "chorus-one.pool.f863973.m0",
+            "public_key": "ed25519:6LFwyEEsqhuDxorWfsKcPPs324zLWTaoqk4o6RDXN7Qc",
+            "amount": "1318859742119402879751178031888"
+        },
+        {
+            "account_id": "inotel.pool.f863973.m0",
+            "public_key": "ed25519:C55jH1MCHYGa3tzUyZZdGrJmmCLP22Aa4v88KYpn2xwZ",
+            "amount": "4945759122706953812641339874642"
+        },
+        {
+            "account_id": "p2p.pool.f863973.m0",
+            "public_key": "ed25519:4ie5979JdSR4f7MRAG58eghRxndVoKnAYAKa1PLoMYSS",
+            "amount": "991547852404615467434919132596"
+        },
+        {
+            "account_id": "dokia.pool.f863973.m0",
+            "public_key": "ed25519:935JMz1vLcJxFApG3TY4MA4RHhvResvoGwCrQoJxHPn9",
+            "amount": "4004628852742744225484204285260"
+        },
+        {
+            "account_id": "01node.pool.f863973.m0",
+            "public_key": "ed25519:3iNqnvBgxJPXCxu6hNdvJso1PEAc1miAD35KQMBCA3aL",
+            "amount": "1416856356232757387343764992394"
+        },
+        {
+            "account_id": "legends.pool.f863973.m0",
+            "public_key": "ed25519:AhQ6sUifJYgjqarXSAzdDZU9ZixpUesP9JEH1Vr7NbaF",
+            "amount": "303006135607766172564337480878"
+        },
+        {
+            "account_id": "blazenet.pool.f863973.m0",
+            "public_key": "ed25519:DiogP36wBXKFpFeqirrxN8G2Mq9vnakgBvgnHdL9CcN3",
+            "amount": "1892937440977093265954787297596"
+        }
+    ],
+    "transaction_validity_period": 86400,
+    "protocol_reward_rate": [
+        1,
+        10
+    ],
+    "max_inflation_rate": [
+        1,
+        20
+    ],
+    "total_supply": "2089646653180081825096998107194444",
+    "num_blocks_per_year": 31536000,
+    "protocol_treasury_account": "near",
+    "fishermen_threshold": "340282366920938463463374607431768211455",
+    "minimum_stake_divisor": 10,
+    "shard_layout": {
+        "V0": {
+            "num_shards": 1,
+            "version": 0
+        }
+    },
+    "simple_nightshade_shard_layout": {
+        "V1": {
+            "fixed_shards": [],
+            "boundary_accounts": [
+                "aurora",
+                "aurora-0",
+                "kkuuue2akv_1630967379.near"
+            ],
+            "shards_split_map": [
+                [
+                    0,
+                    1,
+                    2,
+                    3
+                ]
+            ],
+            "to_parent_shard_map": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "version": 1
+        }
+    },
+    "minimum_stake_ratio": [
+        1,
+        6250
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "predecessor_id": "isonar.testnet",
+    "receiver_id": "nearcanvas.isonar.testnet",
+    "receipt_id": "8b9Vt1xH8DZecMda1YqUcMWA41NvknUJJVd2XEQikPRs",
+    "receipt": {
+        "Action": {
+            "signer_id": "isonar.testnet",
+            "signer_public_key": "ed25519:6JPa48xWuwjHiG4J1ZQj9GgGdwqNvPkn63789qMevxE4",
+            "gas_price": "122987387",
+            "output_data_receivers": [],
+            "input_data_ids": [],
+            "actions": [
+                {
+                    "FunctionCall": {
+                        "method_name": "put_pixel",
+                        "args": "eyJ4IjozMjYsInkiOjMyOSwiY29sb3IiOjN9",
+                        "gas": 30000000000000,
+                        "deposit": "0"
+                    }
+                }
+            ]
+        }
+    }
+}

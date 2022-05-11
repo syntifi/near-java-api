@@ -7,7 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="near-java-api" />
+        <module name="near-java-api-helper" />
+        <module name="near-java-api-rpc" />
+        <module name="near-java-api-common" />
+        <module name="near-java-api-indexer" />
       </profile>
     </annotationProcessing>
   </component>
