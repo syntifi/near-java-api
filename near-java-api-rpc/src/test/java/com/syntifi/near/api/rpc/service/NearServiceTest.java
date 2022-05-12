@@ -1,7 +1,5 @@
 package com.syntifi.near.api.rpc.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.common.exception.NoSuchTypeException;
 import com.syntifi.near.api.common.model.key.PublicKey;
@@ -19,7 +17,6 @@ import com.syntifi.near.api.rpc.model.contract.ContractCodeChanges;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.contract.ContractState;
 import com.syntifi.near.api.rpc.model.contract.ContractStateChanges;
-import com.syntifi.near.api.rpc.model.contract.NFTMetadata;
 import com.syntifi.near.api.rpc.model.gas.GasPrice;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.model.network.NetworkInfo;
@@ -30,11 +27,6 @@ import com.syntifi.near.api.rpc.model.protocol.ProtocolConfig;
 import com.syntifi.near.api.rpc.model.transaction.Receipt;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransactionStatus;
-import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
-import com.syntifi.near.api.rpc.service.contract.ContractFunctionCall;
-import com.syntifi.near.api.rpc.service.contract.FTContractFunctionCall;
-import com.syntifi.near.api.rpc.service.contract.NFTContractFunctionCall;
-import com.syntifi.near.api.rpc.service.contract.StakingContractFunctionCall;
 import com.syntifi.near.api.rpc.service.exception.NearServiceException;
 import com.syntifi.near.api.rpc.service.exception.NearServiceExceptionResolver;
 import org.json.JSONException;
@@ -45,10 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 import java.util.Map;
 
 import static com.syntifi.near.api.common.json.JsonHelper.OBJECT_MAPPER;
@@ -1213,72 +1201,5 @@ public class NearServiceTest {
         assertInstanceOf(NearServiceException.class, t);
 
         assertNull(((NearServiceException) t).getNearServiceErrorData());
-    }
-
-    @Test
-    void callContractFunction_ContractFunctionCallResult_get_whitelisted_tokens_return_list() throws IOException {
-        String args = Base64.getEncoder().encodeToString("{}".getBytes());
-
-        ContractFunctionCallResult result =
-                nearService.callContractFunction(Finality.OPTIMISTIC, "ref-finance-101.testnet", "get_whitelisted_tokens", args);
-
-        LOGGER.debug("{}", result.getResult());
-
-        List<String> value = OBJECT_MAPPER.readValue(new String(result.getResult()), ArrayList.class);
-        value.forEach(item -> LOGGER.debug("{}", item));
-    }
-
-    @Test
-    void callContractFunction_FTContractFunctionCall_builderForBalanceOf_return_list() throws IOException {
-        ContractFunctionCall contractCall = FTContractFunctionCall
-                .builderForBalanceOf(AccountIdParam.builder().accountId("wallet-test.testnet").build())
-                .accountId("meta.pool.testnet").build();
-
-        ContractFunctionCallResult result = contractCall.call(nearService);
-
-        LOGGER.debug("{}", result.getResult());
-
-        JsonNode value = new ObjectMapper().readValue(result.getResult(), JsonNode.class);
-        LOGGER.debug("{}", value);
-    }
-
-    @Test
-    void callContractFunction_StakingContractFunctionCall_builderForAccountTotalBalance_return_value() throws IOException {
-        ContractFunctionCall contractCall = StakingContractFunctionCall
-                .builderForAccountTotalBalance(AccountIdParam.builder().accountId("wallet-test.testnet").build())
-                .accountId("prophet.pool.f863973.m0").build();
-
-        ContractFunctionCallResult result = contractCall.call(nearService);
-
-        LOGGER.debug("{}", result.getResult());
-
-        BigInteger value = new ObjectMapper().readValue(result.getResult(), BigInteger.class);
-        LOGGER.debug("{}", value);
-    }
-
-    @Test
-    void callContractFunction_FTContractFunctionCall_builderForMetadata_return_list() throws IOException {
-        ContractFunctionCall contractCall = FTContractFunctionCall.builderForMetadata().accountId("paras-marketplace-v2.testnet").build();
-
-        ContractFunctionCallResult result = contractCall.call(nearService);
-
-        LOGGER.debug("{}", result);
-
-        if (result.getResult() != null) {
-            NFTMetadata metadata = NFTMetadata.fromBytes(result.getResult(), new ObjectMapper());
-            LOGGER.debug("{}", metadata);
-        }
-    }
-
-    @Test
-    void callContractFunction_NFTContractFunctionCall_builderForMetadata_return_list() throws IOException {
-        ContractFunctionCall contractCall = NFTContractFunctionCall.builderForMetadata().accountId("paras-token-v2.testnet").build();
-
-        ContractFunctionCallResult result = contractCall.call(nearService);
-
-        LOGGER.debug("{}", result.getResult());
-
-        NFTMetadata metadata = NFTMetadata.fromBytes(result.getResult(), new ObjectMapper());
-        LOGGER.debug("{}", metadata);
     }
 }
