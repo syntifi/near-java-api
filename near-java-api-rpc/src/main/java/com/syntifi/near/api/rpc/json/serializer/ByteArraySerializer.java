@@ -7,7 +7,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
+ * Custom byte array serializer for handling serialization numerically
  *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
  */
 public class ByteArraySerializer extends JsonSerializer<byte[]> {
 

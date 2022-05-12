@@ -1,9 +1,9 @@
 package com.syntifi.near.api.helper.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.helper.model.NearValue;
 import com.syntifi.near.api.helper.model.RecentActivity;
-import com.syntifi.near.api.common.service.NearObjectMapper;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -13,7 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- *
+ * Near Helper service uses the http helper API to retrieve useful data
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -22,17 +22,21 @@ import retrofit2.http.Path;
 public interface NearHelperService {
 
     /**
-     * @return
+     * Fetches the value of near in fiat currency
+     *
+     * @return the Near fiat value
      */
     @GET("/fiat")
     Call<NearValue> getNearValue();
 
     /**
-     * @param username
-     * @return
+     * Fetches a list of recent activities for one account
+     *
+     * @param accountId the account to fetch activity
+     * @return list of recent activity for the account
      */
     @GET("account/{accountId}/activity")
-    Call<RecentActivity> getNearRecentActivity(@Path("accountId") String username);
+    Call<RecentActivity> getNearRecentActivity(@Path("accountId") String accountId);
 
     /**
      * NearHelperService builder

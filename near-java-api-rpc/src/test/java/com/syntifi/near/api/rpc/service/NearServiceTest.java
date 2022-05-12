@@ -19,6 +19,7 @@ import com.syntifi.near.api.rpc.model.contract.ContractCodeChanges;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.contract.ContractState;
 import com.syntifi.near.api.rpc.model.contract.ContractStateChanges;
+import com.syntifi.near.api.rpc.model.contract.NFTMetadata;
 import com.syntifi.near.api.rpc.model.gas.GasPrice;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.model.network.NetworkInfo;
@@ -33,7 +34,6 @@ import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.ContractFunctionCall;
 import com.syntifi.near.api.rpc.service.contract.FTContractFunctionCall;
 import com.syntifi.near.api.rpc.service.contract.NFTContractFunctionCall;
-import com.syntifi.near.api.rpc.service.contract.NFTMetadataResult;
 import com.syntifi.near.api.rpc.service.contract.StakingContractFunctionCall;
 import com.syntifi.near.api.rpc.service.exception.NearServiceException;
 import com.syntifi.near.api.rpc.service.exception.NearServiceExceptionResolver;
@@ -1265,7 +1265,7 @@ public class NearServiceTest {
         LOGGER.debug("{}", result);
 
         if (result.getResult() != null) {
-            NFTMetadataResult metadata = NFTMetadataResult.fromBytes(result.getResult(), new ObjectMapper());
+            NFTMetadata metadata = NFTMetadata.fromBytes(result.getResult(), new ObjectMapper());
             LOGGER.debug("{}", metadata);
         }
     }
@@ -1278,7 +1278,7 @@ public class NearServiceTest {
 
         LOGGER.debug("{}", result.getResult());
 
-        NFTMetadataResult metadata = NFTMetadataResult.fromBytes(result.getResult(), new ObjectMapper());
+        NFTMetadata metadata = NFTMetadata.fromBytes(result.getResult(), new ObjectMapper());
         LOGGER.debug("{}", metadata);
     }
 }

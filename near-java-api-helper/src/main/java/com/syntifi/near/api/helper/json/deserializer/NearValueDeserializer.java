@@ -8,6 +8,13 @@ import com.syntifi.near.api.helper.model.NearValue;
 
 import java.io.IOException;
 
+/**
+ * Custom serializer for near fiat value
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
+ */
 public class NearValueDeserializer extends JsonDeserializer<NearValue> {
     public NearValue deserialize(JsonParser p, DeserializationContext ctxt)
             throws IOException {

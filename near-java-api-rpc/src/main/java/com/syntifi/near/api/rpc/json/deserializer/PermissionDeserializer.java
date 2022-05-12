@@ -9,7 +9,7 @@ import com.syntifi.near.api.common.exception.NoSuchTypeException;
 import com.syntifi.near.api.rpc.model.accesskey.permission.PermissionTypeData;
 
 /**
- * Specific implementacion of AbstractAnyOfDeserializer for Permission type objects
+ * Specific implementation of AbstractAnyOfDeserializer for Permission type objects
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace

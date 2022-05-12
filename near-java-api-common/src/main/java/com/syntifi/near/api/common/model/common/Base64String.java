@@ -11,7 +11,7 @@ import java.util.Base64;
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
- * @since 0.0.1
+ * @since 0.2.0
  */
 @NoArgsConstructor
 public class Base64String {

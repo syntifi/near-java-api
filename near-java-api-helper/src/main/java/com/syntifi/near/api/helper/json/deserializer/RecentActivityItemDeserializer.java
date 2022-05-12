@@ -21,6 +21,13 @@ import com.syntifi.near.api.helper.service.exception.NearHelperServiceException;
 import java.io.IOException;
 import java.math.BigInteger;
 
+/**
+ * Custom serializer for a recent activity item
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
+ */
 public class RecentActivityItemDeserializer extends JsonDeserializer<RecentActivityItem> {
     public RecentActivityItem deserialize(JsonParser p, DeserializationContext ctxt)
             throws IOException {

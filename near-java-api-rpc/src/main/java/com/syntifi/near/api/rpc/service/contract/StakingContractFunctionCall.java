@@ -6,14 +6,18 @@ import com.syntifi.near.api.common.model.common.Base64String;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 
 /**
+ * Contract function call object for Staking
  *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
  */
 public class StakingContractFunctionCall extends ContractFunctionCall {
 
     private static final String STAKING_GET_ACCOUNT_TOTAL_BALANCE_METHOD_NAME = "get_account_total_balance";
 
     /**
-     * @return a builder for NFT metadata
+     * @return a builder for total balance for account
      */
     public static ContractFunctionCallBuilder builderForAccountTotalBalance(AccountIdParam accountIdParam) throws JsonProcessingException {
         return new ContractFunctionCallBuilder()

@@ -4,7 +4,11 @@ import com.syntifi.near.api.common.model.common.Base64String;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 
 /**
+ * Contract function call object for NFTs
  *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
  */
 public class NFTContractFunctionCall extends ContractFunctionCall {
 
