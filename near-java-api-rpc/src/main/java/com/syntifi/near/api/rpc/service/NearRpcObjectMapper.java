@@ -15,7 +15,9 @@ import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
  * @since 0.0.1
  */
 public class NearRpcObjectMapper extends NearObjectMapper {
-    public NearRpcObjectMapper() {
+    public static final ObjectMapper INSTANCE = new NearObjectMapper();
+
+    private NearRpcObjectMapper() {
         super();
 
         coercionConfigFor(SuccessReceiptIdStatus.class)

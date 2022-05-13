@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The account id param for contracts
- *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.2.0
@@ -15,7 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AccountIdParam implements ConvertibleToBase64String {
+public class NFTTokensForOwnerParam implements ConvertibleToBase64String {
     @JsonProperty("account_id")
     private String accountId;
+    @JsonProperty("from_index")
+    private String fromIndex;
+    private int limit;
 }

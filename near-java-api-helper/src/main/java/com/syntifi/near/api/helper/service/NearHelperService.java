@@ -1,6 +1,5 @@
 package com.syntifi.near.api.helper.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.helper.model.NearValue;
 import com.syntifi.near.api.helper.model.RecentActivity;
@@ -45,8 +44,6 @@ public interface NearHelperService {
      * @return the helper service instance
      */
     static NearHelperService usingPeer(String url) {
-        ObjectMapper mapper = new NearObjectMapper();
-
         Headers customHeaders = new Headers.Builder()
                 .add("Content-Type", "application/json")
                 .add("Cache-Control", "no-cache")
@@ -57,7 +54,7 @@ public interface NearHelperService {
                         .addInterceptor(
                                 chain -> chain.proceed(chain.request().newBuilder().headers(customHeaders).build())).build())
                 .baseUrl("https://" + url)
-                .addConverterFactory(JacksonConverterFactory.create(mapper))
+                .addConverterFactory(JacksonConverterFactory.create(NearObjectMapper.INSTANCE))
                 .build();
 
         return retrofit.create(NearHelperService.class);

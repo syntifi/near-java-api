@@ -3,6 +3,7 @@ package com.syntifi.near.api.rpc.model.contract;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.syntifi.near.api.common.model.common.ConvertibleFromJsonToObject;
 import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.rpc.json.serializer.ByteArraySerializer;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Builder
 @ToString
-public class ContractFunctionCallResult {
+public class ContractFunctionCallResult implements ConvertibleFromJsonToObject {
     @JsonProperty("result")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonSerialize(using = ByteArraySerializer.class)
@@ -45,4 +46,9 @@ public class ContractFunctionCallResult {
     @JsonProperty("error")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String error;
+
+    @Override
+    public byte[] getJson() {
+        return getResult();
+    }
 }

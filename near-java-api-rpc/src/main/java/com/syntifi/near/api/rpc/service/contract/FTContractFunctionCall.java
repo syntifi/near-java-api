@@ -1,7 +1,6 @@
 package com.syntifi.near.api.rpc.service.contract;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syntifi.near.api.common.model.common.Base64String;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 
@@ -38,30 +37,33 @@ public class FTContractFunctionCall extends ContractFunctionCall {
     /**
      * @return a builder for FT metadata
      */
-    public static ContractFunctionCallBuilder builderForMetadata() {
+    public static ContractFunctionCall forMetadata(String accountId) {
         return new ContractFunctionCallBuilder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(FT_METADATA_METHOD_NAME)
-                .args(new Base64String(""));
+                .accountId(accountId)
+                .args(Base64String.fromDecodedString("")).build();
     }
 
     /**
      * @return a builder for FT Balance
      */
-    public static ContractFunctionCallBuilder builderForBalanceOf(AccountIdParam accountIdParam) throws JsonProcessingException {
+    public static ContractFunctionCall forBalanceOf(String accountId, AccountIdParam accountIdParam) throws JsonProcessingException {
         return new ContractFunctionCallBuilder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(FT_BALANCE_OF_METHOD_NAME)
-                .args(new Base64String(new ObjectMapper().writeValueAsString(accountIdParam)));
+                .accountId(accountId)
+                .args(accountIdParam.toJsonBase64String()).build();
     }
 
     /**
      * @return a builder for FT Transfer
      */
-    public static ContractFunctionCallBuilder builderForTransferCall(FTTransferParam ftTransferParam) throws JsonProcessingException {
+    public static ContractFunctionCall forTransferCall(String accountId, FTTransferParam ftTransferParam) throws JsonProcessingException {
         return new ContractFunctionCallBuilder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(FT_TRANSFER_CALL_METHOD_NAME)
-                .args(new Base64String(new ObjectMapper().writeValueAsString(ftTransferParam)));
+                .accountId(accountId)
+                .args(ftTransferParam.toJsonBase64String()).build();
     }
 }

@@ -10,4 +10,5 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @since 0.0.1
  */
 public class NearObjectMapper extends ObjectMapper {
+    public static final ObjectMapper INSTANCE = new NearObjectMapper();
 }

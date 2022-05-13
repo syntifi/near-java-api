@@ -6,7 +6,6 @@ import com.googlecode.jsonrpc4j.JsonRpcMethod;
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import com.googlecode.jsonrpc4j.JsonRpcParamsPassMode;
 import com.googlecode.jsonrpc4j.ProxyUtil;
-import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKeyChanges;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKeyList;
@@ -31,7 +30,6 @@ import com.syntifi.near.api.rpc.model.protocol.ProtocolConfig;
 import com.syntifi.near.api.rpc.model.transaction.Receipt;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransactionStatus;
-import com.syntifi.near.api.rpc.service.exception.NearServiceExceptionResolver;
 import com.syntifi.near.api.rpc.service.exception.NearServiceException;
 import com.syntifi.near.api.rpc.service.exception.NearServiceExceptionResolver;
 
@@ -839,11 +837,10 @@ public interface NearService {
      * @throws MalformedURLException thrown when url is invalid or unparseable
      */
     static NearService usingPeer(String url) throws MalformedURLException {
-        NearObjectMapper objectMapper = new NearRpcObjectMapper();
         Map<String, String> customHeaders = new TreeMap<>();
         customHeaders.put("Content-Type", "application/json");
 
-        JsonRpcHttpClient client = new JsonRpcHttpClient(objectMapper, new URL("https://" + url),
+        JsonRpcHttpClient client = new JsonRpcHttpClient(NearRpcObjectMapper.INSTANCE, new URL("https://" + url),
                 customHeaders);
 
         client.setExceptionResolver(new NearServiceExceptionResolver());

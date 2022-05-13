@@ -1,6 +1,5 @@
 package com.syntifi.near.api.rpc.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import static com.syntifi.near.api.common.json.JsonHelper.OBJECT_MAPPER;
 import static com.syntifi.near.api.rpc.service.NearServiceHelper.nearService;
 
 public class NearServiceContractsStakingTest {
@@ -32,21 +30,20 @@ public class NearServiceContractsStakingTest {
 
         LOGGER.debug("{}", result.getResult());
 
-        List<String> value = OBJECT_MAPPER.readValue(new String(result.getResult()), ArrayList.class);
+        List<String> value = result.toResultObject(ArrayList.class);
         value.forEach(item -> LOGGER.debug("{}", item));
     }
 
     @Test
     void callContractFunction_StakingContractFunctionCall_builderForAccountTotalBalance_return_value() throws IOException {
         ContractFunctionCall contractCall = StakingContractFunctionCall
-                .builderForAccountTotalBalance(AccountIdParam.builder().accountId("wallet-test.testnet").build())
-                .accountId("prophet.pool.f863973.m0").build();
+                .forAccountTotalBalance("prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
 
         ContractFunctionCallResult result = contractCall.call(nearService);
 
         LOGGER.debug("{}", result.getResult());
 
-        BigInteger value = new ObjectMapper().readValue(result.getResult(), BigInteger.class);
+        BigInteger value = result.toResultObject(BigInteger.class);
         LOGGER.debug("{}", value);
     }
 }

@@ -1,6 +1,5 @@
 package com.syntifi.near.api.indexer.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.indexer.model.AccountIdList;
 import com.syntifi.near.api.indexer.model.StakingDeposit;
@@ -22,31 +21,6 @@ import java.util.List;
  * @since 0.2.0
  */
 public interface NearIndexerService {
-
-    /**
-     * NearIndexerService builder
-     *
-     * @param url the indexer url to connect to
-     * @return the indexer service instance
-     */
-    static NearIndexerService usingPeer(String url) {
-        ObjectMapper mapper = new NearObjectMapper();
-
-        Headers customHeaders = new Headers.Builder()
-                .add("Content-Type", "application/json")
-                .add("Cache-Control", "no-cache")
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(new OkHttpClient.Builder()
-                        .addInterceptor(
-                                chain -> chain.proceed(chain.request().newBuilder().headers(customHeaders).build())).build())
-                .baseUrl("https://" + url)
-                .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .build();
-
-        return retrofit.create(NearIndexerService.class);
-    }
 
     /**
      * Fetches all likely NFTs given an accountId
@@ -74,4 +48,27 @@ public interface NearIndexerService {
      */
     @GET("staking-deposits/{accountId}")
     Call<List<StakingDeposit>> getStakingDeposits(@Path("accountId") String accountId);
+
+    /**
+     * NearIndexerService builder
+     *
+     * @param url the indexer url to connect to
+     * @return the indexer service instance
+     */
+    static NearIndexerService usingPeer(String url) {
+        Headers customHeaders = new Headers.Builder()
+                .add("Content-Type", "application/json")
+                .add("Cache-Control", "no-cache")
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(new OkHttpClient.Builder()
+                        .addInterceptor(
+                                chain -> chain.proceed(chain.request().newBuilder().headers(customHeaders).build())).build())
+                .baseUrl("https://" + url)
+                .addConverterFactory(JacksonConverterFactory.create(NearObjectMapper.INSTANCE))
+                .build();
+
+        return retrofit.create(NearIndexerService.class);
+    }
 }

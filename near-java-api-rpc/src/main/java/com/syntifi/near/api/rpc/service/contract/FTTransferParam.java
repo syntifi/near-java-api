@@ -2,7 +2,6 @@ package com.syntifi.near.api.rpc.service.contract;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,8 +17,7 @@ import java.math.BigInteger;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
-public class FTTransferParam {
+public class FTTransferParam implements ConvertibleToBase64String {
     @JsonProperty("receiver_id")
     private String receiverId;
     @JsonProperty("amount")
