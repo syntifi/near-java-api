@@ -1,8 +1,12 @@
 package com.syntifi.near.api.rpc.service.contract;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.model.common.Base64String;
+import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
+import com.syntifi.near.api.rpc.service.NearService;
+
+import java.io.IOException;
 
 import static com.syntifi.near.api.common.helper.Format.parseNearAmount;
 
@@ -13,7 +17,7 @@ import static com.syntifi.near.api.common.helper.Format.parseNearAmount;
  * @author Andre Bertolace
  * @since 0.2.0
  */
-public class FTContractFunctionCall extends ContractFunctionCall {
+public class FTFunctionCall {
 
     // NFT Constants
 
@@ -37,33 +41,39 @@ public class FTContractFunctionCall extends ContractFunctionCall {
     /**
      * @return a builder for FT metadata
      */
-    public static ContractFunctionCall forMetadata(String accountId) {
-        return new ContractFunctionCallBuilder()
+    public static FunctionCallResult<JsonNode> forMetadata(NearService nearService, String accountId) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(FT_METADATA_METHOD_NAME)
                 .accountId(accountId)
-                .args(Base64String.fromDecodedString("")).build();
+                .args(Base64String.fromDecodedString("")).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, JsonNode.class);
     }
 
     /**
      * @return a builder for FT Balance
      */
-    public static ContractFunctionCall forBalanceOf(String accountId, AccountIdParam accountIdParam) throws JsonProcessingException {
-        return new ContractFunctionCallBuilder()
+    public static FunctionCallResult<JsonNode> forBalanceOf(NearService nearService, String accountId, AccountIdParam accountIdParam) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(FT_BALANCE_OF_METHOD_NAME)
                 .accountId(accountId)
-                .args(accountIdParam.toJsonBase64String()).build();
+                .args(accountIdParam.toJsonBase64String()).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, JsonNode.class);
     }
 
     /**
      * @return a builder for FT Transfer
      */
-    public static ContractFunctionCall forTransferCall(String accountId, FTTransferParam ftTransferParam) throws JsonProcessingException {
-        return new ContractFunctionCallBuilder()
+    public static FunctionCallResult<JsonNode> forTransferCall(NearService nearService, String accountId, FTTransferParam ftTransferParam) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(FT_TRANSFER_CALL_METHOD_NAME)
                 .accountId(accountId)
-                .args(ftTransferParam.toJsonBase64String()).build();
+                .args(ftTransferParam.toJsonBase64String()).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, JsonNode.class);
     }
 }

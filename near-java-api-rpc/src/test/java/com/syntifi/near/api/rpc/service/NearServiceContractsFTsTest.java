@@ -1,11 +1,9 @@
 package com.syntifi.near.api.rpc.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
-import com.syntifi.near.api.rpc.service.contract.ContractFunctionCall;
-import com.syntifi.near.api.rpc.service.contract.FTContractFunctionCall;
-import com.syntifi.near.api.rpc.service.contract.NFTMetadataResult;
+import com.syntifi.near.api.rpc.service.contract.FTFunctionCall;
+import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,28 +18,18 @@ public class NearServiceContractsFTsTest {
 
     @Test
     void callContractFunction_FTContractFunctionCall_builderForBalanceOf_return_list() throws IOException {
-        ContractFunctionCall contractCall = FTContractFunctionCall
-                .forBalanceOf("meta.pool.testnet", new AccountIdParam("wallet-test.testnet"));
+        FunctionCallResult<JsonNode> result = FTFunctionCall
+                .forBalanceOf(nearService, "meta.pool.testnet", new AccountIdParam("wallet-test.testnet"));
 
-        ContractFunctionCallResult result = contractCall.call(nearService);
-
+        LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
-
-        JsonNode value = result.toResultObject(JsonNode.class);
-        LOGGER.debug("{}", value);
     }
 
     @Test
     void callContractFunction_FTContractFunctionCall_builderForMetadata_return_list() throws IOException {
-        ContractFunctionCall contractCall = FTContractFunctionCall.forMetadata("paras-marketplace-v2.testnet");
+        FunctionCallResult<JsonNode> result = FTFunctionCall.forMetadata(nearService, "paras-marketplace-v2.testnet");
 
-        ContractFunctionCallResult result = contractCall.call(nearService);
-
-        LOGGER.debug("{}", result);
-
-        if (result.getResult() != null) {
-            NFTMetadataResult metadata = result.toResultObject(NFTMetadataResult.class);
-            LOGGER.debug("{}", metadata);
-        }
+        LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
+        LOGGER.debug("{}", result.getResult());
     }
 }

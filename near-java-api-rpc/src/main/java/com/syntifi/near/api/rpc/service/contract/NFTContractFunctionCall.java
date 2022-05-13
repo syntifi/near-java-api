@@ -1,8 +1,12 @@
 package com.syntifi.near.api.rpc.service.contract;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.model.common.Base64String;
+import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
+import com.syntifi.near.api.rpc.service.NearService;
+
+import java.io.IOException;
 
 import static com.syntifi.near.api.common.helper.Format.parseNearAmount;
 
@@ -13,7 +17,7 @@ import static com.syntifi.near.api.common.helper.Format.parseNearAmount;
  * @author Andre Bertolace
  * @since 0.2.0
  */
-public class NFTContractFunctionCall extends ContractFunctionCall {
+public class NFTContractFunctionCall {
 
     // NFT Constants
     private static final int TOKENS_PER_PAGE = 4;
@@ -30,55 +34,66 @@ public class NFTContractFunctionCall extends ContractFunctionCall {
     /**
      * @return a builder for NFT Tokens for Owner call
      */
-    public static ContractFunctionCall forTokensForOwner(String accountId, NFTTokensForOwnerParam nftTokensForOwnerParam) throws JsonProcessingException {
-        return ContractFunctionCall.builder()
+    public static FunctionCallResult<JsonNode> callForTokensForOwner(NearService nearService, String accountId, NFTTokensForOwnerParam nftTokensForOwnerParam) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(NFT_TOKENS_FOR_OWNER_METHOD_NAME)
                 .accountId(accountId)
-                .args(nftTokensForOwnerParam.toJsonBase64String()).build();
+                .args(nftTokensForOwnerParam.toJsonBase64String()).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, JsonNode.class);
     }
 
     /**
      * @return a builder for NFT Tokens call
      */
-    public static ContractFunctionCall forTokens(String accountId, NFTTokensParam nftTokensParam) throws JsonProcessingException {
-        return ContractFunctionCall.builder()
+    public static FunctionCallResult<JsonNode> callForTokens(NearService nearService, String accountId, NFTTokensParam nftTokensParam) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(NFT_TOKENS_METHOD_NAME)
                 .accountId(accountId)
-                .args(nftTokensParam.toJsonBase64String()).build();
+                .args(nftTokensParam.toJsonBase64String()).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, JsonNode.class);
     }
 
     /**
      * @return a builder for NFT Total Supply call
      */
-    public static ContractFunctionCall forTotalSupply(String accountId) {
-        return ContractFunctionCall.builder()
+    public static FunctionCallResult<String> callForTotalSupply(NearService nearService, String accountId) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(NFT_TOTAL_SUPPLY_METHOD_NAME)
                 .accountId(accountId)
-                .args(Base64String.fromDecodedString("")).build();
+                .args(Base64String.fromDecodedString("")).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, String.class);
     }
 
     /**
      * @return a builder for NFT Metadata call
      */
-    public static ContractFunctionCall forMetadata(String accountId) {
-        return ContractFunctionCall.builder()
+    public static FunctionCallResult<NFTMetadataResult> callForMetadata(NearService nearService, String accountId) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(NFT_METADATA_METHOD_NAME)
                 .accountId(accountId)
-                .args(Base64String.fromDecodedString("")).build();
+                .args(Base64String.fromDecodedString("")).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, NFTMetadataResult.class);
+
     }
 
     /**
      * @return a builder for NFT Supply for Owner call
      */
-    public static ContractFunctionCall forSupplyForOwner(String accountId, AccountIdParam accountIdParam) throws JsonProcessingException {
-        return ContractFunctionCall.builder()
+    public static FunctionCallResult<String> callForSupplyForOwner(NearService nearService, String accountId, AccountIdParam accountIdParam) throws IOException {
+        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(NFT_SUPPLY_FOR_OWNER_METHOD_NAME)
                 .accountId(accountId)
-                .args(accountIdParam.toJsonBase64String()).build();
+                .args(accountIdParam.toJsonBase64String()).build()
+                .call(nearService);
+        return new FunctionCallResult<>(contractFunctionCallResult, String.class);
     }
 }

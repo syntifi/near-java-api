@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.Arrays;
 import java.util.Base64;
@@ -19,7 +18,6 @@ import java.util.Base64;
  */
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
-@ToString
 public class Base64String {
     @JsonValue
     private String encodedString;
