@@ -24,7 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FunctionCall<T> {
+public class FunctionCall {
     @JsonProperty("account_id")
     private String accountId;
 

@@ -21,7 +21,7 @@ public class NearServiceContractsNFTsTest {
 
     @Test
     void callContractFunction_NFTContractFunctionCall_builderForTotalSupply_return_list() throws IOException {
-        FunctionCallResult<String> result = NFTContractFunctionCall.callForTotalSupply(nearService, "paras-token-v2.testnet");
+        FunctionCallResult<String> result = NFTContractFunctionCall.forTotalSupply(nearService, "paras-token-v2.testnet");
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
@@ -29,7 +29,7 @@ public class NearServiceContractsNFTsTest {
 
     @Test
     void callContractFunction_NFTContractFunctionCall_builderForTokens_return_list() throws IOException {
-        FunctionCallResult<JsonNode> result = NFTContractFunctionCall.callForTokens(nearService, "paras-token-v2.testnet", new NFTTokensParam("0", 10));
+        FunctionCallResult<JsonNode> result = NFTContractFunctionCall.forTokens(nearService, "paras-token-v2.testnet", new NFTTokensParam("0", 10));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
@@ -37,7 +37,7 @@ public class NearServiceContractsNFTsTest {
 
     @Test
     void callContractFunction_NFTContractFunctionCall_builderForTokensForOwner_return_list() throws IOException {
-        FunctionCallResult<JsonNode> result = NFTContractFunctionCall.callForTokensForOwner(nearService, "paras-token-v2.testnet", new NFTTokensForOwnerParam("wallet-test.testnet", "0", 10));
+        FunctionCallResult<JsonNode> result = NFTContractFunctionCall.forTokensForOwner(nearService, "paras-token-v2.testnet", new NFTTokensForOwnerParam("wallet-test.testnet", "0", 10));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
@@ -45,7 +45,7 @@ public class NearServiceContractsNFTsTest {
 
     @Test
     void callContractFunction_NFTContractFunctionCall_builderForMetadata_return_list() throws IOException {
-        FunctionCallResult<NFTMetadataResult> result = NFTContractFunctionCall.callForMetadata(nearService, "paras-token-v2.testnet");
+        FunctionCallResult<NFTMetadataResult> result = NFTContractFunctionCall.forMetadata(nearService, "paras-token-v2.testnet");
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
@@ -53,7 +53,7 @@ public class NearServiceContractsNFTsTest {
 
     @Test
     void callContractFunction_NFTContractFunctionCall_builderForSupplyForOwner_return_list() throws IOException {
-        FunctionCallResult<String> result = NFTContractFunctionCall.callForSupplyForOwner(nearService, "paras-token-v2.testnet", new AccountIdParam("wallet-test.testnet"));
+        FunctionCallResult<String> result = NFTContractFunctionCall.forSupplyForOwner(nearService, "paras-token-v2.testnet", new AccountIdParam("wallet-test.testnet"));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
