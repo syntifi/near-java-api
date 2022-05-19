@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.syntifi.near.api.helper.service.NearHelperServiceHelper.nearHelperService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,6 +34,8 @@ public class NearHelperServiceTest {
 
         NearValue nearValue = value.body();
 
+        assertNotNull(nearValue);
+
         LOGGER.debug("Response {}", nearValue.getUsDollars());
         LOGGER.debug("Response {}", nearValue.getEuros());
         LOGGER.debug("Response {}", nearValue.getChineseYuan());
@@ -48,8 +52,25 @@ public class NearHelperServiceTest {
 
         RecentActivity nearValue = value.body();
 
+        assertNotNull(nearValue);
+
         LOGGER.debug("Response {}", nearValue.size());
 
         assertNotNull(nearValue);
+    }
+
+    @Test
+    void getNearAccounts_valid() throws IOException {
+        Response<List<String>> value = nearHelperService.getNearAccounts("ed25519:F8jARHGZdHqnwrxrnv1pFVzzirXZR2vJzeYbvwQbxZyP").execute();
+
+        assertTrue(value.isSuccessful());
+
+        List<String> nearAccounts = value.body();
+
+        assertNotNull(nearAccounts);
+
+        assertEquals(1, nearAccounts.size());
+
+        assertEquals("syntifi-alice.testnet", nearAccounts.get(0));
     }
 }

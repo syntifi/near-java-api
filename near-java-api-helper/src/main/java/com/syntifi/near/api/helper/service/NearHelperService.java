@@ -11,6 +11,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
+import java.util.List;
+
 /**
  * Near Helper service uses the http helper API to retrieve useful data
  *
@@ -36,6 +38,15 @@ public interface NearHelperService {
      */
     @GET("account/{accountId}/activity")
     Call<RecentActivity> getNearRecentActivity(@Path("accountId") String accountId);
+
+    /**
+     * Fetches a list of accounts for a given public key
+     *
+     * @param publicKey the account public key
+     * @return list containing all account ids
+     */
+    @GET("publicKey/{publicKey}/accounts")
+    Call<List<String>> getNearAccounts(@Path("publicKey") String publicKey);
 
     /**
      * NearHelperService builder
