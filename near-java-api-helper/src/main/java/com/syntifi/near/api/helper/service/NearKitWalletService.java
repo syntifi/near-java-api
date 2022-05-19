@@ -1,7 +1,7 @@
 package com.syntifi.near.api.helper.service;
 
 import com.syntifi.near.api.common.service.NearObjectMapper;
-import com.syntifi.near.api.helper.model.NearValue;
+import com.syntifi.near.api.helper.model.RecentActivity;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -10,33 +10,14 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-import java.util.List;
-
 /**
- * Near Helper service uses the http helper API to retrieve useful data
+ * Near KitWallet Helper service uses the http helper API to retrieve useful data
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.2.0
  */
-public interface NearHelperService {
-
-    /**
-     * Fetches the value of near in fiat currency
-     *
-     * @return the Near fiat value
-     */
-    @GET("/fiat")
-    Call<NearValue> getNearValue();
-
-    /**
-     * Fetches a list of accounts for a given public key
-     *
-     * @param publicKey the account public key
-     * @return list containing all account ids
-     */
-    @GET("publicKey/{publicKey}/accounts")
-    Call<List<String>> getNearAccounts(@Path("publicKey") String publicKey);
+public interface NearKitWalletService {
 
     /**
      * NearHelperService builder
@@ -44,7 +25,7 @@ public interface NearHelperService {
      * @param url the helper url to connect to
      * @return the helper service instance
      */
-    static NearHelperService usingPeer(String url) {
+    static NearKitWalletService usingPeer(String url) {
         Headers customHeaders = new Headers.Builder()
                 .add("Content-Type", "application/json")
                 .add("Cache-Control", "no-cache")
@@ -58,6 +39,15 @@ public interface NearHelperService {
                 .addConverterFactory(JacksonConverterFactory.create(NearObjectMapper.INSTANCE))
                 .build();
 
-        return retrofit.create(NearHelperService.class);
+        return retrofit.create(NearKitWalletService.class);
     }
+
+    /**
+     * Fetches a list of recent activities for one account
+     *
+     * @param accountId the account to fetch activity
+     * @return list of recent activity for the account
+     */
+    @GET("account/{accountId}/activity")
+    Call<RecentActivity> getNearRecentActivity(@Path("accountId") String accountId);
 }

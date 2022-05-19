@@ -52,7 +52,8 @@ public class RecentActivityItemDeserializer extends JsonDeserializer<RecentActiv
         } else if (RecentActivityItem.RecentActivityActionKind.FUNCTION_CALL.equals(recentActivityItem.getActionKind())) {
             recentActivityItem.setArgs(RecentActivityArgFunctionCall.builder()
                     .methodName(argsNode.get("method_name").asText())
-                    .args(argsNode.get("args").asText())
+                    .argsJson(argsNode.get("args_json").asText())
+                    .argsBase64(argsNode.get("args_base64").asText())
                     .gas(argsNode.get("gas").asLong())
                     .deposit(argsNode.get("deposit").asText())
                     .build());

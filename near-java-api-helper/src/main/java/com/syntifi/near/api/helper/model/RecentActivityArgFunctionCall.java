@@ -23,8 +23,11 @@ public class RecentActivityArgFunctionCall implements RecentActivityArg {
     @JsonProperty("method_name")
     private String methodName;
 
-    @JsonProperty("args")
-    private String args;
+    @JsonProperty("args_json")
+    private String argsJson;
+
+    @JsonProperty("args_base64")
+    private String argsBase64;
 
     @JsonProperty("gas")
     private long gas;

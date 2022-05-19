@@ -1,7 +1,6 @@
 package com.syntifi.near.api.helper.service;
 
 import com.syntifi.near.api.helper.model.NearValue;
-import com.syntifi.near.api.helper.model.RecentActivity;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,21 +39,6 @@ public class NearHelperServiceTest {
         LOGGER.debug("Response {}", nearValue.getEuros());
         LOGGER.debug("Response {}", nearValue.getChineseYuan());
         LOGGER.debug("Response {}", nearValue.getLastUpdatedAt());
-
-        assertNotNull(nearValue);
-    }
-
-    @Test
-    void getNearRecentActivity_valid() throws IOException {
-        Response<RecentActivity> value = nearHelperService.getNearRecentActivity("wallet-test.testnet").execute();
-
-        assertTrue(value.isSuccessful());
-
-        RecentActivity nearValue = value.body();
-
-        assertNotNull(nearValue);
-
-        LOGGER.debug("Response {}", nearValue.size());
 
         assertNotNull(nearValue);
     }
