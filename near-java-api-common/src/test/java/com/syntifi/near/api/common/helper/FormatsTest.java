@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.syntifi.near.api.common.helper.Format.parseNearAmount;
+import static com.syntifi.near.api.common.helper.Formats.parseNearAmount;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FormatTest {
+public class FormatsTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FormatTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FormatsTest.class);
 
     private static final List<String[]> parseNearAmountSamples = Arrays.asList(
             new String[]{null, null},

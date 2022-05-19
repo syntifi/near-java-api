@@ -1,6 +1,7 @@
-package com.syntifi.near.api.rpc.service.contract;
+package com.syntifi.near.api.rpc.service.contract.ft;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.syntifi.near.api.rpc.service.contract.ConvertibleToBase64String;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

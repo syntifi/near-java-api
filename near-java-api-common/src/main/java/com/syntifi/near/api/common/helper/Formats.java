@@ -5,7 +5,14 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Format {
+/**
+ * Helper methods for formatting
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
+ */
+public class Formats {
 
     /**
      * Exponent for calculating how many indivisible units are there in one NEAR. See {@link #NEAR_NOMINATION}.
@@ -39,7 +46,7 @@ public class Format {
 
         balance = balanceBN.toString();
         final String wholeStr = balance != null ? balance.substring(0, balance.length() - NEAR_NOMINATION_EXP) : "0";
-        final String fractionStr = padStart(balance.substring(balance.length() - NEAR_NOMINATION_EXP), NEAR_NOMINATION_EXP, '0').substring(0, fracDigits);
+        final String fractionStr = balance != null ? padStart(balance.substring(balance.length() - NEAR_NOMINATION_EXP), NEAR_NOMINATION_EXP, '0').substring(0, fracDigits) : "0";
 
         return trimTrailingZeroes(formatWithCommas(wholeStr) + "." + fractionStr);
     }

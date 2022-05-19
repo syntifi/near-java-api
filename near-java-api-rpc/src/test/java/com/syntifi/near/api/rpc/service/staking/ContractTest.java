@@ -1,10 +1,10 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc.service.staking;
 
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
-import com.syntifi.near.api.rpc.service.contract.StakingFunctionCall;
+import com.syntifi.near.api.rpc.service.contract.staking.StakingContractFunctionCall;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +16,9 @@ import java.util.Base64;
 
 import static com.syntifi.near.api.rpc.service.NearServiceHelper.nearService;
 
-public class NearServiceContractsStakingTest {
+public class ContractTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NearServiceContractsStakingTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContractTest.class);
 
     @Test
     void callContractFunction_ContractFunctionCallResult_get_whitelisted_tokens_return_list() throws IOException {
@@ -35,8 +35,8 @@ public class NearServiceContractsStakingTest {
     }
 
     @Test
-    void callContractFunction_StakingContractFunctionCall_builderForAccountTotalBalance_return_value() throws IOException {
-        FunctionCallResult<BigInteger> result = StakingFunctionCall
+    void callContractFunction_StakingContractFunctionCall_forAccountTotalBalance_return_value() throws IOException {
+        FunctionCallResult<BigInteger> result = StakingContractFunctionCall
                 .forAccountTotalBalance(nearService, "prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
