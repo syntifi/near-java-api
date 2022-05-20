@@ -1,8 +1,8 @@
-package com.syntifi.near.api.helper.model;
+package com.syntifi.near.api.indexer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.syntifi.near.api.helper.json.deserializer.RecentActivityItemDeserializer;
+import com.syntifi.near.api.indexer.json.deserializer.RecentActivityItemDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

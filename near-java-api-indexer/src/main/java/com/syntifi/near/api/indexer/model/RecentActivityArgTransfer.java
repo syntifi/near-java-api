@@ -1,4 +1,4 @@
-package com.syntifi.near.api.helper.model;
+package com.syntifi.near.api.indexer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -19,19 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RecentActivityArgFunctionCall implements RecentActivityArg {
-    @JsonProperty("method_name")
-    private String methodName;
-
-    @JsonProperty("args_json")
-    private String argsJson;
-
-    @JsonProperty("args_base64")
-    private String argsBase64;
-
-    @JsonProperty("gas")
-    private long gas;
-
+public class RecentActivityArgTransfer implements RecentActivityArg {
     @JsonProperty("deposit")
     private String deposit;
 }

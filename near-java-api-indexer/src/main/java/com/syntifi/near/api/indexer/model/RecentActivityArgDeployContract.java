@@ -1,6 +1,5 @@
-package com.syntifi.near.api.helper.model;
+package com.syntifi.near.api.indexer.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +18,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RecentActivityArgAddKey implements RecentActivityArg {
-    @JsonProperty("access_key")
-    private RecentActivityAccessKey accessKey;
-
-    @JsonProperty("public_key")
-    private String publicKey;
+public class RecentActivityArgDeployContract implements RecentActivityArg {
+    private byte[] code;
 }

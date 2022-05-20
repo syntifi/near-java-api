@@ -1,4 +1,4 @@
-package com.syntifi.near.api.helper.model;
+package com.syntifi.near.api.indexer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RecentActivityArgTransfer implements RecentActivityArg {
-    @JsonProperty("deposit")
-    private String deposit;
+public class RecentActivityArgAddKey implements RecentActivityArg {
+    @JsonProperty("access_key")
+    private RecentActivityAccessKey accessKey;
+
+    @JsonProperty("public_key")
+    private String publicKey;
 }

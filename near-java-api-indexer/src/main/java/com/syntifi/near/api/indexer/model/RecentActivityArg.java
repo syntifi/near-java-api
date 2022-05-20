@@ -1,4 +1,4 @@
-package com.syntifi.near.api.helper.model;
+package com.syntifi.near.api.indexer.model;
 
 /**
  * RecentActivityArg

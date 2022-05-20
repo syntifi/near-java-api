@@ -2,6 +2,7 @@ package com.syntifi.near.api.indexer.service;
 
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.indexer.model.AccountIdList;
+import com.syntifi.near.api.indexer.model.RecentActivity;
 import com.syntifi.near.api.indexer.model.StakingDeposit;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -48,6 +49,15 @@ public interface NearIndexerService {
      */
     @GET("staking-deposits/{accountId}")
     Call<List<StakingDeposit>> getStakingDeposits(@Path("accountId") String accountId);
+
+    /**
+     * Fetches a list of recent activities for one account
+     *
+     * @param accountId the account to fetch activity
+     * @return list of recent activity for the account
+     */
+    @GET("account/{accountId}/activity")
+    Call<RecentActivity> getNearRecentActivity(@Path("accountId") String accountId);
 
     /**
      * NearIndexerService builder

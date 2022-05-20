@@ -1,4 +1,4 @@
-package com.syntifi.near.api.helper.model;
+package com.syntifi.near.api.indexer.model;
 
 import com.syntifi.near.api.common.model.key.PublicKey;
 import lombok.AllArgsConstructor;

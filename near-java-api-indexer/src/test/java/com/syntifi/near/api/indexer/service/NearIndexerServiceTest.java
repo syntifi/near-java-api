@@ -1,6 +1,7 @@
 package com.syntifi.near.api.indexer.service;
 
 import com.syntifi.near.api.indexer.model.AccountIdList;
+import com.syntifi.near.api.indexer.model.RecentActivity;
 import com.syntifi.near.api.indexer.model.StakingDeposit;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -62,5 +63,22 @@ public class NearIndexerServiceTest {
         assertNotNull(stakingDeposits);
 
         stakingDeposits.forEach(i -> LOGGER.debug("deposit: {} validator: {}", i.getDeposit(), i.getValidator()));
+    }
+
+    @Test
+    void getNearRecentActivity_valid() throws IOException {
+        Response<RecentActivity> value = nearIndexerService.getNearRecentActivity("wallet-test.testnet").execute();
+
+        assertTrue(value.isSuccessful());
+
+        RecentActivity nearValue = value.body();
+
+        assertNotNull(nearValue);
+
+        nearValue.forEach(item -> LOGGER.debug("Item kind: {}", item.getActionKind()));
+
+        LOGGER.debug("Response {}", nearValue.size());
+
+        assertNotNull(nearValue);
     }
 }
