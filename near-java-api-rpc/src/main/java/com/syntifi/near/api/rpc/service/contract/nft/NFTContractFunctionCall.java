@@ -2,13 +2,16 @@ package com.syntifi.near.api.rpc.service.contract.nft;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.helper.Formats;
-import com.syntifi.near.api.common.model.common.Base64String;
-import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
-import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.service.NearService;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
-import com.syntifi.near.api.rpc.service.contract.FunctionCall;
+import com.syntifi.near.api.rpc.service.contract.ContractMethod;
+import com.syntifi.near.api.rpc.service.contract.ContractMethodCaller;
 import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
+import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContract;
+import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContractMetadata;
+import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenList;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.io.IOException;
 
@@ -23,108 +26,89 @@ import java.io.IOException;
 public class NFTContractFunctionCall {
 
     // NFT Constants
-    private static final int TOKENS_PER_PAGE = 4;
     private static final String NFT_TRANSFER_GAS = Formats.parseNearAmount("0.00000000003");
     private static final int NFT_TRANSFER_DEPOSIT = 1; // 1 yocto Near
 
-    // Contract Methods
-    private static final String NFT_TOTAL_SUPPLY_METHOD_NAME = "nft_total_supply";
-    private static final String NFT_METADATA_METHOD_NAME = "nft_metadata";
-    private static final String NFT_SUPPLY_FOR_OWNER_METHOD_NAME = "nft_supply_for_owner";
-    private static final String NFT_TOKENS_METHOD_NAME = "nft_tokens";
-    private static final String NFT_TOKENS_FOR_OWNER_METHOD_NAME = "nft_tokens_for_owner";
-
+    /**
+     * Builds a contract function call and returns a typed result
+     *
+     * @param nearService the near service instance to use for the contract call
+     * @param contract    the contract to load the metadata
+     * @throws IOException thrown if failed to deserialize result to target class
+     */
+    public static void loadContractMetadata(NearService nearService, NFTContract contract) throws IOException {
+        contract.setMetadata(ContractMethodCaller
+                .callFor(StakingMethodCaller.ViewMethod.NFT_METADATA, NFTContractMetadata.class, nearService, contract.getContractId(), null));
+    }
 
     /**
      * Builds a contract function call and returns a typed result
      *
      * @param nearService            the near service instance to use for the contract call
-     * @param accountId              the account id
+     * @param contractAccountId      the contract's account id
      * @param nftTokensForOwnerParam the arguments for the target method
      * @return a typed function call result
      * @throws IOException thrown if failed to deserialize result to target class
      */
-    public static FunctionCallResult<NFTTokenList> forTokensForOwner(NearService nearService, String accountId, NFTTokensForOwnerParam nftTokensForOwnerParam) throws IOException {
-        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
-                .finality(Finality.OPTIMISTIC)
-                .methodName(NFT_TOKENS_FOR_OWNER_METHOD_NAME)
-                .accountId(accountId)
-                .args(nftTokensForOwnerParam.toJsonBase64String()).build()
-                .call(nearService);
-        return new FunctionCallResult<>(contractFunctionCallResult, NFTTokenList.class);
+    public static FunctionCallResult<NFTTokenList> forTokensForOwner(NearService nearService, String contractAccountId, NFTTokensForOwnerParam nftTokensForOwnerParam) throws IOException {
+        return ContractMethodCaller
+                .callFor(StakingMethodCaller.ViewMethod.NFT_TOKENS_FOR_OWNER, NFTTokenList.class, nearService, contractAccountId, nftTokensForOwnerParam);
     }
 
     /**
      * Builds a contract function call and returns a typed result
      *
-     * @param nearService    the near service instance to use for the contract call
-     * @param accountId      the account id
-     * @param nftTokensParam the arguments for the target method
+     * @param nearService       the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param nftTokensParam    the arguments for the target method
      * @return a typed function call result
      * @throws IOException thrown if failed to deserialize result to target class
      */
-    public static FunctionCallResult<JsonNode> forTokens(NearService nearService, String accountId, NFTTokensParam nftTokensParam) throws IOException {
-        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
-                .finality(Finality.OPTIMISTIC)
-                .methodName(NFT_TOKENS_METHOD_NAME)
-                .accountId(accountId)
-                .args(nftTokensParam.toJsonBase64String()).build()
-                .call(nearService);
-        return new FunctionCallResult<>(contractFunctionCallResult, JsonNode.class);
+    public static FunctionCallResult<JsonNode> forTokens(NearService nearService, String contractAccountId, NFTTokensParam nftTokensParam) throws IOException {
+        return ContractMethodCaller
+                .callFor(StakingMethodCaller.ViewMethod.NFT_TOKENS, JsonNode.class, nearService, contractAccountId, nftTokensParam);
     }
 
     /**
      * Builds a contract function call and returns a typed result
      *
-     * @param nearService the near service instance to use for the contract call
-     * @param accountId   the account id
+     * @param nearService       the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
      * @return a typed function call result
      * @throws IOException thrown if failed to deserialize result to target class
      */
-    public static FunctionCallResult<String> forTotalSupply(NearService nearService, String accountId) throws IOException {
-        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
-                .finality(Finality.OPTIMISTIC)
-                .methodName(NFT_TOTAL_SUPPLY_METHOD_NAME)
-                .accountId(accountId)
-                .args(Base64String.fromDecodedString("")).build()
-                .call(nearService);
-        return new FunctionCallResult<>(contractFunctionCallResult, String.class);
+    public static FunctionCallResult<String> forTotalSupply(NearService nearService, String contractAccountId) throws IOException {
+        return ContractMethodCaller
+                .callFor(StakingMethodCaller.ViewMethod.NFT_TOTAL_SUPPLY, String.class, nearService, contractAccountId, null);
     }
 
     /**
      * Builds a contract function call and returns a typed result
      *
-     * @param nearService the near service instance to use for the contract call
-     * @param accountId   the account id
+     * @param nearService       the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param accountIdParam    the arguments for the target method
      * @return a typed function call result
-     * @throws IOException thrown if failed to deserialize result to target class
      */
-    public static FunctionCallResult<NFTContractMetadata> forMetadata(NearService nearService, String accountId) throws IOException {
-        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
-                .finality(Finality.OPTIMISTIC)
-                .methodName(NFT_METADATA_METHOD_NAME)
-                .accountId(accountId)
-                .args(Base64String.fromDecodedString("")).build()
-                .call(nearService);
-        return new FunctionCallResult<>(contractFunctionCallResult, NFTContractMetadata.class);
-
+    public static FunctionCallResult<String> forSupplyForOwner(NearService nearService, String contractAccountId, AccountIdParam accountIdParam) throws IOException {
+        return ContractMethodCaller
+                .callFor(StakingMethodCaller.ViewMethod.NFT_SUPPLY_FOR_OWNER, String.class, nearService, contractAccountId, accountIdParam);
     }
 
     /**
-     * Builds a contract function call and returns a typed result
-     *
-     * @param nearService    the near service instance to use for the contract call
-     * @param accountId      the account id
-     * @param accountIdParam the arguments for the target method
-     * @return a typed function call result
+     * Contract method definitions
      */
-    public static FunctionCallResult<String> forSupplyForOwner(NearService nearService, String accountId, AccountIdParam accountIdParam) throws IOException {
-        ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
-                .finality(Finality.OPTIMISTIC)
-                .methodName(NFT_SUPPLY_FOR_OWNER_METHOD_NAME)
-                .accountId(accountId)
-                .args(accountIdParam.toJsonBase64String()).build()
-                .call(nearService);
-        return new FunctionCallResult<>(contractFunctionCallResult, String.class);
+    public static class StakingMethodCaller extends ContractMethodCaller {
+        @Getter
+        @AllArgsConstructor
+        public enum ViewMethod implements ContractMethod {
+            NFT_TOTAL_SUPPLY("nft_total_supply"),
+            NFT_METADATA("nft_metadata"),
+            NFT_SUPPLY_FOR_OWNER("nft_supply_for_owner"),
+            NFT_TOKENS("nft_tokens"),
+            NFT_TOKENS_FOR_OWNER("nft_tokens_for_owner");
+
+            private final String methodName;
+        }
     }
 }

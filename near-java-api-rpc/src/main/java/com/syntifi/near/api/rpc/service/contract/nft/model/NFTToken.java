@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.contract.nft;
+package com.syntifi.near.api.rpc.service.contract.nft.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -24,6 +24,9 @@ import java.net.URISyntaxException;
 @ToString
 @JsonIgnoreProperties(value = {"approved_account_ids"})
 public class NFTToken {
+
+    private static final String DEFAULT_MEDIA_URL = "https://cloudflare-ipfs.com/ipfs/%s";
+
     @JsonProperty("token_id")
     private String tokenId;
     @JsonProperty("owner_id")
@@ -32,19 +35,18 @@ public class NFTToken {
     private NFTTokenMetadata metadata;
 
     @JsonIgnore
-    private String getUrl(NFTContract contract) throws URISyntaxException, MalformedURLException {
+    public String getMediaUrl(NFTContract contract) throws URISyntaxException, MalformedURLException {
         URI uri;
         if (metadata.getMedia() == null) {
-            // no url if no media
-            uri = null;
-        } else if (Strings.isURL(metadata.getMedia())) {
+            uri = null; // no url if no media
+        } else if (Strings.isURL(metadata.getMedia()) || metadata.getMedia().startsWith("data:image")) {
             uri = new URI(metadata.getMedia());
-        } else if (contract.getMetadata().getBaseUri() != null) {
-            uri = new URI(contract.getMetadata().getBaseUri() + metadata.getMedia());
+        } else if (contract.getMetadata().getResult().getBaseUri() != null) {
+            uri = new URI(contract.getMetadata().getResult().getBaseUri() + "/" + metadata.getMedia());
         } else {
-            uri = new URI("https://cloudflare-ipfs.com/ipfs/" + metadata.getMedia());
+            uri = new URI(String.format(DEFAULT_MEDIA_URL, metadata.getMedia()));
         }
 
-        return uri == null ? null : uri.toURL().toString();
+        return uri == null ? null : uri.normalize().toURL().toString();
     }
 }

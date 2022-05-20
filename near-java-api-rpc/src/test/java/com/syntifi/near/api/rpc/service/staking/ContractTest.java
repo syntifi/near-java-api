@@ -36,8 +36,8 @@ public class ContractTest {
 
     @Test
     void callContractFunction_StakingContractFunctionCall_forAccountTotalBalance_return_value() throws IOException {
-        FunctionCallResult<BigInteger> result = StakingContractFunctionCall
-                .forAccountTotalBalance(nearService, "prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
+        FunctionCallResult<BigInteger> result =
+                StakingContractFunctionCall.forAccountTotalBalance(nearService, "prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());

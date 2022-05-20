@@ -2,6 +2,7 @@ package com.syntifi.near.api.indexer.service;
 
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.indexer.model.AccountIdList;
+import com.syntifi.near.api.indexer.model.NearValue;
 import com.syntifi.near.api.indexer.model.RecentActivity;
 import com.syntifi.near.api.indexer.model.StakingDeposit;
 import okhttp3.Headers;
@@ -58,6 +59,23 @@ public interface NearIndexerService {
      */
     @GET("account/{accountId}/activity")
     Call<RecentActivity> getNearRecentActivity(@Path("accountId") String accountId);
+
+    /**
+     * Fetches the value of near in fiat currency
+     *
+     * @return the Near fiat value
+     */
+    @GET("/fiat")
+    Call<NearValue> getNearValue();
+
+    /**
+     * Fetches a list of accounts for a given public key
+     *
+     * @param publicKey the account public key
+     * @return list containing all account ids
+     */
+    @GET("publicKey/{publicKey}/accounts")
+    Call<List<String>> getNearAccounts(@Path("publicKey") String publicKey);
 
     /**
      * NearIndexerService builder

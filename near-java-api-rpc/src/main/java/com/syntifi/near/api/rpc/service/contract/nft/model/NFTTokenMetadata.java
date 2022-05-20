@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.contract.nft;
+package com.syntifi.near.api.rpc.service.contract.nft.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

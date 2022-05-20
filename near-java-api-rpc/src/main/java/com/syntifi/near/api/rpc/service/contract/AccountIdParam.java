@@ -2,6 +2,7 @@ package com.syntifi.near.api.rpc.service.contract;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +15,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
-public class AccountIdParam implements ConvertibleToBase64String {
+public class AccountIdParam implements ContractMethodParams {
     @JsonProperty("account_id")
     private String accountId;
 }
