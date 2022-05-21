@@ -11,7 +11,6 @@
 
     <modules>
         <module>near-java-api-rpc</module>
-        <module>near-java-api-helper</module>
         <module>near-java-api-indexer</module>
         <module>near-java-api-common</module>
     </modules>
@@ -59,8 +58,8 @@
         <lombok.version>1.18.24</lombok.version>
         <jsonrpc4j.version>1.6.1-oak</jsonrpc4j.version>
         <retrofit2.version>2.9.0</retrofit2.version>
-        <jackson.version>2.13.2</jackson.version>
-        <jackson-databind.version>2.13.2.2</jackson-databind.version>
+        <jackson.version>2.13.3</jackson.version>
+        <jackson-databind.version>2.13.3</jackson-databind.version>
         <junit.version>5.8.2</junit.version>
         <jsonassert.version>1.5.0</jsonassert.version>
         <borshj.version>0.1.0</borshj.version>
