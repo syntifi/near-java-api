@@ -1,13 +1,14 @@
-package com.syntifi.near.api.rpc.service.contract;
+package com.syntifi.near.api.indexer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * The account id param for contracts
+ * RecentActivityArg
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -15,9 +16,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class AccountIdParam implements ContractMethodParams {
-    @JsonProperty("account_id")
-    private String accountId;
+@Builder
+public class RecentActivityArgTransfer implements RecentActivityArg {
+    @JsonProperty("deposit")
+    private String deposit;
 }

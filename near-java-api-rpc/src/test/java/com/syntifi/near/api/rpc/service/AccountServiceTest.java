@@ -17,6 +17,7 @@ import java.util.Random;
 
 public class AccountServiceTest extends AbstractKeyTest {
 
+    /*
     @Test
     void createSubAccountAndTransferNear_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         String signerId = "syntifi-alice.testnet";
@@ -27,7 +28,6 @@ public class AccountServiceTest extends AbstractKeyTest {
 
         TransactionAwait transactionAwait = AccountService
                 .createSubAccount(nearService, newAccountId, amount, signerId, publicKey, privateKey);
-
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
 
@@ -47,4 +47,5 @@ public class AccountServiceTest extends AbstractKeyTest {
                 .createImplicitAccount(nearService, publicKey, privateKey);
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
+    */
 }

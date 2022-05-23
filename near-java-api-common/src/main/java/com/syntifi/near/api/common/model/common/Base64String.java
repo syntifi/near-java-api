@@ -25,12 +25,24 @@ public class Base64String {
     @JsonIgnore
     private String decodedString;
 
+    /**
+     * Creates an instance of Base64String from a decoded string value
+     *
+     * @param value the base64 decoded string
+     * @return a Base64String from the decoded string
+     */
     public static Base64String fromDecodedString(String value) {
         return Base64String.builder()
                 .decodedString(value)
                 .encodedString(Base64.getEncoder().encodeToString(value.getBytes())).build();
     }
 
+    /**
+     * Creates an instance of Base64String from an encoded string value
+     *
+     * @param value the base64 encoded string
+     * @return a Base64String from the encoded string
+     */
     public static Base64String fromEncodedString(String value) {
         return Base64String.builder()
                 .decodedString(Arrays.toString(Base64.getDecoder().decode(value)))

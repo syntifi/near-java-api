@@ -1,6 +1,8 @@
 package com.syntifi.near.api.indexer.service;
 
 import com.syntifi.near.api.indexer.model.AccountIdList;
+import com.syntifi.near.api.indexer.model.NearValue;
+import com.syntifi.near.api.indexer.model.RecentActivity;
 import com.syntifi.near.api.indexer.model.StakingDeposit;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.syntifi.near.api.indexer.service.NearIndexerServiceHelper.nearIndexerService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,6 +27,39 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class NearIndexerServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NearIndexerServiceTest.class);
+
+    @Test
+    void getNearValue_valid() throws IOException {
+        Response<NearValue> value = nearIndexerService.getNearValue().execute();
+
+        assertTrue(value.isSuccessful());
+
+        NearValue nearValue = value.body();
+
+        assertNotNull(nearValue);
+
+        LOGGER.debug("Response {}", nearValue.getUsDollars());
+        LOGGER.debug("Response {}", nearValue.getEuros());
+        LOGGER.debug("Response {}", nearValue.getChineseYuan());
+        LOGGER.debug("Response {}", nearValue.getLastUpdatedAt());
+
+        assertNotNull(nearValue);
+    }
+
+    @Test
+    void getNearAccounts_valid() throws IOException {
+        Response<List<String>> value = nearIndexerService.getNearAccounts("ed25519:F8jARHGZdHqnwrxrnv1pFVzzirXZR2vJzeYbvwQbxZyP").execute();
+
+        assertTrue(value.isSuccessful());
+
+        List<String> nearAccounts = value.body();
+
+        assertNotNull(nearAccounts);
+
+        assertEquals(1, nearAccounts.size());
+
+        assertEquals("syntifi-alice.testnet", nearAccounts.get(0));
+    }
 
     @Test
     void getAccountLikelyNFTs_valid() throws IOException {
@@ -62,5 +98,22 @@ public class NearIndexerServiceTest {
         assertNotNull(stakingDeposits);
 
         stakingDeposits.forEach(i -> LOGGER.debug("deposit: {} validator: {}", i.getDeposit(), i.getValidator()));
+    }
+
+    @Test
+    void getNearRecentActivity_valid() throws IOException {
+        Response<RecentActivity> value = nearIndexerService.getNearRecentActivity("wallet-test.testnet").execute();
+
+        assertTrue(value.isSuccessful());
+
+        RecentActivity nearValue = value.body();
+
+        assertNotNull(nearValue);
+
+        nearValue.forEach(item -> LOGGER.debug("Item kind: {}", item.getActionKind()));
+
+        LOGGER.debug("Response {}", nearValue.size());
+
+        assertNotNull(nearValue);
     }
 }

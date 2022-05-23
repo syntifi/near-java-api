@@ -8,15 +8,28 @@ import lombok.Setter;
 import java.io.IOException;
 
 /**
- * @param <T>
+ * A basic typed function call result
+ *
+ * @param <R> the result type to deserialize to
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
  */
 @Getter
 @Setter
-public class FunctionCallResult<T> {
+public class FunctionCallResult<R> {
     private ContractFunctionCallResult contractFunctionCallResult;
-    private T result;
+    private R result;
 
-    public FunctionCallResult(ContractFunctionCallResult contractFunctionCallResult, Class<T> clazz) throws IOException {
+    /**
+     * Creates an instance of FunctionCallResult with the type for deserializing the result data and
+     * the full contract response object
+     *
+     * @param contractFunctionCallResult the full result object from the request
+     * @param clazz                      the class of type R to load the result to
+     * @throws IOException thrown if failed to map json to class
+     */
+    public FunctionCallResult(ContractFunctionCallResult contractFunctionCallResult, Class<R> clazz) throws IOException {
         this.contractFunctionCallResult = contractFunctionCallResult;
         if (contractFunctionCallResult.getResult() != null) {
             result = NearObjectMapper.INSTANCE.readValue(contractFunctionCallResult.getResult(), clazz);
