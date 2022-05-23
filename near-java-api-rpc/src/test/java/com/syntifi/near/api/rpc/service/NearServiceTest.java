@@ -42,7 +42,7 @@ import java.util.Map;
 import static com.syntifi.near.api.common.json.JsonHelper.OBJECT_MAPPER;
 import static com.syntifi.near.api.common.json.JsonHelper.getPrettyJson;
 import static com.syntifi.near.api.common.json.JsonHelper.loadJsonFromResourceFile;
-import static com.syntifi.near.api.rpc.service.NearServiceHelper.nearService;
+import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;

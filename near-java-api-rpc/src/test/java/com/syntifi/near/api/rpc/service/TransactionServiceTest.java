@@ -22,7 +22,7 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Base64;
 
-import static com.syntifi.near.api.rpc.service.NearServiceHelper.nearService;
+import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

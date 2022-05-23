@@ -14,7 +14,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Base64;
 
-import static com.syntifi.near.api.rpc.service.NearServiceHelper.nearService;
+import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
 
 public class NearServiceContractsStakingTest {
 

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static com.syntifi.near.api.rpc.service.NearServiceHelper.nearService;
+import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
 
 public class NearServiceContractsFTsTest {
 
