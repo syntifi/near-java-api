@@ -7,6 +7,7 @@ import com.syntifi.crypto.key.mnemonic.MnemonicCode;
 import com.syntifi.crypto.key.mnemonic.exception.MnemonicException;
 import com.syntifi.near.api.common.helper.Formats;
 import com.syntifi.near.api.common.key.AbstractKeyTest;
+import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
@@ -23,6 +24,7 @@ import java.util.Random;
 
 import static com.syntifi.near.api.rpc.service.NearServiceTestnetHelper.nearService;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AccountServiceTest extends AbstractKeyTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
@@ -58,11 +60,12 @@ public class AccountServiceTest extends AbstractKeyTest {
         PrivateKey privateKey = aliceNearPrivateKey;
         PublicKey publicKey = aliceNearPublicKey;
 
-        TransactionAwait transactionAwait = AccountService
-                .createSubAccount(nearService, newAccountId, amount, signerId, publicKey, privateKey);
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        EncodedHash transactionHash = AccountService
+                .createSubAccountAsync(nearService, newAccountId, amount, signerId, publicKey, privateKey);
+        assertTrue(transactionHash.getDecodedHash().length > 0);
     }
 
+    /*
     @Test
     void createNamedAccount_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         Random rnd = new Random();
@@ -75,5 +78,5 @@ public class AccountServiceTest extends AbstractKeyTest {
                 .createNamedAccount(nearService, "syntifi-" + Math.abs(rnd.nextInt()) + ".testnet",
                         newPublicKey, amount, "testnet", publicKey, privateKey);
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
-    }
+    } */
 }

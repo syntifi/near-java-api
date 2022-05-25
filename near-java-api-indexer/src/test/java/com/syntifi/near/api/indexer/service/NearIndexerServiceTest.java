@@ -56,9 +56,9 @@ public class NearIndexerServiceTest {
 
         assertNotNull(nearAccounts);
 
-        assertEquals(1, nearAccounts.size());
+        assertTrue(nearAccounts.size()>=1);
 
-        assertEquals("syntifi-alice.testnet", nearAccounts.get(0));
+        assertTrue(nearAccounts.contains("syntifi-alice.testnet"));
     }
 
     @Test
