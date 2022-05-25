@@ -1,0 +1,161 @@
+{
+  "receipts_outcome": [
+    {
+      "block_hash": "DVQD1bykhgQCYPLkSMK4rS2U56Rpm2jTLuzzWenW99ew",
+      "id": "3HdfwtvmX4V5tkvdioVwEHndfTFnNYceAA6crkjKgVi9",
+      "outcome": {
+        "executor_id": "syntifi-alice.new.testnet",
+        "gas_burnt": 207666875000,
+        "logs": [],
+        "metadata": {
+          "gas_profile": [],
+          "version": 1
+        },
+        "receipt_ids": [
+          "AqhRYYX4EBAGnLCwVEuVcQyhVyWg5k58M6a5fizyL2a",
+          "EKUnogeY5M3bEwu6kFARWZXg6je5U6p64dmy3YBFQXGs"
+        ],
+        "status": {
+          "Failure": {
+            "ActionError": {
+              "index": 0,
+              "kind": {
+                "CreateAccountNotAllowed": {
+                  "account_id": "syntifi-alice.new.testnet",
+                  "predecessor_id": "syntifi-alice.testnet"
+                }
+              }
+            }
+          }
+        },
+        "tokens_burnt": "20766687500000000000"
+      },
+      "proof": [
+        {
+          "direction": "Right",
+          "hash": "3uavQp264rBNZs2oepz3Ybh4eBU8WupPTTyYYvR3viTw"
+        },
+        {
+          "direction": "Right",
+          "hash": "JCVMzAGhyATva4bWRmnGooBLjYbqrVvkoTcBgP4mV2tK"
+        }
+      ]
+    },
+    {
+      "block_hash": "3U1vJcmKHkYSpRxasPnWTNyATKtinoFkzTHanYdRtXkA",
+      "id": "AqhRYYX4EBAGnLCwVEuVcQyhVyWg5k58M6a5fizyL2a",
+      "outcome": {
+        "executor_id": "syntifi-alice.testnet",
+        "gas_burnt": 223182562500,
+        "logs": [],
+        "metadata": {
+          "gas_profile": [],
+          "version": 1
+        },
+        "receipt_ids": [],
+        "status": {
+          "SuccessValue": ""
+        },
+        "tokens_burnt": "0"
+      },
+      "proof": [
+        {
+          "direction": "Right",
+          "hash": "6rRBbxri4k9hNTPWJYQP2C6tcwx8NHmAvQxGfDGFeJsb"
+        },
+        {
+          "direction": "Left",
+          "hash": "3ZPaZVvEGosgcMH8frgcT1mZcbRFQDQZEhGXWhygbsgx"
+        }
+      ]
+    },
+    {
+      "block_hash": "3U1vJcmKHkYSpRxasPnWTNyATKtinoFkzTHanYdRtXkA",
+      "id": "EKUnogeY5M3bEwu6kFARWZXg6je5U6p64dmy3YBFQXGs",
+      "outcome": {
+        "executor_id": "syntifi-alice.testnet",
+        "gas_burnt": 223182562500,
+        "logs": [],
+        "metadata": {
+          "gas_profile": [],
+          "version": 1
+        },
+        "receipt_ids": [],
+        "status": {
+          "SuccessValue": ""
+        },
+        "tokens_burnt": "0"
+      },
+      "proof": [
+        {
+          "direction": "Left",
+          "hash": "EKxB1HwhbNbFM57iMfdJB7XoUd2s4wYA9Pz8xLXdEqBX"
+        },
+        {
+          "direction": "Left",
+          "hash": "3ZPaZVvEGosgcMH8frgcT1mZcbRFQDQZEhGXWhygbsgx"
+        }
+      ]
+    }
+  ],
+  "status": {
+    "Failure": {
+      "ActionError": {
+        "index": 0,
+        "kind": {
+          "CreateAccountNotAllowed": {
+            "account_id": "syntifi-alice.new.testnet",
+            "predecessor_id": "syntifi-alice.testnet"
+          }
+        }
+      }
+    }
+  },
+  "transaction": {
+    "actions": [
+      "CreateAccount",
+      {
+        "Transfer": {
+          "deposit": "1"
+        }
+      },
+      {
+        "AddKey": {
+          "access_key": {
+            "nonce": 83906394000150,
+            "permission": "FullAccess"
+          },
+          "public_key": "ed25519:F8jARHGZdHqnwrxrnv1pFVzzirXZR2vJzeYbvwQbxZyP"
+        }
+      }
+    ],
+    "hash": "4w2KLyvyM1Hhx3Xd7RfCVx1CMdPYUGj3kXigLsQ5qLgn",
+    "nonce": 83906394000151,
+    "public_key": "ed25519:F8jARHGZdHqnwrxrnv1pFVzzirXZR2vJzeYbvwQbxZyP",
+    "receiver_id": "syntifi-alice.new.testnet",
+    "signature": "ed25519:3izQp2iHHmW3JNfDYeD9rnF5uqGFjV9R5gV7Wf6iKfs7PARE38HFJNM4uGAYsfh5PryfN1QcNAESEjkytB4cAoYR",
+    "signer_id": "syntifi-alice.testnet"
+  },
+  "transaction_outcome": {
+    "block_hash": "BNexnT1ZZTEaDekvvL1e9zwXYd1CWgXskAnGwYnJmUVK",
+    "id": "4w2KLyvyM1Hhx3Xd7RfCVx1CMdPYUGj3kXigLsQ5qLgn",
+    "outcome": {
+      "executor_id": "syntifi-alice.testnet",
+      "gas_burnt": 424555062500,
+      "logs": [],
+      "metadata": {
+        "gas_profile": null,
+        "version": 1
+      },
+      "receipt_ids": [
+        "3HdfwtvmX4V5tkvdioVwEHndfTFnNYceAA6crkjKgVi9"
+      ],
+      "status": {
+        "SuccessReceiptId": "3HdfwtvmX4V5tkvdioVwEHndfTFnNYceAA6crkjKgVi9"
+      },
+      "tokens_burnt": "42455506250000000000"
+    },
+    "proof": []
+  }
+}
+

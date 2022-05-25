@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.rpc.model.accesskey.permission.Permission;
+import com.syntifi.near.borshj.Borsh;
+import com.syntifi.near.borshj.annotation.BorshField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,10 +25,12 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccessKey {
+public class AccessKey implements Borsh {
+    @BorshField(order = 1)
     @JsonProperty("nonce")
     private long nonce;
 
+    @BorshField(order = 2)
     @JsonProperty("permission")
     private Permission permission;
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BaseService {
     /**
-     * Prepares the transaction to send
+     * Prepares the transaction to send with a given nonce
      *
      * @param nearService      the near service instance to use
      * @param signerId         the signer id
@@ -26,32 +26,23 @@ public class BaseService {
      * @param signerPublicKey  signer public key
      * @param signerPrivateKey signer private key
      * @param actionList       list of {@link Action} to send
-     * @param nonce
-     * @param block
+     * @param nonce            nonce to add in the transaction
      * @return the base64 encoded signed transaction string
      * @throws GeneralSecurityException thrown if failed to sign the transaction
      */
     public static String prepareTransactionForActionList(NearService nearService, String signerId, String receiverId,
                                                          PublicKey signerPublicKey, PrivateKey signerPrivateKey,
-                                                         List<Action> actionList, Long nonce, Block block)
+                                                         List<Action> actionList, Long nonce)
             throws GeneralSecurityException {
-        Block block1 = block == null ?nearService.getBlock(Finality.FINAL) : block;
-        long nextNonce;
-
-        if (nonce == null) {
-            AccessKey accessKey = nearService.viewAccessKey(Finality.FINAL, signerId, signerPublicKey.toEncodedBase58String());
-            nextNonce = accessKey.getNonce() + 1L;
-        } else {
-            nextNonce = 0L;
-        }
+        Block block = nearService.getBlock(Finality.FINAL);
 
         Transaction transaction = Transaction
                 .builder()
                 .signerId(signerId)
                 .publicKey(signerPublicKey)
-                .nonce(nextNonce)
+                .nonce(nonce)
                 .receiverId(receiverId)
-                .blockHash(block1.getHeader().getHash().getDecodedHash())
+                .blockHash(block.getHeader().getHash().getDecodedHash())
                 .actions(actionList)
                 .build();
 
@@ -70,5 +61,26 @@ public class BaseService {
         byte[] borshTx = Borsh.serialize(signedTransaction);
 
         return Base64.getEncoder().encodeToString(borshTx);
+    }
+
+
+    /**
+     * Prepares the transaction to send and automatically queries for the next nonce
+     *
+     * @param nearService      the near service instance to use
+     * @param signerId         the signer id
+     * @param receiverId       the receiver id
+     * @param signerPublicKey  signer public key
+     * @param signerPrivateKey signer private key
+     * @param actionList       list of {@link Action} to send
+     * @return the base64 encoded signed transaction string
+     * @throws GeneralSecurityException thrown if failed to sign the transaction
+     */
+    public static String prepareTransactionForActionList(NearService nearService, String signerId, String receiverId,
+                                                         PublicKey signerPublicKey, PrivateKey signerPrivateKey,
+                                                         List<Action> actionList) throws GeneralSecurityException {
+       AccessKey accessKey = nearService.viewAccessKey(Finality.FINAL, signerId, signerPublicKey.toEncodedBase58String());
+       return BaseService.prepareTransactionForActionList(nearService, signerId, receiverId,
+               signerPublicKey, signerPrivateKey, actionList,accessKey.getNonce() + 1L);
     }
 }

@@ -462,6 +462,22 @@ public class NearServiceTest {
         JSONAssert.assertEquals(inputJson, getPrettyJson(transactionStatus), false);
     }
 
+    //TODO: Check implement the code to run this test
+    // Failures at: https://docs.near.org/docs/roles/integrator/errors/error-implementation
+/*    @Test
+    void loadedFromExample_transactionStatusFailure()
+            throws IOException, JSONException {
+
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/transaction/example/transaction-status-failure.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TransactionStatus.class));
+
+        TransactionStatus transactionStatus = OBJECT_MAPPER.readValue(inputJson, TransactionStatus.class);
+
+        JSONAssert.assertEquals(inputJson, getPrettyJson(transactionStatus), false);
+    }
+*/
     @Test
     void getTransactionStatus_transactionStatus_notNull() {
         String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";

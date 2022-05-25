@@ -83,7 +83,7 @@ public class TransactionService extends BaseService {
                                                         List<Action> actionList)
             throws GeneralSecurityException {
         return nearService.sendTransactionAwait(BaseService.prepareTransactionForActionList(
-                nearService, signerId, receiverId, signerPublicKey, signerPrivateKey, actionList, null, null));
+                nearService, signerId, receiverId, signerPublicKey, signerPrivateKey, actionList ));
     }
 
     /**
@@ -105,7 +105,7 @@ public class TransactionService extends BaseService {
         return EncodedHash.builder()
                 .encodedHash(nearService.sendTransactionAsync(
                         BaseService.prepareTransactionForActionList(nearService, signerId,
-                                receiverId, signerPublicKey, signerPrivateKey, actionList, null, null)))
+                                receiverId, signerPublicKey, signerPrivateKey, actionList)))
                 .build();
     }
 

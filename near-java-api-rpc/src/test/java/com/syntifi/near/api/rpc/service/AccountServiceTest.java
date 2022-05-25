@@ -1,28 +1,60 @@
 package com.syntifi.near.api.rpc.service;
 
-import com.syntifi.crypto.key.Ed25519PrivateKey;
+import com.syntifi.crypto.key.encdec.Base58;
+import com.syntifi.crypto.key.encdec.Hex;
+import com.syntifi.crypto.key.mnemonic.Language;
+import com.syntifi.crypto.key.mnemonic.MnemonicCode;
+import com.syntifi.crypto.key.mnemonic.exception.MnemonicException;
+import com.syntifi.near.api.common.helper.Formats;
 import com.syntifi.near.api.common.key.AbstractKeyTest;
-import com.syntifi.near.api.common.model.key.KeyType;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.GeneralSecurityException;
+import java.util.List;
+import java.util.Random;
+
 import static com.syntifi.near.api.rpc.service.NearServiceTestnetHelper.nearService;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-import java.math.BigInteger;
-import java.security.GeneralSecurityException;
-import java.util.Random;
-
 public class AccountServiceTest extends AbstractKeyTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
 
-    /*
+    @Test
+    void createImplicitAccountFromMnemonic_should_getStatus_SuccessValueStatus() throws GeneralSecurityException, IOException, MnemonicException.MnemonicLengthException {
+        MnemonicCode mnemonicCode = new MnemonicCode(Language.EN);
+        List<String> words = mnemonicCode.generateSecureRandomWords();
+        PrivateKey newPrivateKey = KeyService.deriveFromSeed(mnemonicCode.toSeed(words, ""));
+        PublicKey newPublicKey = KeyService.derivePublicKey(newPrivateKey);
+        LOGGER.debug("=============> Mnemonic");
+        LOGGER.info(String.join(" ", words));
+        LOGGER.debug("=============> Public key ");
+        LOGGER.debug(Hex.encode(newPublicKey.getData()));
+        LOGGER.debug("=============> Privatekey ");
+        LOGGER.debug(Hex.encode(newPrivateKey.getData()));
+        String signerId = "syntifi-alice.testnet";
+        BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
+        PrivateKey privateKey = aliceNearPrivateKey;
+        PublicKey publicKey = aliceNearPublicKey;
+        TransactionAwait transactionAwait = TransactionService
+                .sendTransferActionAwait(nearService, signerId, Hex.encode(newPublicKey.getData()),
+                        publicKey, privateKey, amount);
+        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+    }
+
     @Test
     void createSubAccountAndTransferNear_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
+        Random rnd = new Random();
         String signerId = "syntifi-alice.testnet";
-        String newAccountId = "syntifi-alice.new.testnet";
-        BigInteger amount = new BigInteger("1", 10);
+        String newAccountId = Math.abs(rnd.nextInt()) + "." + signerId;
+        BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
         PrivateKey privateKey = aliceNearPrivateKey;
         PublicKey publicKey = aliceNearPublicKey;
 
@@ -32,20 +64,16 @@ public class AccountServiceTest extends AbstractKeyTest {
     }
 
     @Test
-    void createImplicitAccount_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
-        Random random = new Random();
-        byte[] key = new byte[32];
-        random.nextBytes(key);
-        Ed25519PrivateKey pk = new Ed25519PrivateKey();
-        pk.setKey(key);
-        PrivateKey privateKey = new PrivateKey();
-        privateKey.setData(pk.getKey());
-        privateKey.setType(KeyType.ED25519);
-        PublicKey publicKey = new PublicKey();
-        publicKey.setData(pk.derivePublicKey().getKey());
+    void createNamedAccount_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
+        Random rnd = new Random();
+        PrivateKey newPrivateKey = KeyService.deriveRandomKey();
+        PublicKey newPublicKey = KeyService.derivePublicKey(newPrivateKey);
+        PrivateKey privateKey = bobNearPrivateKey;
+        PublicKey publicKey = bobNearPublicKey;
+        BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
         TransactionAwait transactionAwait = AccountService
-                .createImplicitAccount(nearService, publicKey, privateKey);
+                .createNamedAccount(nearService, "syntifi-" + Math.abs(rnd.nextInt()) + ".testnet",
+                        newPublicKey, amount, "testnet", publicKey, privateKey);
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
-    */
 }
