@@ -35,9 +35,9 @@ public class FunctionCallAction implements Action {
 
     @BorshField(order = 3)
     @JsonProperty("gas")
-    private BigInteger gas;
+    private Long gas;
 
     @BorshField(order = 4)
     @JsonProperty("deposit")
-    private String deposit;
+    private BigInteger deposit;
 }

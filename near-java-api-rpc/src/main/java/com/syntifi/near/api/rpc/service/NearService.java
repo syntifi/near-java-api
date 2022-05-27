@@ -832,15 +832,16 @@ public interface NearService {
     /**
      * NearService builder
      *
-     * @param url the rpc peer url to connect to
+     * @param network the rpc peer url to connect to
      * @return the data holding object
      * @throws MalformedURLException thrown when url is invalid or unparseable
      */
-    static NearService usingPeer(String url) throws MalformedURLException {
+    static NearService usingNetwork(Network network) throws MalformedURLException {
         Map<String, String> customHeaders = new TreeMap<>();
         customHeaders.put("Content-Type", "application/json");
 
-        JsonRpcHttpClient client = new JsonRpcHttpClient(NearRpcObjectMapper.INSTANCE, new URL("https://" + url),
+        JsonRpcHttpClient client = new JsonRpcHttpClient(NearRpcObjectMapper.INSTANCE,
+                new URL("https://" + network.getRpcUrl()),
                 customHeaders);
 
         client.setExceptionResolver(new NearServiceExceptionResolver());

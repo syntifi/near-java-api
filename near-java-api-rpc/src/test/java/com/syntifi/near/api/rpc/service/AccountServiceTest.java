@@ -1,6 +1,5 @@
 package com.syntifi.near.api.rpc.service;
 
-import com.syntifi.crypto.key.encdec.Base58;
 import com.syntifi.crypto.key.encdec.Hex;
 import com.syntifi.crypto.key.mnemonic.Language;
 import com.syntifi.crypto.key.mnemonic.MnemonicCode;
@@ -65,18 +64,19 @@ public class AccountServiceTest extends AbstractKeyTest {
         assertTrue(transactionHash.getDecodedHash().length > 0);
     }
 
-    /*
     @Test
     void createNamedAccount_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         Random rnd = new Random();
         PrivateKey newPrivateKey = KeyService.deriveRandomKey();
         PublicKey newPublicKey = KeyService.derivePublicKey(newPrivateKey);
-        PrivateKey privateKey = bobNearPrivateKey;
-        PublicKey publicKey = bobNearPublicKey;
+        String creatorId = "syntifi-alice.testnet";
+        PrivateKey privateKey = aliceNearPrivateKey;
+        PublicKey publicKey = aliceNearPublicKey;
         BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
-        TransactionAwait transactionAwait = AccountService
-                .createNamedAccount(nearService, "syntifi-" + Math.abs(rnd.nextInt()) + ".testnet",
-                        newPublicKey, amount, "testnet", publicKey, privateKey);
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
-    } */
+        EncodedHash transactionHash = AccountService
+                .createNamedAccountAsync(nearService, "testnet",
+                        "syntifi-" + Math.abs(rnd.nextInt()) + ".testnet",
+                        newPublicKey, amount, creatorId, publicKey, privateKey);
+        assertTrue(transactionHash.getDecodedHash().length > 0);
+    }
 }

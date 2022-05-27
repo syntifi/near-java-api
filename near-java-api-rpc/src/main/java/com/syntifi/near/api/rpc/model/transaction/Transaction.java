@@ -48,16 +48,16 @@ public class Transaction implements Borsh {
     @JsonProperty("receiver_id")
     private String receiverId;
 
+    @BorshField(order = 5)
+    @JsonIgnore
+    private byte[] blockHash = new byte[BLOCK_HASH_LENGTH];
+
     @BorshField(order = 6)
     @JsonProperty("actions")
     private Collection<Action> actions;
 
     @JsonProperty("signature")
     private Signature signature;
-
-    @BorshField(order = 5)
-    @JsonIgnore
-    private byte[] blockHash = new byte[BLOCK_HASH_LENGTH];
 
     @JsonProperty("hash")
     private EncodedHash hash;

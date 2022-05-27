@@ -8,7 +8,7 @@
                         {
                             "FunctionCall": {
                                 "args": "eyJhbW91bnQiOiIxMDAwIiwicmVjZWl2ZXJfaWQiOiJib3dlbiJ9",
-                                "deposit": "0",
+                                "deposit": 0,
                                 "gas": 100000000000000,
                                 "method_name": "transfer"
                             }
@@ -188,7 +188,7 @@
             {
                 "FunctionCall": {
                     "args": "eyJhbW91bnQiOiIxMDAwIiwicmVjZWl2ZXJfaWQiOiJib3dlbiJ9",
-                    "deposit": "0",
+                    "deposit": 0,
                     "gas": 100000000000000,
                     "method_name": "transfer"
                 }

@@ -32,7 +32,7 @@
                         "method_name": "ft_transfer_call",
                         "args": "eyJyZWNlaXZlcl9pZCI6IjA5Lm9yYWNsZS5mbHV4LWRldiIsImFtb3VudCI6IjIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJtc2ciOiJ7XCJTdGFrZURhdGFSZXF1ZXN0XCI6e1wiaWRcIjpcIjMxMjdcIixcIm91dGNvbWVcIjp7XCJBbnN3ZXJcIjp7XCJTdHJpbmdcIjpcIltdXCJ9fX19In0=",
                         "gas": 300000000000000,
-                        "deposit": "1"
+                        "deposit": 1
                     }
                 }
             ],
@@ -50,7 +50,7 @@
                         "method_name": "ft_transfer_call",
                         "args": "eyJyZWNlaXZlcl9pZCI6IjA5Lm9yYWNsZS5mbHV4LWRldiIsImFtb3VudCI6IjIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAiLCJtc2ciOiJ7XCJTdGFrZURhdGFSZXF1ZXN0XCI6e1wiaWRcIjpcIjMxMjdcIixcIm91dGNvbWVcIjp7XCJBbnN3ZXJcIjp7XCJTdHJpbmdcIjpcIltdXCJ9fX19In0=",
                         "gas": 300000000000000,
-                        "deposit": "1"
+                        "deposit": 1
                     }
                 }
             ],

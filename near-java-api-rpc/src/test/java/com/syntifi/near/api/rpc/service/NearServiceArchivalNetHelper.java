@@ -11,16 +11,14 @@ public class NearServiceArchivalNetHelper {
 
     public static NearService nearService = null;
 
-    static {
-        // WARN: Using archival (archival-rpc.testnet.near.org) testnet (instead of "rpc.testnet.near.org") for stabler
-        // results
-        String peerAddress = "archival-rpc.testnet.near.org";
+    public static Network network = Network.ARCHIVAL_TEST_NET;
 
-        LOGGER.debug("======== Running tests with peer {} ========", peerAddress);
+    static {
+        LOGGER.debug("======== Running tests with peer {} ========", network.getRpcUrl());
         try {
-            nearService = NearService.usingPeer(peerAddress);
+            nearService = NearService.usingNetwork(network);
         } catch (MalformedURLException e) {
-            LOGGER.error("Invalid URL {}", peerAddress);
+            LOGGER.error("Invalid URL {}", network.getRpcUrl());
             e.printStackTrace();
         }
     }
