@@ -56,16 +56,16 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      @JsonProperty(<span class="jxr_string">"receiver_id"</span>)
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">private</strong> String receiverId;
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      @BorshField(order = 6)
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      @JsonProperty(<span class="jxr_string">"actions"</span>)
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">private</strong> Collection&lt;Action&gt; actions;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      @BorshField(order = 5)
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      @JsonIgnore
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      <strong class="jxr_keyword">private</strong> byte[] blockHash = <strong class="jxr_keyword">new</strong> byte[BLOCK_HASH_LENGTH];
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      @JsonProperty(<span class="jxr_string">"signature"</span>)
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">private</strong> <a name="Signature" href="../../../../../../../com/syntifi/near/api/common/model/key/Signature.html#Signature">Signature</a> signature;
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      @BorshField(order = 5)
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>      @JsonIgnore
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> byte[] blockHash = <strong class="jxr_keyword">new</strong> byte[BLOCK_HASH_LENGTH];
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      @BorshField(order = 6)
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      @JsonProperty(<span class="jxr_string">"actions"</span>)
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">private</strong> Collection&lt;Action&gt; actions;
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      @JsonProperty(<span class="jxr_string">"signature"</span>)
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> <a name="Signature" href="../../../../../../../com/syntifi/near/api/common/model/key/Signature.html#Signature">Signature</a> signature;
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      @JsonProperty(<span class="jxr_string">"hash"</span>)
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <a name="EncodedHash" href="../../../../../../../com/syntifi/near/api/common/model/common/EncodedHash.html#EncodedHash">EncodedHash</a> hash;
