@@ -85,7 +85,7 @@ public class TransactionServiceTest extends AbstractKeyTest {
         assertTrue(publicKey.getPublicKey().verify(hashedTx, signedTransactionDec.getSignature().getData()));
     }
 
-    @Test
+/*    @Test
     void sent100toBobAwait_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         String signerId = "syntifi-alice.testnet";
         String receiverId = "syntifi-bob.testnet";
@@ -112,7 +112,7 @@ public class TransactionServiceTest extends AbstractKeyTest {
 
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
-
+*/
     @Test
     void sent100toBobAsync_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         String signerId = "syntifi-alice.testnet";
