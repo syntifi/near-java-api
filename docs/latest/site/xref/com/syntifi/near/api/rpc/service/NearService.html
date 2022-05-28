@@ -840,22 +840,23 @@
 <a class="jxr_linenumber" name="L832" href="#L832">832</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L833" href="#L833">833</a> <em class="jxr_javadoccomment">     * NearService builder</em>
 <a class="jxr_linenumber" name="L834" href="#L834">834</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L835" href="#L835">835</a> <em class="jxr_javadoccomment">     * @param url the rpc peer url to connect to</em>
+<a class="jxr_linenumber" name="L835" href="#L835">835</a> <em class="jxr_javadoccomment">     * @param network the rpc peer url to connect to</em>
 <a class="jxr_linenumber" name="L836" href="#L836">836</a> <em class="jxr_javadoccomment">     * @return the data holding object</em>
 <a class="jxr_linenumber" name="L837" href="#L837">837</a> <em class="jxr_javadoccomment">     * @throws MalformedURLException thrown when url is invalid or unparseable</em>
 <a class="jxr_linenumber" name="L838" href="#L838">838</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L839" href="#L839">839</a>     <strong class="jxr_keyword">static</strong> <a name="NearService" href="../../../../../../com/syntifi/near/api/rpc/service/NearService.html#NearService">NearService</a> usingPeer(String url) <strong class="jxr_keyword">throws</strong> MalformedURLException {
+<a class="jxr_linenumber" name="L839" href="#L839">839</a>     <strong class="jxr_keyword">static</strong> <a name="NearService" href="../../../../../../com/syntifi/near/api/rpc/service/NearService.html#NearService">NearService</a> usingNetwork(<a name="Network" href="../../../../../../com/syntifi/near/api/rpc/service/Network.html#Network">Network</a> network) <strong class="jxr_keyword">throws</strong> MalformedURLException {
 <a class="jxr_linenumber" name="L840" href="#L840">840</a>         Map&lt;String, String&gt; customHeaders = <strong class="jxr_keyword">new</strong> TreeMap&lt;&gt;();
 <a class="jxr_linenumber" name="L841" href="#L841">841</a>         customHeaders.put(<span class="jxr_string">"Content-Type"</span>, <span class="jxr_string">"application/json"</span>);
 <a class="jxr_linenumber" name="L842" href="#L842">842</a> 
-<a class="jxr_linenumber" name="L843" href="#L843">843</a>         JsonRpcHttpClient client = <strong class="jxr_keyword">new</strong> JsonRpcHttpClient(NearRpcObjectMapper.INSTANCE, <strong class="jxr_keyword">new</strong> URL(<span class="jxr_string">"https://"</span> + url),
-<a class="jxr_linenumber" name="L844" href="#L844">844</a>                 customHeaders);
-<a class="jxr_linenumber" name="L845" href="#L845">845</a> 
-<a class="jxr_linenumber" name="L846" href="#L846">846</a>         client.setExceptionResolver(<strong class="jxr_keyword">new</strong> <a name="NearServiceExceptionResolver" href="../../../../../../com/syntifi/near/api/rpc/service/exception/NearServiceExceptionResolver.html#NearServiceExceptionResolver">NearServiceExceptionResolver</a>());
-<a class="jxr_linenumber" name="L847" href="#L847">847</a> 
-<a class="jxr_linenumber" name="L848" href="#L848">848</a>         <strong class="jxr_keyword">return</strong> ProxyUtil.createClientProxy(NearService.<strong class="jxr_keyword">class</strong>.getClassLoader(), NearService.<strong class="jxr_keyword">class</strong>, client);
-<a class="jxr_linenumber" name="L849" href="#L849">849</a>     }
-<a class="jxr_linenumber" name="L850" href="#L850">850</a> }
+<a class="jxr_linenumber" name="L843" href="#L843">843</a>         JsonRpcHttpClient client = <strong class="jxr_keyword">new</strong> JsonRpcHttpClient(NearRpcObjectMapper.INSTANCE,
+<a class="jxr_linenumber" name="L844" href="#L844">844</a>                 <strong class="jxr_keyword">new</strong> URL(<span class="jxr_string">"https://"</span> + network.getRpcUrl()),
+<a class="jxr_linenumber" name="L845" href="#L845">845</a>                 customHeaders);
+<a class="jxr_linenumber" name="L846" href="#L846">846</a> 
+<a class="jxr_linenumber" name="L847" href="#L847">847</a>         client.setExceptionResolver(<strong class="jxr_keyword">new</strong> <a name="NearServiceExceptionResolver" href="../../../../../../com/syntifi/near/api/rpc/service/exception/NearServiceExceptionResolver.html#NearServiceExceptionResolver">NearServiceExceptionResolver</a>());
+<a class="jxr_linenumber" name="L848" href="#L848">848</a> 
+<a class="jxr_linenumber" name="L849" href="#L849">849</a>         <strong class="jxr_keyword">return</strong> ProxyUtil.createClientProxy(NearService.<strong class="jxr_keyword">class</strong>.getClassLoader(), NearService.<strong class="jxr_keyword">class</strong>, client);
+<a class="jxr_linenumber" name="L850" href="#L850">850</a>     }
+<a class="jxr_linenumber" name="L851" href="#L851">851</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2022. All rights reserved.</div>
