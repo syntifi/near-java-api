@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
+import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
 
 public class ContractTest {
 
@@ -25,7 +25,7 @@ public class ContractTest {
     @Test
     void callContractFunction_NFTContractFunctionCall_forTotalSupply_return_list() throws IOException {
         FunctionCallResult<String> result = NFTContractFunctionCall
-                .forTotalSupply(nearService, "paras-token-v2.testnet");
+                .forTotalSupply(nearClient, "paras-token-v2.testnet");
 
         LOGGER.debug("{}", result.getResult());
     }
@@ -33,7 +33,7 @@ public class ContractTest {
     @Test
     void callContractFunction_NFTContractFunctionCall_forTokens_return_list() throws IOException {
         FunctionCallResult<JsonNode> result = NFTContractFunctionCall
-                .forTokens(nearService, "paras-token-v2.testnet", NFTTokensParam.builder().fromIndex("0").build());
+                .forTokens(nearClient, "paras-token-v2.testnet", NFTTokensParam.builder().fromIndex("0").build());
 
         LOGGER.debug("{}", result.getResult());
     }
@@ -42,10 +42,10 @@ public class ContractTest {
     void callContractFunction_NFTContractFunctionCall_forTokensForOwner_return_list() throws IOException, URISyntaxException {
         NFTContract contract = new NFTContract("paras-token-v2.testnet");
 
-        NFTContractFunctionCall.loadContractMetadata(nearService, contract);
+        NFTContractFunctionCall.loadContractMetadata(nearClient, contract);
 
         FunctionCallResult<NFTTokenList> resultList = NFTContractFunctionCall
-                .forTokensForOwner(nearService,
+                .forTokensForOwner(nearClient,
                         contract.getContractId(),
                         NFTTokensForOwnerParam.builder().accountId("wallet-test.testnet").fromIndex("0").build());
 
@@ -59,7 +59,7 @@ public class ContractTest {
     @Test
     void callContractFunction_NFTContractFunctionCall_forMetadata_return_list() throws IOException {
         NFTContract contract = new NFTContract("paras-token-v2.testnet");
-        NFTContractFunctionCall.loadContractMetadata(nearService, contract);
+        NFTContractFunctionCall.loadContractMetadata(nearClient, contract);
 
         LOGGER.debug("{}", contract.getMetadata().getResult());
     }
@@ -67,7 +67,7 @@ public class ContractTest {
     @Test
     void callContractFunction_NFTContractFunctionCall_forSupplyForOwner_return_list() throws IOException {
         FunctionCallResult<String> result = NFTContractFunctionCall
-                .forSupplyForOwner(nearService,
+                .forSupplyForOwner(nearClient,
                         "paras-token-v2.testnet",
                         AccountIdParam.builder().accountId("wallet-test.testnet").build());
 

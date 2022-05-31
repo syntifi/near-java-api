@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 
-import static com.syntifi.near.api.rpc.service.NearServiceTestnetHelper.nearService;
+import static com.syntifi.near.api.rpc.NearClientTestnetHelper.nearClient;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -21,7 +21,7 @@ class StakingServiceTest extends AbstractKeyTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
 
-    @Test
+/*    @Test
     void depositAndStakeToken_should_return_Success() throws GeneralSecurityException {
         String stakingPool = "stakesstone.pool.f863973.m0";
         BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
@@ -29,9 +29,21 @@ class StakingServiceTest extends AbstractKeyTest {
         PrivateKey privateKey = aliceNearPrivateKey;
         PublicKey publicKey = aliceNearPublicKey;
 
-        TransactionAwait transactionAwait = StakingService.depositAndStakeTokens(nearService, stakingPool,
+        TransactionAwait transactionAwait = StakingService.depositAndStakeTokens(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
+*/
+/*    @Test
+    void unstakeToken_should_return_Success() throws GeneralSecurityException {
+        String stakingPool = "stakesstone.pool.f863973.m0";
+        BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
+        String accountId = "syntifi-alice.testnet";
+        PrivateKey privateKey = aliceNearPrivateKey;
+        PublicKey publicKey = aliceNearPublicKey;
 
+        TransactionAwait transactionAwait = StakingService.unStakeTokens(nearClient, stakingPool,
+                amount, accountId, publicKey, privateKey);
+        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+    }*/
 }

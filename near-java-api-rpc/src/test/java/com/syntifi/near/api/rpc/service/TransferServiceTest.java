@@ -10,9 +10,7 @@ import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.api.rpc.model.block.Block;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.model.transaction.SignedTransaction;
-import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
 import com.syntifi.near.api.rpc.model.transaction.Transaction;
-import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransferAction;
 import com.syntifi.near.borshj.Borsh;
 import org.junit.jupiter.api.Test;
@@ -22,13 +20,13 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Base64;
 
-import static com.syntifi.near.api.rpc.service.NearServiceTestnetHelper.nearService;
+import static com.syntifi.near.api.rpc.NearClientTestnetHelper.nearClient;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TransactionServiceTest extends AbstractKeyTest {
+public class TransferServiceTest extends AbstractKeyTest {
 
     @Test
     void serializeSignAndDeserializeVerifyTransaction_should_match() throws GeneralSecurityException {
@@ -37,9 +35,9 @@ public class TransactionServiceTest extends AbstractKeyTest {
         String amount = "100";
         PublicKey publicKey = aliceNearPublicKey;
 
-        Block block = nearService.getBlock(Finality.FINAL);
+        Block block = nearClient.getBlock(Finality.FINAL);
 
-        AccessKey accessKey = nearService.viewAccessKey(Finality.FINAL, signerId, publicKey.toEncodedBase58String());
+        AccessKey accessKey = nearClient.viewAccessKey(Finality.FINAL, signerId, publicKey.toEncodedBase58String());
 
         long nextNonce = accessKey.getNonce() + 1L;
 
@@ -121,8 +119,8 @@ public class TransactionServiceTest extends AbstractKeyTest {
         PrivateKey privateKey = aliceNearPrivateKey;
         PublicKey publicKey = aliceNearPublicKey;
 
-        EncodedHash transactionAsync = TransactionService
-                .sendTransferActionAsync(nearService, signerId, receiverId, publicKey, privateKey, amount);
+        EncodedHash transactionAsync = TransferService
+                .sendTransferActionAsync(nearClient, signerId, receiverId, publicKey, privateKey, amount);
 
         assertNotNull(transactionAsync.getEncodedHash());
     }
@@ -135,8 +133,8 @@ public class TransactionServiceTest extends AbstractKeyTest {
         PrivateKey privateKey = bobNearPrivateKey;
         PublicKey publicKey = bobNearPublicKey;
 
-        EncodedHash transactionAsync = TransactionService
-                .sendTransferActionAsync(nearService, signerId, receiverId, publicKey, privateKey, amount);
+        EncodedHash transactionAsync = TransferService
+                .sendTransferActionAsync(nearClient, signerId, receiverId, publicKey, privateKey, amount);
 
         assertNotNull(transactionAsync.getEncodedHash());
     }

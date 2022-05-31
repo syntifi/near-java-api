@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc;
 
 import com.googlecode.jsonrpc4j.JsonRpcFixedParam;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
@@ -45,7 +45,7 @@ import java.util.TreeMap;
  * @author Andre Bertolace
  * @since 0.0.1
  */
-public interface NearService {
+public interface NearClient {
 
     /**
      * Queries network and returns block for given height or hash.
@@ -791,7 +791,8 @@ public interface NearService {
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "call_function")
     ContractFunctionCallResult callContractFunction(@JsonRpcParam("finality") Finality finality,
-                                                    @JsonRpcParam("account_id") String accountId, @JsonRpcParam("method_name") String methodName,
+                                                    @JsonRpcParam("account_id") String accountId,
+                                                    @JsonRpcParam("method_name") String methodName,
                                                     @JsonRpcParam("args_base64") String argsBase64)
             throws NearServiceException;
 
@@ -808,7 +809,8 @@ public interface NearService {
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "call_function")
     ContractFunctionCallResult callContractFunction(@JsonRpcParam("block_id") String blockHash,
-                                                    @JsonRpcParam("account_id") String accountId, @JsonRpcParam("method_name") String methodName,
+                                                    @JsonRpcParam("account_id") String accountId,
+                                                    @JsonRpcParam("method_name") String methodName,
                                                     @JsonRpcParam("args_base64") String argsBase64)
             throws NearServiceException;
 
@@ -825,7 +827,8 @@ public interface NearService {
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "call_function")
     ContractFunctionCallResult callContractFunction(@JsonRpcParam("block_id") long blockHeight,
-                                                    @JsonRpcParam("account_id") String accountId, @JsonRpcParam("method_name") String methodName,
+                                                    @JsonRpcParam("account_id") String accountId,
+                                                    @JsonRpcParam("method_name") String methodName,
                                                     @JsonRpcParam("args_base64") String argsBase64)
             throws NearServiceException;
 
@@ -836,7 +839,7 @@ public interface NearService {
      * @return the data holding object
      * @throws MalformedURLException thrown when url is invalid or unparseable
      */
-    static NearService usingNetwork(Network network) throws MalformedURLException {
+    static NearClient usingNetwork(Network network) throws MalformedURLException {
         Map<String, String> customHeaders = new TreeMap<>();
         customHeaders.put("Content-Type", "application/json");
 
@@ -846,6 +849,6 @@ public interface NearService {
 
         client.setExceptionResolver(new NearServiceExceptionResolver());
 
-        return ProxyUtil.createClientProxy(NearService.class.getClassLoader(), NearService.class, client);
+        return ProxyUtil.createClientProxy(NearClient.class.getClassLoader(), NearClient.class, client);
     }
 }

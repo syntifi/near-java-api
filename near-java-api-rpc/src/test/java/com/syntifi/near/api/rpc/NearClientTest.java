@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.common.exception.NoSuchTypeException;
@@ -42,7 +42,7 @@ import java.util.Map;
 import static com.syntifi.near.api.common.json.JsonHelper.OBJECT_MAPPER;
 import static com.syntifi.near.api.common.json.JsonHelper.getPrettyJson;
 import static com.syntifi.near.api.common.json.JsonHelper.loadJsonFromResourceFile;
-import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
+import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -57,9 +57,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author Andre Bertolace
  * @since 0.0.1
  */
-public class NearServiceTest {
+public class NearClientTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NearServiceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NearClientTest.class);
 
     // From sample response at:
     // https://docs.near.org/docs/api/rpc/block-chunk#block-details
@@ -76,14 +76,14 @@ public class NearServiceTest {
 
     @Test
     void getBlock_byFinality_block_notNull() {
-        Block block = nearService.getBlock(Finality.FINAL);
+        Block block = nearClient.getBlock(Finality.FINAL);
 
         assertNotNull(block);
     }
 
     @Test
     void getBlock_byHash_block_notNull() throws JSONException, IOException {
-        Block block = nearService.getBlock("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
+        Block block = nearClient.getBlock("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
 
         assertNotNull(block);
 
@@ -94,7 +94,7 @@ public class NearServiceTest {
 
     @Test
     void getBlock_byHash_block_notNull_with_validator_proposals() {
-        Block block = nearService.getBlock("BCEqCXnKijpvQfTMJDn6Bh2We1v1sAZoihApTnJsd32B");
+        Block block = nearClient.getBlock("BCEqCXnKijpvQfTMJDn6Bh2We1v1sAZoihApTnJsd32B");
 
         assertNotNull(block);
 
@@ -107,7 +107,7 @@ public class NearServiceTest {
 
     @Test
     void getBlock_byHeight_block_notNull() throws JSONException, IOException {
-        Block block = nearService.getBlock(78770817);
+        Block block = nearClient.getBlock(78770817);
 
         assertNotNull(block);
 
@@ -131,14 +131,14 @@ public class NearServiceTest {
 
     @Test
     void getBlockChanges_byFinality_blockChanges_notNull() {
-        BlockChanges blockChanges = nearService.getBlockChanges(Finality.FINAL);
+        BlockChanges blockChanges = nearClient.getBlockChanges(Finality.FINAL);
 
         assertNotNull(blockChanges);
     }
 
     @Test
     void getBlockChanges_byHash_blockChanges_notNull() throws JSONException, IOException {
-        BlockChanges blockChanges = nearService.getBlockChanges("BmEZnrmov6h6rMPpWkMV2JtU1C5LP563V5Y5yXwUW2N5");
+        BlockChanges blockChanges = nearClient.getBlockChanges("BmEZnrmov6h6rMPpWkMV2JtU1C5LP563V5Y5yXwUW2N5");
 
         assertNotNull(blockChanges);
 
@@ -149,7 +149,7 @@ public class NearServiceTest {
 
     @Test
     void getBlockChanges_byHeight_blockChanges_notNull() throws JSONException, IOException {
-        BlockChanges blockChanges = nearService.getBlockChanges(78770674);
+        BlockChanges blockChanges = nearClient.getBlockChanges(78770674);
 
         assertNotNull(blockChanges);
 
@@ -173,7 +173,7 @@ public class NearServiceTest {
 
     @Test
     void getChunkDetails_byChunkId_chunk_notNull() throws JSONException, IOException {
-        Chunk chunk = nearService.getChunkDetails("9mdG2cRcV8Dsb1EoSjtya81NddjRB2stYCTVukZh7zzw");
+        Chunk chunk = nearClient.getChunkDetails("9mdG2cRcV8Dsb1EoSjtya81NddjRB2stYCTVukZh7zzw");
 
         assertNotNull(chunk);
 
@@ -184,7 +184,7 @@ public class NearServiceTest {
 
     @Test
     void getChunkDetails_byBlockHashAndShardId_chunk_notNull() throws JSONException, IOException {
-        Chunk chunk = nearService.getChunkDetails("F1HXTzeYgYq28rgsHuKUrRbo5QTBGKFYG7rbxXkRZWXN", 0);
+        Chunk chunk = nearClient.getChunkDetails("F1HXTzeYgYq28rgsHuKUrRbo5QTBGKFYG7rbxXkRZWXN", 0);
 
         assertNotNull(chunk);
 
@@ -195,7 +195,7 @@ public class NearServiceTest {
 
     @Test
     void getChunkDetails_byBlockHeightAndShardId_chunk_notNull() throws JSONException, IOException {
-        Chunk chunk = nearService.getChunkDetails(78567387, 0);
+        Chunk chunk = nearClient.getChunkDetails(78567387, 0);
 
         assertNotNull(chunk);
 
@@ -219,7 +219,7 @@ public class NearServiceTest {
 
     @Test
     void getNetworkInfo_networkInfo_notNull() {
-        NetworkInfo networkInfo = nearService.getNetworkInfo();
+        NetworkInfo networkInfo = nearClient.getNetworkInfo();
 
         assertNotNull(networkInfo);
     }
@@ -239,7 +239,7 @@ public class NearServiceTest {
 
     @Test
     void getNodeStatus_nodeStatus_notNull() {
-        NodeStatus nodeStatus = nearService.getNodeStatus();
+        NodeStatus nodeStatus = nearClient.getNodeStatus();
 
         assertNotNull(nodeStatus);
     }
@@ -259,7 +259,7 @@ public class NearServiceTest {
 
     @Test
     void getNetworkValidationStatus_byNull_validationStatus_notNull() {
-        ValidationStatus networkValidationStatus = nearService.getNetworkValidationStatus(null);
+        ValidationStatus networkValidationStatus = nearClient.getNetworkValidationStatus(null);
 
         assertNotNull(networkValidationStatus);
     }
@@ -268,9 +268,9 @@ public class NearServiceTest {
     @Disabled("No validators found! (https://docs.near.org/docs/api/rpc/network#validation-status)")
     @Test
     void getNetworkValidationStatus_byBlockHash_validationStatus_notNull() {
-        Block lastBlock = nearService.getBlock(Finality.FINAL);
+        Block lastBlock = nearClient.getBlock(Finality.FINAL);
 
-        ValidationStatus networkValidationStatus = nearService
+        ValidationStatus networkValidationStatus = nearClient
                 .getNetworkValidationStatus(lastBlock.getHeader().getHash().getEncodedHash());
 
         assertNotNull(networkValidationStatus);
@@ -280,9 +280,9 @@ public class NearServiceTest {
     @Disabled("No validators found! (https://docs.near.org/docs/api/rpc/network#validation-status)")
     @Test
     void getNetworkValidationStatus_byBlockNumber_validationStatus_notNull() {
-        Block lastBlock = nearService.getBlock(Finality.OPTIMISTIC);
+        Block lastBlock = nearClient.getBlock(Finality.OPTIMISTIC);
 
-        ValidationStatus networkValidationStatus = nearService
+        ValidationStatus networkValidationStatus = nearClient
                 .getNetworkValidationStatus(lastBlock.getHeader().getHeight());
 
         assertNotNull(networkValidationStatus);
@@ -303,7 +303,7 @@ public class NearServiceTest {
 
     @Test
     void getGasPrice_byNull_gasPrice_notNull() throws IOException, JSONException {
-        GasPrice gasPrice = nearService.getGasPrice(null);
+        GasPrice gasPrice = nearClient.getGasPrice(null);
 
         assertNotNull(gasPrice);
 
@@ -314,7 +314,7 @@ public class NearServiceTest {
 
     @Test
     void getGasPrice_byBlockHash_gasPrice_notNull() throws JSONException, IOException {
-        GasPrice gasPrice = nearService.getGasPrice("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
+        GasPrice gasPrice = nearClient.getGasPrice("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
 
         assertNotNull(gasPrice);
 
@@ -325,7 +325,7 @@ public class NearServiceTest {
 
     @Test
     void getGasPrice_byBlockNumber_gasPrice_notNull() throws IOException, JSONException {
-        GasPrice gasPrice = nearService.getGasPrice(78770817);
+        GasPrice gasPrice = nearClient.getGasPrice(78770817);
 
         assertNotNull(gasPrice);
 
@@ -349,7 +349,7 @@ public class NearServiceTest {
 
     @Test
     void getGenesisConfig_genesisConfig_notNull() throws JSONException, IOException {
-        GenesisConfig genesisConfig = nearService.getGenesisConfig();
+        GenesisConfig genesisConfig = nearClient.getGenesisConfig();
 
         assertNotNull(genesisConfig);
 
@@ -373,21 +373,21 @@ public class NearServiceTest {
 
     @Test
     void getProtocolConfig_byFinality_protocolConfig_notNull() {
-        ProtocolConfig protocolConfig = nearService.getProtocolConfig(Finality.FINAL);
+        ProtocolConfig protocolConfig = nearClient.getProtocolConfig(Finality.FINAL);
 
         assertNotNull(protocolConfig);
     }
 
     @Test
     void getProtocolConfig_byHash_protocolConfig_notNullProtocolVersion() {
-        ProtocolConfig protocolConfig = nearService.getProtocolConfig("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
+        ProtocolConfig protocolConfig = nearClient.getProtocolConfig("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
 
         assertNotNull(protocolConfig);
     }
 
     @Test
     void getProtocolConfig_byHeight_protocolConfig_notNullProtocolVersion() {
-        ProtocolConfig protocolConfig = nearService.getProtocolConfig(78770817);
+        ProtocolConfig protocolConfig = nearClient.getProtocolConfig(78770817);
 
         assertNotNull(protocolConfig);
     }
@@ -411,7 +411,7 @@ public class NearServiceTest {
         String signedTransaction = "DgAAAHNlbmRlci50ZXN0bmV0AOrmAai64SZOv9e/naX4W15pJx0GAap35wTT1T/DwcbbDwAAAAAAAAAQAAAAcmVjZWl2ZXIudGVzdG5ldNMnL7URB1cxPOu3G8jTqlEwlcasagIbKlAJlF5ywVFLAQAAAAMAAACh7czOG8LTAAAAAAAAAGQcOG03xVSFQFjoagOb4NBBqWhERnnz45LY4+52JgZhm1iQKz7qAdPByrGFDQhQ2Mfga8RlbysuQ8D8LlA6bQE=";
         String expectedTransactionHash = "6zgh2u9DqHHiXzdy9ouTP7oGky2T4nugqzqt9wJZwNFm";
 
-        String transactionHash = nearService.sendTransactionAsync(signedTransaction);
+        String transactionHash = nearClient.sendTransactionAsync(signedTransaction);
 
         assertNotNull(transactionHash);
         assertEquals(expectedTransactionHash, transactionHash);
@@ -437,7 +437,7 @@ public class NearServiceTest {
             JSONException {
         String signedTransaction = "DgAAAHNlbmRlci50ZXN0bmV0AOrmAai64SZOv9e/naX4W15pJx0GAap35wTT1T/DwcbbDQAAAAAAAAAQAAAAcmVjZWl2ZXIudGVzdG5ldIODI4YfV/QS++blXpQYT+bOsRblTRW4f547y/LkvMQ9AQAAAAMAAACh7czOG8LTAAAAAAAAAAXcaTJzu9GviPT7AD4mNJGY79jxTrjFLoyPBiLGHgBi8JK1AnhK8QknJ1ourxlvOYJA2xEZE8UR24THmSJcLQw=";
 
-        TransactionAwait transaction = nearService.sendTransactionAwait(signedTransaction);
+        TransactionAwait transaction = nearClient.sendTransactionAwait(signedTransaction);
 
         assertNotNull(transaction);
 
@@ -483,7 +483,7 @@ public class NearServiceTest {
         String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";
         String accountId = "isonar.testnet";
 
-        TransactionStatus transactionStatus = nearService.getTransactionStatus(transactionHash, accountId);
+        TransactionStatus transactionStatus = nearClient.getTransactionStatus(transactionHash, accountId);
 
         assertNotNull(transactionStatus);
     }
@@ -509,7 +509,7 @@ public class NearServiceTest {
         String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";
         String accountId = "isonar.testnet";
 
-        TransactionStatus transactionStatusWithReceipts = nearService.getTransactionStatusWithReceipts(transactionHash,
+        TransactionStatus transactionStatusWithReceipts = nearClient.getTransactionStatusWithReceipts(transactionHash,
                 accountId);
 
         assertNotNull(transactionStatusWithReceipts);
@@ -535,7 +535,7 @@ public class NearServiceTest {
     void getTransactionReceipt_transactionReceipt_notNull() throws JSONException, IOException {
         String receiptId = "8b9Vt1xH8DZecMda1YqUcMWA41NvknUJJVd2XEQikPRs";
 
-        Receipt transactionReceipt = nearService.getTransactionReceipt(receiptId);
+        Receipt transactionReceipt = nearClient.getTransactionReceipt(receiptId);
 
         assertNotNull(transactionReceipt);
 
@@ -562,7 +562,7 @@ public class NearServiceTest {
         String accountId = "client.chainlink.testnet";
         String publicKey = "ed25519:H9k5eiU4xXS3M4z8HzKJSLaZdqGdGwBG49o7orNC4eZW";
 
-        AccessKey accessKey = nearService.viewAccessKey(Finality.FINAL, accountId, publicKey);
+        AccessKey accessKey = nearClient.viewAccessKey(Finality.FINAL, accountId, publicKey);
 
         assertNotNull(accessKey);
     }
@@ -572,7 +572,7 @@ public class NearServiceTest {
         String accountId = "client.chainlink.testnet";
         String publicKey = "ed25519:H9k5eiU4xXS3M4z8HzKJSLaZdqGdGwBG49o7orNC4eZW";
 
-        AccessKey accessKey = nearService.viewAccessKey("8bVg8wugs2QHqXr42oEsCYyH7jvR9pLaAP35dFqx2evU", accountId,
+        AccessKey accessKey = nearClient.viewAccessKey("8bVg8wugs2QHqXr42oEsCYyH7jvR9pLaAP35dFqx2evU", accountId,
                 publicKey);
 
         assertNotNull(accessKey);
@@ -587,7 +587,7 @@ public class NearServiceTest {
         String accountId = "client.chainlink.testnet";
         String publicKey = "ed25519:H9k5eiU4xXS3M4z8HzKJSLaZdqGdGwBG49o7orNC4eZW";
 
-        AccessKey accessKey = nearService.viewAccessKey(78443365, accountId, publicKey);
+        AccessKey accessKey = nearClient.viewAccessKey(78443365, accountId, publicKey);
 
         assertNotNull(accessKey);
 
@@ -613,7 +613,7 @@ public class NearServiceTest {
     void viewAccessKeyList_byFinality_accessKey_notNull() {
         String accountId = "client.chainlink.testnet";
 
-        AccessKeyList accessKeyList = nearService.viewAccessKeyList(Finality.FINAL, accountId);
+        AccessKeyList accessKeyList = nearClient.viewAccessKeyList(Finality.FINAL, accountId);
 
         assertNotNull(accessKeyList);
     }
@@ -622,7 +622,7 @@ public class NearServiceTest {
     void viewAccessKeyList_byHash_accessKey_notNull() throws IOException, JSONException {
         String accountId = "client.chainlink.testnet";
 
-        AccessKeyList accessKeyList = nearService.viewAccessKeyList("DwFpDPiQXBaX6Vw3aKazQ4nXjgzw1uk6XpUkfTSJrbXf",
+        AccessKeyList accessKeyList = nearClient.viewAccessKeyList("DwFpDPiQXBaX6Vw3aKazQ4nXjgzw1uk6XpUkfTSJrbXf",
                 accountId);
 
         assertNotNull(accessKeyList);
@@ -636,7 +636,7 @@ public class NearServiceTest {
     void viewAccessKeyList_byHeight_accessKey_notNull() throws IOException, JSONException {
         String accountId = "client.chainlink.testnet";
 
-        AccessKeyList accessKeyList = nearService.viewAccessKeyList(78772585, accountId);
+        AccessKeyList accessKeyList = nearClient.viewAccessKeyList(78772585, accountId);
 
         assertNotNull(accessKeyList);
 
@@ -667,7 +667,7 @@ public class NearServiceTest {
         Key key0 = new Key("example-acct.testnet", PublicKey.fromEncodedBase58String("ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM", PublicKey.class));
         keys[0] = key0;
 
-        AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(Finality.FINAL, keys);
+        AccessKeyChanges accessKeyChanges = nearClient.viewSingleAccessKeyChanges(Finality.FINAL, keys);
 
         assertNotNull(accessKeyChanges);
     }
@@ -681,7 +681,7 @@ public class NearServiceTest {
         Key key0 = new Key("example-acct.testnet", PublicKey.fromEncodedBase58String("ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM", PublicKey.class));
         keys[0] = key0;
 
-        AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(
+        AccessKeyChanges accessKeyChanges = nearClient.viewSingleAccessKeyChanges(
                 "Cr82U81VqHgCz9LzZjPivh9t16e8es6aFCv9qvDMMH88",
                 keys);
 
@@ -697,7 +697,7 @@ public class NearServiceTest {
         Key key0 = new Key("example-acct.testnet", PublicKey.fromEncodedBase58String("ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM", PublicKey.class));
         keys[0] = key0;
 
-        AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(78433961, keys);
+        AccessKeyChanges accessKeyChanges = nearClient.viewSingleAccessKeyChanges(78433961, keys);
 
         assertNotNull(accessKeyChanges);
     }
@@ -741,7 +741,7 @@ public class NearServiceTest {
 
         accountIds[0] = "client.chainlink.testnet";
 
-        AccessKeyChanges accessKeyChanges = nearService.viewAllAccessKeyChanges(Finality.FINAL, accountIds);
+        AccessKeyChanges accessKeyChanges = nearClient.viewAllAccessKeyChanges(Finality.FINAL, accountIds);
 
         assertNotNull(accessKeyChanges);
     }
@@ -754,7 +754,7 @@ public class NearServiceTest {
 
         accountIds[0] = "client.chainlink.testnet";
 
-        AccessKeyChanges accessKeyChanges = nearService.viewAllAccessKeyChanges(
+        AccessKeyChanges accessKeyChanges = nearClient.viewAllAccessKeyChanges(
                 "Ais9kPbHvk6XmEYptoEpBtyFW77V16TZNHHnYtmXWr1d",
                 accountIds);
 
@@ -769,7 +769,7 @@ public class NearServiceTest {
 
         accountIds[0] = "client.chainlink.testnet";
 
-        AccessKeyChanges accessKeyChanges = nearService.viewAllAccessKeyChanges(78433518, accountIds);
+        AccessKeyChanges accessKeyChanges = nearClient.viewAllAccessKeyChanges(78433518, accountIds);
 
         assertNotNull(accessKeyChanges);
     }
@@ -789,14 +789,14 @@ public class NearServiceTest {
 
     @Test
     void viewAccount_byFinality_account_notNull() {
-        Account account = nearService.viewAccount(Finality.FINAL, "nearkat.testnet");
+        Account account = nearClient.viewAccount(Finality.FINAL, "nearkat.testnet");
 
         assertNotNull(account);
     }
 
     @Test
     void viewAccount_byHash_account_notNull() throws IOException, JSONException {
-        Account account = nearService.viewAccount("5hyGx7LiGaeRiAN4RrKcGomi1QXHqZwKXFQf6xTmvUgb", "nearkat.testnet");
+        Account account = nearClient.viewAccount("5hyGx7LiGaeRiAN4RrKcGomi1QXHqZwKXFQf6xTmvUgb", "nearkat.testnet");
 
         assertNotNull(account);
 
@@ -807,7 +807,7 @@ public class NearServiceTest {
 
     @Test
     void viewAccount_byHeight_account_notNull() throws JSONException, IOException {
-        Account account = nearService.viewAccount(78439658, "nearkat.testnet");
+        Account account = nearClient.viewAccount(78439658, "nearkat.testnet");
 
         assertNotNull(account);
 
@@ -837,7 +837,7 @@ public class NearServiceTest {
 
         accountIds[0] = "nearkat.testnet";
 
-        AccountChanges accountChanges = nearService.viewAccountChanges(Finality.FINAL, accountIds);
+        AccountChanges accountChanges = nearClient.viewAccountChanges(Finality.FINAL, accountIds);
 
         assertNotNull(accountChanges);
     }
@@ -850,7 +850,7 @@ public class NearServiceTest {
 
         accountIds[0] = "nearkat.testnet";
 
-        AccountChanges accountChanges = nearService.viewAccountChanges("7vWp2djKLoJ3RE1sr8RzSKQtyzKpe2wZ7NCcDuFNuL7j",
+        AccountChanges accountChanges = nearClient.viewAccountChanges("7vWp2djKLoJ3RE1sr8RzSKQtyzKpe2wZ7NCcDuFNuL7j",
                 accountIds);
 
         assertNotNull(accountChanges);
@@ -868,7 +868,7 @@ public class NearServiceTest {
 
         accountIds[0] = "nearkat.testnet";
 
-        AccountChanges accountChanges = nearService.viewAccountChanges(78440142, accountIds);
+        AccountChanges accountChanges = nearClient.viewAccountChanges(78440142, accountIds);
 
         assertNotNull(accountChanges);
 
@@ -892,14 +892,14 @@ public class NearServiceTest {
 
     @Test
     void viewContractCode_byFinality_contractCode_notNull() {
-        ContractCode contractCode = nearService.viewContractCode(Finality.FINAL, "guest-book.testnet");
+        ContractCode contractCode = nearClient.viewContractCode(Finality.FINAL, "guest-book.testnet");
 
         assertNotNull(contractCode);
     }
 
     @Test
     void viewContractCode_byHash_contractCode_notNull() throws IOException, JSONException {
-        ContractCode contractCode = nearService.viewContractCode("uLxyauKPhSk1tebYKi3k69pHSaT2ZLzWy4JwtGm52pu",
+        ContractCode contractCode = nearClient.viewContractCode("uLxyauKPhSk1tebYKi3k69pHSaT2ZLzWy4JwtGm52pu",
                 "guest-book.testnet");
 
         assertNotNull(contractCode);
@@ -911,7 +911,7 @@ public class NearServiceTest {
 
     @Test
     void viewContractCode_byHeight_contractCode_notNull() throws JSONException, IOException {
-        ContractCode contractCode = nearService.viewContractCode(78440518, "guest-book.testnet");
+        ContractCode contractCode = nearClient.viewContractCode(78440518, "guest-book.testnet");
 
         assertNotNull(contractCode);
 
@@ -937,7 +937,7 @@ public class NearServiceTest {
     @Disabled("Too large contract state! (https://docs.near.org/docs/api/rpc/contracts#view-contract-state)")
     @Test
     void viewContractState_byFinality_contractCode_notNull() {
-        ContractState contractState = nearService.viewContractState(Finality.FINAL,
+        ContractState contractState = nearClient.viewContractState(Finality.FINAL,
                 "guest-book.testnet", "");
 
         assertNotNull(contractState);
@@ -948,7 +948,7 @@ public class NearServiceTest {
     @Test
     void viewContractState_byHash_contractCode_notNull() throws IOException,
             JSONException {
-        ContractState contractState = nearService.viewContractState("342bkjvnzoZ7FGRE5BwDVkzSRUYXAScTz3GsDB9sEHXg",
+        ContractState contractState = nearClient.viewContractState("342bkjvnzoZ7FGRE5BwDVkzSRUYXAScTz3GsDB9sEHXg",
                 "guest-book.testnet", "");
 
         assertNotNull(contractState);
@@ -964,7 +964,7 @@ public class NearServiceTest {
     @Test
     void viewContractState_byHeight_contractCode_notNull() throws JSONException,
             IOException {
-        ContractState contractState = nearService.viewContractState(78440679,
+        ContractState contractState = nearClient.viewContractState(78440679,
                 "guest-book.testnet", "");
 
         assertNotNull(contractState);
@@ -997,7 +997,7 @@ public class NearServiceTest {
 
         accountIds[0] = "guest-book.testnet";
 
-        ContractStateChanges contractStateChanges = nearService.viewContractStateChanges(Finality.FINAL, accountIds,
+        ContractStateChanges contractStateChanges = nearClient.viewContractStateChanges(Finality.FINAL, accountIds,
                 "");
 
         assertNotNull(contractStateChanges);
@@ -1011,7 +1011,7 @@ public class NearServiceTest {
 
         accountIds[0] = "guest-book.testnet";
 
-        ContractStateChanges contractStateChanges = nearService.viewContractStateChanges(
+        ContractStateChanges contractStateChanges = nearClient.viewContractStateChanges(
                 "5KgQ8uu17bhUPnMUbkmciHxbpFvsbhwdkJu4ptRfR7Zn",
                 accountIds, "");
 
@@ -1030,7 +1030,7 @@ public class NearServiceTest {
 
         accountIds[0] = "guest-book.testnet";
 
-        ContractStateChanges contractStateChanges = nearService.viewContractStateChanges(78441183, accountIds, "");
+        ContractStateChanges contractStateChanges = nearClient.viewContractStateChanges(78441183, accountIds, "");
 
         assertNotNull(contractStateChanges);
 
@@ -1061,7 +1061,7 @@ public class NearServiceTest {
 
         accountIds[0] = "dev-1602714453032-7566969";
 
-        ContractCodeChanges contractCodeChanges = nearService.viewContractCodeChanges(Finality.FINAL, accountIds);
+        ContractCodeChanges contractCodeChanges = nearClient.viewContractCodeChanges(Finality.FINAL, accountIds);
 
         assertNotNull(contractCodeChanges);
     }
@@ -1074,7 +1074,7 @@ public class NearServiceTest {
 
         accountIds[0] = "dev-1602714453032-7566969";
 
-        ContractCodeChanges contractCodeChanges = nearService.viewContractCodeChanges(
+        ContractCodeChanges contractCodeChanges = nearClient.viewContractCodeChanges(
                 "HpsjZvjtuxarKRsXGVrgB6qtuCcHRgx3Xof1gfT2Jfj7",
                 accountIds);
 
@@ -1093,7 +1093,7 @@ public class NearServiceTest {
 
         accountIds[0] = "dev-1602714453032-7566969";
 
-        ContractCodeChanges contractCodeChanges = nearService.viewContractCodeChanges(78441560, accountIds);
+        ContractCodeChanges contractCodeChanges = nearClient.viewContractCodeChanges(78441560, accountIds);
 
         assertNotNull(contractCodeChanges);
 
@@ -1121,7 +1121,7 @@ public class NearServiceTest {
 
     @Test
     void callContractFunction_byFinality_contractFunctionCallResult_notNull() {
-        ContractFunctionCallResult contractFunctionCallResult = nearService
+        ContractFunctionCallResult contractFunctionCallResult = nearClient
                 .callContractFunction(
                         Finality.FINAL,
                         "guest-book.testnet",
@@ -1133,7 +1133,7 @@ public class NearServiceTest {
 
     @Test
     void callContractFunction_byHash_contractFunctionCallResult_notNull() throws IOException, JSONException {
-        ContractFunctionCallResult contractFunctionCallResult = nearService
+        ContractFunctionCallResult contractFunctionCallResult = nearClient
                 .callContractFunction(
                         "J5QTB4Stz3iwtHvgr5KnVzNUgzm4J1bE5Et6JWrJPC8o",
                         "guest-book.testnet",
@@ -1165,7 +1165,7 @@ public class NearServiceTest {
      */
     @Test
     void callContractFunction_byHeight_contractFunctionCallResult_notNull() throws JSONException, IOException {
-        ContractFunctionCallResult contractFunctionCallResult = nearService
+        ContractFunctionCallResult contractFunctionCallResult = nearClient
                 .callContractFunction(79272492,
                         "guest-book.testnet",
                         "getMessages",
@@ -1184,7 +1184,7 @@ public class NearServiceTest {
 
         LOGGER.debug("Calling getBlock with hash {} should throw NearServiceException", invalidBlockHash);
 
-        Throwable t = assertThrows(NearServiceException.class, () -> nearService.getBlock(invalidBlockHash));
+        Throwable t = assertThrows(NearServiceException.class, () -> nearClient.getBlock(invalidBlockHash));
 
         LOGGER.debug("Threw {}", t.getClass().getSimpleName());
     }

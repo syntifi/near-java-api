@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
+import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
 
 public class ContractTest {
 
@@ -19,7 +19,7 @@ public class ContractTest {
     @Test
     void callContractFunction_FTContractFunctionCall_forBalanceOf_return_list() throws IOException {
         FunctionCallResult<JsonNode> result = FTContractFunctionCall
-                .forBalanceOf(nearService, "meta.pool.testnet", new AccountIdParam("wallet-test.testnet"));
+                .forBalanceOf(nearClient, "meta.pool.testnet", new AccountIdParam("wallet-test.testnet"));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
@@ -27,7 +27,7 @@ public class ContractTest {
 
     @Test
     void callContractFunction_FTContractFunctionCall_forMetadata_return_list() throws IOException {
-        FunctionCallResult<JsonNode> result = FTContractFunctionCall.forMetadata(nearService, "paras-marketplace-v2.testnet");
+        FunctionCallResult<JsonNode> result = FTContractFunctionCall.forMetadata(nearClient, "paras-marketplace-v2.testnet");
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());

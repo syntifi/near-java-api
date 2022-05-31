@@ -14,7 +14,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Base64;
 
-import static com.syntifi.near.api.rpc.service.NearServiceArchivalNetHelper.nearService;
+import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
 
 public class ContractTest {
 
@@ -25,7 +25,7 @@ public class ContractTest {
         String args = Base64.getEncoder().encodeToString("{}".getBytes());
 
         ContractFunctionCallResult callResult =
-                nearService.callContractFunction(Finality.OPTIMISTIC, "ref-finance-101.testnet", "get_whitelisted_tokens", args);
+                nearClient.callContractFunction(Finality.OPTIMISTIC, "ref-finance-101.testnet", "get_whitelisted_tokens", args);
 
         @SuppressWarnings("rawtypes")
         FunctionCallResult<ArrayList> result = new FunctionCallResult<>(callResult, ArrayList.class);
@@ -37,7 +37,7 @@ public class ContractTest {
     @Test
     void callContractFunction_StakingContractFunctionCall_forAccountTotalBalance_return_value() throws IOException {
         FunctionCallResult<BigInteger> result =
-                StakingContractFunctionCall.forAccountTotalBalance(nearService, "prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
+                StakingContractFunctionCall.forAccountTotalBalance(nearClient, "prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());

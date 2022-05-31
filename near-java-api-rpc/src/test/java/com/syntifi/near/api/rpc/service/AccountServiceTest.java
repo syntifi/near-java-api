@@ -21,7 +21,7 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Random;
 
-import static com.syntifi.near.api.rpc.service.NearServiceTestnetHelper.nearService;
+import static com.syntifi.near.api.rpc.NearClientTestnetHelper.nearClient;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,8 +44,8 @@ public class AccountServiceTest extends AbstractKeyTest {
         BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
         PrivateKey privateKey = aliceNearPrivateKey;
         PublicKey publicKey = aliceNearPublicKey;
-        TransactionAwait transactionAwait = TransactionService
-                .sendTransferActionAwait(nearService, signerId, Hex.encode(newPublicKey.getData()),
+        TransactionAwait transactionAwait = TransferService
+                .sendTransferActionAwait(nearClient, signerId, Hex.encode(newPublicKey.getData()),
                         publicKey, privateKey, amount);
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
@@ -60,7 +60,7 @@ public class AccountServiceTest extends AbstractKeyTest {
         PublicKey publicKey = aliceNearPublicKey;
 
         EncodedHash transactionHash = AccountService
-                .createSubAccountAsync(nearService, newAccountId, amount, signerId, publicKey, privateKey);
+                .createSubAccountAsync(nearClient, newAccountId, amount, signerId, publicKey, privateKey);
         assertTrue(transactionHash.getDecodedHash().length > 0);
     }
 
@@ -74,7 +74,7 @@ public class AccountServiceTest extends AbstractKeyTest {
         PublicKey publicKey = aliceNearPublicKey;
         BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
         EncodedHash transactionHash = AccountService
-                .createNamedAccountAsync(nearService, "testnet",
+                .createNamedAccountAsync(nearClient, "testnet",
                         "syntifi-" + Math.abs(rnd.nextInt()) + ".testnet",
                         newPublicKey, amount, creatorId, publicKey, privateKey);
         assertTrue(transactionHash.getDecodedHash().length > 0);

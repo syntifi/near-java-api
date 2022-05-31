@@ -1,19 +1,19 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc;
 
 import com.syntifi.near.api.rpc.service.exception.NearServiceException;
 
 import java.net.MalformedURLException;
 
 
-public class NearServiceHelper {
+public class NearClientHelper {
 
-    public static NearService getService(Network network) {
-        NearService nearService;
+    public static NearClient getClient(Network network) {
+        NearClient nearClient;
         try {
-            nearService = NearService.usingNetwork(network);
+            nearClient = NearClient.usingNetwork(network);
         } catch (MalformedURLException e) {
             throw new NearServiceException("Invalid URL " + network.getRpcUrl(), e.getCause());
         }
-        return nearService;
+        return nearClient;
     }
 }

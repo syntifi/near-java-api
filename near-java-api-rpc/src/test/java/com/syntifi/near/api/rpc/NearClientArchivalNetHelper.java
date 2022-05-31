@@ -1,21 +1,22 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 
-public class NearServiceTestnetHelper {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NearServiceTestnetHelper.class);
+public class NearClientArchivalNetHelper {
 
-    public static NearService nearService = null;
+    private static final Logger LOGGER = LoggerFactory.getLogger(NearClientArchivalNetHelper.class);
 
-    public static Network network = Network.TEST_NET;
+    public static NearClient nearClient = null;
+
+    public static Network network = Network.ARCHIVAL_TEST_NET;
 
     static {
         LOGGER.debug("======== Running tests with peer {} ========", network.getRpcUrl());
         try {
-            nearService = NearService.usingNetwork(network);
+            nearClient = NearClient.usingNetwork(network);
         } catch (MalformedURLException e) {
             LOGGER.error("Invalid URL {}", network.getRpcUrl());
             e.printStackTrace();

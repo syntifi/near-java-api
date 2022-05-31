@@ -1,6 +1,6 @@
 package com.syntifi.near.api.rpc.service.contract.staking;
 
-import com.syntifi.near.api.rpc.service.NearService;
+import com.syntifi.near.api.rpc.NearClient;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.ContractMethod;
 import com.syntifi.near.api.rpc.service.contract.ContractMethodCaller;
@@ -23,15 +23,15 @@ public class StakingContractFunctionCall {
     /**
      * Builds a contract function call and returns a typed result
      *
-     * @param nearService       the near service instance to use for the contract call
+     * @param nearClient       the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
      * @param accountIdParam    the arguments for the target method
      * @return a typed function call result
      * @throws IOException thrown if failed to deserialize result to target class
      */
-    public static FunctionCallResult<BigInteger> forAccountTotalBalance(NearService nearService, String contractAccountId, AccountIdParam accountIdParam) throws IOException {
+    public static FunctionCallResult<BigInteger> forAccountTotalBalance(NearClient nearClient, String contractAccountId, AccountIdParam accountIdParam) throws IOException {
         return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.GET_ACCOUNT_TOTAL_BALANCE, BigInteger.class, nearService, contractAccountId, accountIdParam);
+                .callFor(StakingMethodCaller.ViewMethod.GET_ACCOUNT_TOTAL_BALANCE, BigInteger.class, nearClient, contractAccountId, accountIdParam);
     }
 
     /**

@@ -4,7 +4,7 @@ package com.syntifi.near.api.rpc.service.contract;
 import com.syntifi.near.api.common.model.common.Base64String;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
-import com.syntifi.near.api.rpc.service.NearService;
+import com.syntifi.near.api.rpc.NearClient;
 
 import java.io.IOException;
 
@@ -22,21 +22,21 @@ public abstract class ContractMethodCaller {
      *
      * @param method            the method to call
      * @param returnClass       the type of result object
-     * @param nearService       the near service to use
+     * @param nearClient       the near service to use
      * @param contractAccountId the contract account id
      * @param params            the method parameters
      * @param <T>               type of the result object
      * @return a typed FunctionCallResult for the requested contract method
      * @throws IOException thrown when fails to map json to result object
      */
-    public static <T> FunctionCallResult<T> callFor(ContractMethod method, Class<T> returnClass, NearService nearService, String contractAccountId, ContractMethodParams params) throws IOException {
+    public static <T> FunctionCallResult<T> callFor(ContractMethod method, Class<T> returnClass, NearClient nearClient, String contractAccountId, ContractMethodParams params) throws IOException {
         ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(method.getMethodName())
                 .accountId(contractAccountId)
                 .args(params != null ? params.toJsonBase64String() : Base64String.fromDecodedString(""))
                 .build()
-                .call(nearService);
+                .call(nearClient);
         return new FunctionCallResult<>(contractFunctionCallResult, returnClass);
     }
 }

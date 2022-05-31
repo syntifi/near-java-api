@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc;
 
 /**
  * Lists of most relevante networks and their root domain

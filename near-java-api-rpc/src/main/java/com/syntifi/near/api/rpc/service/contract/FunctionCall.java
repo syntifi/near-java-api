@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syntifi.near.api.common.model.common.Base64String;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
-import com.syntifi.near.api.rpc.service.NearService;
+import com.syntifi.near.api.rpc.NearClient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,8 +38,8 @@ public class FunctionCall {
     @JsonProperty("finality")
     private Finality finality;
 
-    public ContractFunctionCallResult call(NearService nearService) {
-        return nearService.callContractFunction(
+    public ContractFunctionCallResult call(NearClient nearClient) {
+        return nearClient.callContractFunction(
                 this.getFinality(),
                 this.getAccountId(),
                 this.getMethodName(),

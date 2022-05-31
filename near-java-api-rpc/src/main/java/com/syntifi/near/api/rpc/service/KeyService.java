@@ -5,6 +5,8 @@ import com.syntifi.crypto.key.Ed25519PublicKey;
 import com.syntifi.near.api.common.model.key.KeyType;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
@@ -15,6 +17,7 @@ import java.io.IOException;
  * @author Andre Bertolace
  * @since 0.2.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class KeyService {
 
     /**
