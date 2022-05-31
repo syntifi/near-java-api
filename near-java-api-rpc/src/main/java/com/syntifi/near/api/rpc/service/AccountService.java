@@ -103,7 +103,7 @@ public class AccountService {
                                                       PublicKey newAccountPublicKey, BigInteger amountToNewAccount,
                                                       String creatorAccountId, PublicKey creatorPublicKey,
                                                       PrivateKey creatorPrivateKey)
-            throws GeneralSecurityException, NearServiceException {
+            throws GeneralSecurityException {
         List<Action> actions = AccountService.createActionArrayToCreateNamedAccount(newAccountId, newAccountPublicKey,
                 amountToNewAccount);
 
