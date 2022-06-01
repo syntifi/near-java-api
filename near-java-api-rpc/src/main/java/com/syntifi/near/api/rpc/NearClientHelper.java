@@ -1,5 +1,6 @@
 package com.syntifi.near.api.rpc;
 
+import com.syntifi.near.api.common.helper.Network;
 import com.syntifi.near.api.rpc.service.exception.NearServiceException;
 
 import java.net.MalformedURLException;

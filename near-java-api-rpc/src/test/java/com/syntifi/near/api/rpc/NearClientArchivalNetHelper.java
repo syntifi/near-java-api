@@ -1,5 +1,6 @@
 package com.syntifi.near.api.rpc;
 
+import com.syntifi.near.api.common.helper.Network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
