@@ -22,6 +22,7 @@ import lombok.Setter;
 public class RecentActivityPermission {
     public enum PermissionKind {
         FULL_ACCESS,
+        FUNCTION_CALL
     }
 
     @JsonProperty("permission_kind")
