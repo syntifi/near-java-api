@@ -12,8 +12,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.List;
 
-import static com.syntifi.near.api.indexer.service.NearIndexerServiceHelper.nearIndexerService;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.syntifi.near.api.indexer.service.NearIndexerClientHelper.nearIndexerClient;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,13 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Andre Bertolace
  * @since 0.0.1
  */
-public class NearIndexerServiceTest {
+public class NearIndexerClientTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NearIndexerServiceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NearIndexerClientTest.class);
 
     @Test
     void getNearValue_valid() throws IOException {
-        Response<NearValue> value = nearIndexerService.getNearValue().execute();
+        Response<NearValue> value = nearIndexerClient.getNearValue().execute();
 
         assertTrue(value.isSuccessful());
 
@@ -48,7 +47,7 @@ public class NearIndexerServiceTest {
 
     @Test
     void getNearAccounts_valid() throws IOException {
-        Response<List<String>> value = nearIndexerService.getNearAccounts("ed25519:F8jARHGZdHqnwrxrnv1pFVzzirXZR2vJzeYbvwQbxZyP").execute();
+        Response<List<String>> value = nearIndexerClient.getNearAccounts("ed25519:F8jARHGZdHqnwrxrnv1pFVzzirXZR2vJzeYbvwQbxZyP").execute();
 
         assertTrue(value.isSuccessful());
 
@@ -63,7 +62,7 @@ public class NearIndexerServiceTest {
 
     @Test
     void getAccountLikelyNFTs_valid() throws IOException {
-        Response<AccountIdList> value = nearIndexerService.getAccountLikelyNFTs("wallet-test.testnet").execute();
+        Response<AccountIdList> value = nearIndexerClient.getAccountLikelyNFTs("wallet-test.testnet").execute();
 
         assertTrue(value.isSuccessful());
 
@@ -76,7 +75,7 @@ public class NearIndexerServiceTest {
 
     @Test
     void getAccountLikelyFTs_valid() throws IOException {
-        Response<AccountIdList> value = nearIndexerService.getAccountLikelyFTs("wallet-test.testnet").execute();
+        Response<AccountIdList> value = nearIndexerClient.getAccountLikelyFTs("wallet-test.testnet").execute();
 
         assertTrue(value.isSuccessful());
 
@@ -89,7 +88,7 @@ public class NearIndexerServiceTest {
 
     @Test
     void getStakingDeposits_valid() throws IOException {
-        Response<List<StakingDeposit>> value = nearIndexerService.getStakingDeposits("wallet-test.testnet").execute();
+        Response<List<StakingDeposit>> value = nearIndexerClient.getStakingDeposits("wallet-test.testnet").execute();
 
         assertTrue(value.isSuccessful());
 
@@ -102,7 +101,7 @@ public class NearIndexerServiceTest {
 
     @Test
     void getNearRecentActivity_valid() throws IOException {
-        Response<RecentActivity> value = nearIndexerService.getNearRecentActivity("wallet-test.testnet").execute();
+        Response<RecentActivity> value = nearIndexerClient.getNearRecentActivity("wallet-test.testnet").execute();
 
         assertTrue(value.isSuccessful());
 

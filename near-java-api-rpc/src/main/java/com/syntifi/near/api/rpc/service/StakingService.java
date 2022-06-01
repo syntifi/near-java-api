@@ -6,8 +6,6 @@ import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.NearClient;
-import com.syntifi.near.api.rpc.NearClientHelper;
-import com.syntifi.near.api.rpc.Network;
 import com.syntifi.near.api.rpc.model.transaction.Action;
 import com.syntifi.near.api.rpc.model.transaction.FunctionCallAction;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
@@ -92,7 +90,7 @@ public class StakingService {
     public static TransactionAwait createNamedAccount(Network network, String stakingPool,
                                                       BigInteger stakingAmount, String accountId,
                                                       PublicKey accountPubliKey, PrivateKey accountPrivateKey) throws GeneralSecurityException {
-        NearClient nearClient = NearClientHelper.getClient(network);
+        NearClient nearClient = NearClient.usingNetwork(network);
 
         return StakingService.depositAndStakeTokens(nearClient, stakingPool, stakingAmount, accountId,
                 accountPubliKey, accountPrivateKey);
@@ -142,7 +140,7 @@ public class StakingService {
     public static EncodedHash depositAndStakeTokensAsync(Network network, String stakingPool,
                                                          BigInteger stakingAmount, String accountId,
                                                          PublicKey accountPubliKey, PrivateKey accountPrivateKey) throws GeneralSecurityException {
-        NearClient nearClient = NearClientHelper.getClient(network);
+        NearClient nearClient = NearClient.usingNetwork(network);
 
         return StakingService.depositAndStakeTokensAsync(nearClient, stakingPool, stakingAmount, accountId,
                 accountPubliKey, accountPrivateKey);
@@ -166,7 +164,6 @@ public class StakingService {
                 .deposit(stakingAmount)
                 .build());
     }
-
 
     /**
      * Internal method to create a list of actions needed to unstake a certain

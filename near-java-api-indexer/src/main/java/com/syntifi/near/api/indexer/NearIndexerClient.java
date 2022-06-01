@@ -1,5 +1,6 @@
-package com.syntifi.near.api.indexer.service;
+package com.syntifi.near.api.indexer;
 
+import com.syntifi.near.api.common.helper.Network;
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.indexer.model.AccountIdList;
 import com.syntifi.near.api.indexer.model.NearValue;
@@ -16,13 +17,13 @@ import retrofit2.http.Path;
 import java.util.List;
 
 /**
- * Near indexer service uses http API to retrieve useful information on chain data
+ * Near indexer client uses http API to retrieve useful information on chain data
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.2.0
  */
-public interface NearIndexerService {
+public interface NearIndexerClient {
 
     /**
      * Fetches all likely NFTs given an accountId
@@ -80,10 +81,10 @@ public interface NearIndexerService {
     /**
      * NearIndexerService builder
      *
-     * @param url the indexer url to connect to
+     * @param network the indexer url to connect to
      * @return the indexer service instance
      */
-    static NearIndexerService usingPeer(String url) {
+    static NearIndexerClient usingNetwork(Network network) {
         Headers customHeaders = new Headers.Builder()
                 .add("Content-Type", "application/json")
                 .add("Cache-Control", "no-cache")
@@ -93,10 +94,10 @@ public interface NearIndexerService {
                 .client(new OkHttpClient.Builder()
                         .addInterceptor(
                                 chain -> chain.proceed(chain.request().newBuilder().headers(customHeaders).build())).build())
-                .baseUrl("https://" + url)
+                .baseUrl("https://" + network.getIndexerUrl())
                 .addConverterFactory(JacksonConverterFactory.create(NearObjectMapper.INSTANCE))
                 .build();
 
-        return retrofit.create(NearIndexerService.class);
+        return retrofit.create(NearIndexerClient.class);
     }
 }

@@ -1,10 +1,12 @@
-package com.syntifi.near.api.rpc.service.exception;
+package com.syntifi.near.api.rpc.jsonrpc4j.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.googlecode.jsonrpc4j.ExceptionResolver;
+import com.syntifi.near.api.common.exception.NearErrorData;
+import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.service.NearObjectMapper;
 
 /**
@@ -14,17 +16,17 @@ import com.syntifi.near.api.common.service.NearObjectMapper;
  * @author Andre Bertolace
  * @since 0.0.1
  */
-public class NearServiceExceptionResolver implements ExceptionResolver {
+public class NearExceptionResolver implements ExceptionResolver {
     private static final ObjectMapper objectMapper = new NearObjectMapper();
 
     @Override
     public Throwable resolveException(ObjectNode response) {
         try {
             JsonNode errorNode = response.get("error");
-            NearServiceErrorData error = objectMapper.treeToValue(errorNode, NearServiceErrorData.class);
-            return new NearServiceException(error);
+            NearErrorData error = objectMapper.treeToValue(errorNode, NearErrorData.class);
+            return new NearException(error);
         } catch (JsonProcessingException | IllegalArgumentException e) {
-            return new NearServiceException(String.format("Could not extract error, response was: %s", response), e);
+            return new NearException(String.format("Could not extract error, response was: %s", response), e);
         }
     }
 }

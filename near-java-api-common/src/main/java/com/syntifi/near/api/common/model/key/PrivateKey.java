@@ -40,12 +40,12 @@ public class PrivateKey extends KeySig {
     }
 
     @JsonCreator
-    public static PrivateKey getPublicKeyFromJson(String base58String) {
+    public static PrivateKey getPrivateKeyFromJson(String base58String) {
         return fromEncodedBase58String(base58String, PrivateKey.class);
     }
 
     @JsonValue
-    public String getJsonPublicKey() {
+    public String getJsonPrivateKey() {
         return this.toEncodedBase58String();
     }
 }

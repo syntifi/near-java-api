@@ -6,7 +6,9 @@ import com.googlecode.jsonrpc4j.JsonRpcMethod;
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import com.googlecode.jsonrpc4j.JsonRpcParamsPassMode;
 import com.googlecode.jsonrpc4j.ProxyUtil;
+import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.helper.Network;
+import com.syntifi.near.api.rpc.jsonrpc4j.exception.NearExceptionResolver;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKeyChanges;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKeyList;
@@ -31,8 +33,6 @@ import com.syntifi.near.api.rpc.model.protocol.ProtocolConfig;
 import com.syntifi.near.api.rpc.model.transaction.Receipt;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransactionStatus;
-import com.syntifi.near.api.rpc.service.exception.NearServiceException;
-import com.syntifi.near.api.rpc.service.exception.NearServiceExceptionResolver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -49,58 +49,82 @@ import java.util.TreeMap;
 public interface NearClient {
 
     /**
+     * NearService builder
+     *
+     * @param network the rpc peer url to connect to
+     * @return the data holding object
+     * @throws NearException thrown when url is invalid or unparseable
+     */
+    static NearClient usingNetwork(Network network) throws NearException {
+        Map<String, String> customHeaders = new TreeMap<>();
+        customHeaders.put("Content-Type", "application/json");
+
+        try {
+            JsonRpcHttpClient client = new JsonRpcHttpClient(NearRpcObjectMapper.INSTANCE,
+                    new URL("https://" + network.getRpcUrl()),
+                    customHeaders);
+
+            client.setExceptionResolver(new NearExceptionResolver());
+
+            return ProxyUtil.createClientProxy(NearClient.class.getClassLoader(), NearClient.class, client);
+        } catch (MalformedURLException e) {
+            throw new NearException("Invalid URL " + network.getRpcUrl(), e.getCause());
+        }
+    }
+
+    /**
      * Queries network and returns block for given height or hash.
      *
      * @param finality the finality param
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("block")
-    Block getBlock(@JsonRpcParam("finality") Finality finality) throws NearServiceException;
+    Block getBlock(@JsonRpcParam("finality") Finality finality) throws NearException;
 
     /**
      * Queries network and returns block for given height or hash.
      *
      * @param blockHash the block's hash
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("block")
-    Block getBlock(@JsonRpcParam("block_id") String blockHash) throws NearServiceException;
+    Block getBlock(@JsonRpcParam("block_id") String blockHash) throws NearException;
 
     /**
      * Queries network and returns block for given height or hash.
      *
      * @param blockHeight the block's height
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("block")
-    Block getBlock(@JsonRpcParam("block_id") long blockHeight) throws NearServiceException;
+    Block getBlock(@JsonRpcParam("block_id") long blockHeight) throws NearException;
 
     /**
      * @param finality the finality param
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes_in_block")
-    BlockChanges getBlockChanges(@JsonRpcParam("finality") Finality finality) throws NearServiceException;
+    BlockChanges getBlockChanges(@JsonRpcParam("finality") Finality finality) throws NearException;
 
     /**
      * @param blockHash the block's hash
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes_in_block")
-    BlockChanges getBlockChanges(@JsonRpcParam("block_id") String blockHash) throws NearServiceException;
+    BlockChanges getBlockChanges(@JsonRpcParam("block_id") String blockHash) throws NearException;
 
     /**
      * @param blockHeight the block's height
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes_in_block")
-    BlockChanges getBlockChanges(@JsonRpcParam("block_id") long blockHeight) throws NearServiceException;
+    BlockChanges getBlockChanges(@JsonRpcParam("block_id") long blockHeight) throws NearException;
 
     /**
      * Returns details of a specific chunk. You can run a block details query to get
@@ -108,10 +132,10 @@ public interface NearClient {
      *
      * @param chunkId the id of the chunk
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("chunk")
-    Chunk getChunkDetails(@JsonRpcParam("chunk_id") String chunkId) throws NearServiceException;
+    Chunk getChunkDetails(@JsonRpcParam("chunk_id") String chunkId) throws NearException;
 
     /**
      * Returns details of a specific chunk. You can run a block details query to get
@@ -120,11 +144,11 @@ public interface NearClient {
      * @param blockId the block hash
      * @param shardId the id of the shard
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("chunk")
     Chunk getChunkDetails(@JsonRpcParam("block_id") String blockId,
-                          @JsonRpcParam("shard_id") long shardId) throws NearServiceException;
+                          @JsonRpcParam("shard_id") long shardId) throws NearException;
 
     /**
      * Returns details of a specific chunk. You can run a block details query to get
@@ -133,31 +157,31 @@ public interface NearClient {
      * @param blockId the block height
      * @param shardId the id of the shard
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("chunk")
     Chunk getChunkDetails(@JsonRpcParam("block_id") long blockId,
-                          @JsonRpcParam("shard_id") long shardId) throws NearServiceException;
+                          @JsonRpcParam("shard_id") long shardId) throws NearException;
 
     /**
      * Returns general status of a given node (sync status, near core node version,
      * protocol version, etc.), and the current set of validators.
      *
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("status")
-    NodeStatus getNodeStatus() throws NearServiceException;
+    NodeStatus getNodeStatus() throws NearException;
 
     /**
      * Returns the current state of node network connections (active peers,
      * transmitted data, etc.)
      *
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("network_info")
-    NetworkInfo getNetworkInfo() throws NearServiceException;
+    NetworkInfo getNetworkInfo() throws NearException;
 
     /**
      * Queries active validators on the network returning details and the state of
@@ -165,10 +189,10 @@ public interface NearClient {
      *
      * @param blockHash the block's hash
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "validators", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
-    ValidationStatus getNetworkValidationStatus(String blockHash) throws NearServiceException;
+    ValidationStatus getNetworkValidationStatus(String blockHash) throws NearException;
 
     /**
      * Queries active validators on the network returning details and the state of
@@ -176,10 +200,10 @@ public interface NearClient {
      *
      * @param blockHeight the block's height
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "validators", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
-    ValidationStatus getNetworkValidationStatus(long blockHeight) throws NearServiceException;
+    ValidationStatus getNetworkValidationStatus(long blockHeight) throws NearException;
 
     /**
      * Returns gas price for a specific block_height or block_hash.
@@ -187,29 +211,29 @@ public interface NearClient {
      *
      * @param blockHash the block's hash
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "gas_price", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
-    GasPrice getGasPrice(String blockHash) throws NearServiceException;
+    GasPrice getGasPrice(String blockHash) throws NearException;
 
     /**
      * Returns gas price for a specific block_height or block_hash.
      *
      * @param blockHeight the block's height
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "gas_price", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
-    GasPrice getGasPrice(long blockHeight) throws NearServiceException;
+    GasPrice getGasPrice(long blockHeight) throws NearException;
 
     /**
      * Returns current genesis configuration.
      *
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_genesis_config")
-    GenesisConfig getGenesisConfig() throws NearServiceException;
+    GenesisConfig getGenesisConfig() throws NearException;
 
     /**
      * Returns most recent protocol configuration or a specific queried block.
@@ -217,11 +241,11 @@ public interface NearClient {
      *
      * @param finality the finality param
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_protocol_config")
     ProtocolConfig getProtocolConfig(@JsonRpcParam("finality") Finality finality)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns most recent protocol configuration or a specific queried block.
@@ -229,10 +253,10 @@ public interface NearClient {
      *
      * @param blockHash the block's hash
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_protocol_config")
-    ProtocolConfig getProtocolConfig(@JsonRpcParam("block_id") String blockHash) throws NearServiceException;
+    ProtocolConfig getProtocolConfig(@JsonRpcParam("block_id") String blockHash) throws NearException;
 
     /**
      * Returns most recent protocol configuration or a specific queried block.
@@ -240,10 +264,10 @@ public interface NearClient {
      *
      * @param blockHeight the block's height
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_protocol_config")
-    ProtocolConfig getProtocolConfig(@JsonRpcParam("block_id") long blockHeight) throws NearServiceException;
+    ProtocolConfig getProtocolConfig(@JsonRpcParam("block_id") long blockHeight) throws NearException;
 
     /**
      * Sends a transaction and immediately returns transaction hash.
@@ -251,10 +275,10 @@ public interface NearClient {
      * @param base64EncodedSignedTransaction the base64 encoded signed transaction
      *                                       string
      * @return the transaction hash
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "broadcast_tx_async", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
-    String sendTransactionAsync(String base64EncodedSignedTransaction) throws NearServiceException;
+    String sendTransactionAsync(String base64EncodedSignedTransaction) throws NearException;
 
     /**
      * Sends a transaction and waits until transaction is fully complete. (Has a 10-second timeout)
@@ -262,10 +286,10 @@ public interface NearClient {
      * @param base64EncodedSignedTransaction the base64 encoded signed transaction
      *                                       string
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "broadcast_tx_commit", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
-    TransactionAwait sendTransactionAwait(String base64EncodedSignedTransaction) throws NearServiceException;
+    TransactionAwait sendTransactionAwait(String base64EncodedSignedTransaction) throws NearException;
 
     /**
      * Queries status of a transaction by hash and returns the final transaction
@@ -274,11 +298,11 @@ public interface NearClient {
      * @param transactionHash the transaction hash
      * @param senderAccountId the sender's account id
      * @return the data holding object the final transaction result
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "tx", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
     TransactionStatus getTransactionStatus(String transactionHash, String senderAccountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Queries status of a transaction by hash, returning the final transaction
@@ -288,21 +312,21 @@ public interface NearClient {
      * @param senderAccountId the sender's account id
      * @return the data holding object the final transaction result and details of
      * all receipts
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod(value = "EXPERIMENTAL_tx_status", paramsPassMode = JsonRpcParamsPassMode.ARRAY)
     TransactionStatus getTransactionStatusWithReceipts(String transactionHash, String senderAccountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Fetches a receipt by its ID (as is, without a status or execution outcome)
      *
      * @param receiptId the receipt ID to query for info
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_receipt")
-    Receipt getTransactionReceipt(@JsonRpcParam("receipt_id") String receiptId) throws NearServiceException;
+    Receipt getTransactionReceipt(@JsonRpcParam("receipt_id") String receiptId) throws NearException;
 
     /**
      * Returns information about a single access key for given account.
@@ -314,13 +338,13 @@ public interface NearClient {
      * @param accountId the account id
      * @param publicKey the associated public key
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_access_key")
     AccessKey viewAccessKey(@JsonRpcParam("finality") Finality finality,
                             @JsonRpcParam("account_id") String accountId, @JsonRpcParam("public_key") String publicKey)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns information about a single access key for given account.
@@ -332,13 +356,13 @@ public interface NearClient {
      * @param accountId the account id
      * @param publicKey the associated public key
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_access_key")
     AccessKey viewAccessKey(@JsonRpcParam("block_id") String blockHash,
                             @JsonRpcParam("account_id") String accountId, @JsonRpcParam("public_key") String publicKey)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns information about a single access key for given account.
@@ -350,13 +374,13 @@ public interface NearClient {
      * @param accountId   the account id
      * @param publicKey   the associated public key
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_access_key")
     AccessKey viewAccessKey(@JsonRpcParam("block_id") long blockHeight,
                             @JsonRpcParam("account_id") String accountId, @JsonRpcParam("public_key") String publicKey)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns all access keys for a given account.
@@ -364,13 +388,13 @@ public interface NearClient {
      * @param finality  the finality param
      * @param accountId the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_access_key_list")
     AccessKeyList viewAccessKeyList(@JsonRpcParam("finality") Finality finality,
                                     @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns all access keys for a given account.
@@ -378,13 +402,13 @@ public interface NearClient {
      * @param blockHash the block's hash
      * @param accountId the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_access_key_list")
     AccessKeyList viewAccessKeyList(@JsonRpcParam("block_id") String blockHash,
                                     @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns all access keys for a given account.
@@ -392,13 +416,13 @@ public interface NearClient {
      * @param blockHeight the block's height
      * @param accountId   the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_access_key_list")
     AccessKeyList viewAccessKeyList(@JsonRpcParam("block_id") long blockHeight,
                                     @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns individual access key changes in a specific block. You can query
@@ -408,13 +432,13 @@ public interface NearClient {
      * @param finality the finality param
      * @param keys     the key data to query for changes
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "single_access_key_changes")
     AccessKeyChanges viewSingleAccessKeyChanges(@JsonRpcParam("finality") Finality finality,
                                                 @JsonRpcParam("keys") Key[] keys)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns individual access key changes in a specific block. You can query
@@ -424,13 +448,13 @@ public interface NearClient {
      * @param blockHash the block's hash
      * @param keys      the key data to query for changes
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "single_access_key_changes")
     AccessKeyChanges viewSingleAccessKeyChanges(@JsonRpcParam("block_id") String blockHash,
                                                 @JsonRpcParam("keys") Key[] keys)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns individual access key changes in a specific block. You can query
@@ -440,13 +464,13 @@ public interface NearClient {
      * @param blockHeight the block's height
      * @param keys        the key data to query for changes
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "single_access_key_changes")
     AccessKeyChanges viewSingleAccessKeyChanges(@JsonRpcParam("block_id") long blockHeight,
                                                 @JsonRpcParam("keys") Key[] keys)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns changes to all access keys of a specific block. Multiple accounts can
@@ -455,13 +479,13 @@ public interface NearClient {
      * @param finality   the finality param
      * @param accountIds the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "all_access_key_changes")
     AccessKeyChanges viewAllAccessKeyChanges(@JsonRpcParam("finality") Finality finality,
                                              @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns changes to all access keys of a specific block. Multiple accounts can
@@ -470,13 +494,13 @@ public interface NearClient {
      * @param blockHash  the block's hash
      * @param accountIds the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "all_access_key_changes")
     AccessKeyChanges viewAllAccessKeyChanges(@JsonRpcParam("block_id") String blockHash,
                                              @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns changes to all access keys of a specific block. Multiple accounts can
@@ -485,13 +509,13 @@ public interface NearClient {
      * @param blockHeight the block's height
      * @param accountIds  the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "all_access_key_changes")
     AccessKeyChanges viewAllAccessKeyChanges(@JsonRpcParam("block_id") long blockHeight,
                                              @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns basic account information.
@@ -499,13 +523,13 @@ public interface NearClient {
      * @param finality  the finality param
      * @param accountId the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_account")
     Account viewAccount(@JsonRpcParam("finality") Finality finality,
                         @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns basic account information.
@@ -513,13 +537,13 @@ public interface NearClient {
      * @param blockHash the block's hash
      * @param accountId the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_account")
     Account viewAccount(@JsonRpcParam("block_id") String blockHash,
                         @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns basic account information.
@@ -527,13 +551,13 @@ public interface NearClient {
      * @param blockHeight the block's height
      * @param accountId   the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_account")
     Account viewAccount(@JsonRpcParam("block_id") long blockHeight,
                         @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns account changes from transactions in a given account.
@@ -541,13 +565,13 @@ public interface NearClient {
      * @param finality   the finality param
      * @param accountIds the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "account_changes")
     AccountChanges viewAccountChanges(@JsonRpcParam("finality") Finality finality,
                                       @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns account changes from transactions in a given account.
@@ -555,13 +579,13 @@ public interface NearClient {
      * @param blockHash  the block's hash
      * @param accountIds the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "account_changes")
     AccountChanges viewAccountChanges(@JsonRpcParam("block_id") String blockHash,
                                       @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns account changes from transactions in a given account.
@@ -569,13 +593,13 @@ public interface NearClient {
      * @param blockHeight the block's height
      * @param accountIds  the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "account_changes")
     AccountChanges viewAccountChanges(@JsonRpcParam("block_id") long blockHeight,
                                       @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the contract code (Wasm binary) deployed to the account. Please note
@@ -584,13 +608,13 @@ public interface NearClient {
      * @param finality  the finality param
      * @param accountId the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_code")
     ContractCode viewContractCode(@JsonRpcParam("finality") Finality finality,
                                   @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the contract code (Wasm binary) deployed to the account. Please note
@@ -599,13 +623,13 @@ public interface NearClient {
      * @param blockHash the block's hash
      * @param accountId the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_code")
     ContractCode viewContractCode(@JsonRpcParam("block_id") String blockHash,
                                   @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the contract code (Wasm binary) deployed to the account. Please note
@@ -614,13 +638,13 @@ public interface NearClient {
      * @param blockHeight the block's height
      * @param accountId   the account id
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_code")
     ContractCode viewContractCode(@JsonRpcParam("block_id") long blockHeight,
                                   @JsonRpcParam("account_id") String accountId)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the state (key value pairs) of a contract based on the key prefix
@@ -632,14 +656,14 @@ public interface NearClient {
      * @param accountId    the account id
      * @param prefixBase64 the base64 encoded prefix
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_state")
     ContractState viewContractState(@JsonRpcParam("finality") Finality finality,
                                     @JsonRpcParam("account_id") String accountId,
                                     @JsonRpcParam("prefix_base64") String prefixBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the state (key value pairs) of a contract based on the key prefix
@@ -651,14 +675,14 @@ public interface NearClient {
      * @param accountId    the account id
      * @param prefixBase64 the base64 encoded prefix
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_state")
     ContractState viewContractState(@JsonRpcParam("block_id") String blockHash,
                                     @JsonRpcParam("account_id") String accountId,
                                     @JsonRpcParam("prefix_base64") String prefixBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the state (key value pairs) of a contract based on the key prefix
@@ -670,14 +694,14 @@ public interface NearClient {
      * @param accountId    the account id
      * @param prefixBase64 the base64 encoded prefix
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "view_state")
     ContractState viewContractState(@JsonRpcParam("block_id") long blockHeight,
                                     @JsonRpcParam("account_id") String accountId,
                                     @JsonRpcParam("prefix_base64") String prefixBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the state change details of a contract based on the key prefix
@@ -688,14 +712,14 @@ public interface NearClient {
      * @param accountIds      the account ids
      * @param keyPrefixBase64 the base64 encoded key prefix
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "data_changes")
     ContractStateChanges viewContractStateChanges(@JsonRpcParam("finality") Finality finality,
                                                   @JsonRpcParam("account_ids") String[] accountIds,
                                                   @JsonRpcParam("key_prefix_base64") String keyPrefixBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the state change details of a contract based on the key prefix
@@ -706,14 +730,14 @@ public interface NearClient {
      * @param accountIds      the account ids
      * @param keyPrefixBase64 the base64 encoded key prefix
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "data_changes")
     ContractStateChanges viewContractStateChanges(@JsonRpcParam("block_id") String blockHash,
                                                   @JsonRpcParam("account_ids") String[] accountIds,
                                                   @JsonRpcParam("key_prefix_base64") String keyPrefixBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns the state change details of a contract based on the key prefix
@@ -724,14 +748,14 @@ public interface NearClient {
      * @param accountIds      the account ids
      * @param keyPrefixBase64 the base64 encoded key prefix
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "data_changes")
     ContractStateChanges viewContractStateChanges(@JsonRpcParam("block_id") long blockHeight,
                                                   @JsonRpcParam("account_ids") String[] accountIds,
                                                   @JsonRpcParam("key_prefix_base64") String keyPrefixBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns code changes made when deploying a contract. Change is returned is a
@@ -740,13 +764,13 @@ public interface NearClient {
      * @param finality   the finality param
      * @param accountIds the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "contract_code_changes")
     ContractCodeChanges viewContractCodeChanges(@JsonRpcParam("finality") Finality finality,
                                                 @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns code changes made when deploying a contract. Change is returned is a
@@ -755,13 +779,13 @@ public interface NearClient {
      * @param blockHash  the block's hash
      * @param accountIds the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "contract_code_changes")
     ContractCodeChanges viewContractCodeChanges(@JsonRpcParam("block_id") String blockHash,
                                                 @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Returns code changes made when deploying a contract. Change is returned is a
@@ -770,13 +794,13 @@ public interface NearClient {
      * @param blockHeight the block's height
      * @param accountIds  the account ids
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("EXPERIMENTAL_changes")
     @JsonRpcFixedParam(name = "changes_type", value = "contract_code_changes")
     ContractCodeChanges viewContractCodeChanges(@JsonRpcParam("block_id") long blockHeight,
                                                 @JsonRpcParam("account_ids") String[] accountIds)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Allows you to call a contract method as a view function.
@@ -787,7 +811,7 @@ public interface NearClient {
      *                   call
      * @param argsBase64 the method's base64 encoded arguments
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "call_function")
@@ -795,7 +819,7 @@ public interface NearClient {
                                                     @JsonRpcParam("account_id") String accountId,
                                                     @JsonRpcParam("method_name") String methodName,
                                                     @JsonRpcParam("args_base64") String argsBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Allows you to call a contract method as a view function.
@@ -805,7 +829,7 @@ public interface NearClient {
      * @param methodName the name of the method to call
      * @param argsBase64 the method's base64 encoded arguments
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "call_function")
@@ -813,7 +837,7 @@ public interface NearClient {
                                                     @JsonRpcParam("account_id") String accountId,
                                                     @JsonRpcParam("method_name") String methodName,
                                                     @JsonRpcParam("args_base64") String argsBase64)
-            throws NearServiceException;
+            throws NearException;
 
     /**
      * Allows you to call a contract method as a view function.
@@ -823,7 +847,7 @@ public interface NearClient {
      * @param methodName  the name of the method to call
      * @param argsBase64  the method's base64 encoded arguments
      * @return the data holding object
-     * @throws NearServiceException rpc call error exception
+     * @throws NearException rpc call error exception
      */
     @JsonRpcMethod("query")
     @JsonRpcFixedParam(name = "request_type", value = "call_function")
@@ -831,25 +855,5 @@ public interface NearClient {
                                                     @JsonRpcParam("account_id") String accountId,
                                                     @JsonRpcParam("method_name") String methodName,
                                                     @JsonRpcParam("args_base64") String argsBase64)
-            throws NearServiceException;
-
-    /**
-     * NearService builder
-     *
-     * @param network the rpc peer url to connect to
-     * @return the data holding object
-     * @throws MalformedURLException thrown when url is invalid or unparseable
-     */
-    static NearClient usingNetwork(Network network) throws MalformedURLException {
-        Map<String, String> customHeaders = new TreeMap<>();
-        customHeaders.put("Content-Type", "application/json");
-
-        JsonRpcHttpClient client = new JsonRpcHttpClient(NearRpcObjectMapper.INSTANCE,
-                new URL("https://" + network.getRpcUrl()),
-                customHeaders);
-
-        client.setExceptionResolver(new NearServiceExceptionResolver());
-
-        return ProxyUtil.createClientProxy(NearClient.class.getClassLoader(), NearClient.class, client);
-    }
+            throws NearException;
 }

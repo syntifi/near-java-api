@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.exception;
+package com.syntifi.near.api.common.exception;
 
 import lombok.Data;
 
@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 /**
  * Json RPC service error data
- * 
+ *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
  * @since 0.0.1
  */
 @Data
-public class NearServiceErrorData implements Serializable {
+public class NearErrorData implements Serializable {
     private String name;
     private Serializable cause;
     private int code;

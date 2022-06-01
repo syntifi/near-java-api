@@ -1,8 +1,10 @@
 package com.syntifi.near.api.rpc;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.exception.NoSuchTypeException;
 import com.syntifi.near.api.common.model.key.PublicKey;
+import com.syntifi.near.api.rpc.jsonrpc4j.exception.NearExceptionResolver;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKeyChanges;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKeyList;
@@ -27,8 +29,6 @@ import com.syntifi.near.api.rpc.model.protocol.ProtocolConfig;
 import com.syntifi.near.api.rpc.model.transaction.Receipt;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransactionStatus;
-import com.syntifi.near.api.rpc.service.exception.NearServiceException;
-import com.syntifi.near.api.rpc.service.exception.NearServiceExceptionResolver;
 import org.json.JSONException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -1184,38 +1184,38 @@ public class NearClientTest {
 
         LOGGER.debug("Calling getBlock with hash {} should throw NearServiceException", invalidBlockHash);
 
-        Throwable t = assertThrows(NearServiceException.class, () -> nearClient.getBlock(invalidBlockHash));
+        Throwable t = assertThrows(NearException.class, () -> nearClient.getBlock(invalidBlockHash));
 
         LOGGER.debug("Threw {}", t.getClass().getSimpleName());
     }
 
     @Test
     void loadError_validInput_doesHaveErrorData() throws IOException {
-        NearServiceExceptionResolver nearServiceExceptionResolver = new NearServiceExceptionResolver();
+        NearExceptionResolver nearExceptionResolver = new NearExceptionResolver();
 
         String validErrorJson = loadJsonFromResourceFile(
                 "json-test-samples/error/valid-error.json");
 
-        Throwable t = nearServiceExceptionResolver
+        Throwable t = nearExceptionResolver
                 .resolveException((ObjectNode) OBJECT_MAPPER.readTree(validErrorJson));
 
-        assertInstanceOf(NearServiceException.class, t);
+        assertInstanceOf(NearException.class, t);
 
-        assertNotNull(((NearServiceException) t).getNearServiceErrorData());
+        assertNotNull(((NearException) t).getNearErrorData());
     }
 
     @Test
     void loadError_invalidInput_doesNotHaveErrorData() throws IOException {
-        NearServiceExceptionResolver nearServiceExceptionResolver = new NearServiceExceptionResolver();
+        NearExceptionResolver nearExceptionResolver = new NearExceptionResolver();
 
         String invalidErrorJson = loadJsonFromResourceFile(
                 "json-test-samples/error/invalid-error.json");
 
-        Throwable t = nearServiceExceptionResolver
+        Throwable t = nearExceptionResolver
                 .resolveException((ObjectNode) OBJECT_MAPPER.readTree(invalidErrorJson));
 
-        assertInstanceOf(NearServiceException.class, t);
+        assertInstanceOf(NearException.class, t);
 
-        assertNull(((NearServiceException) t).getNearServiceErrorData());
+        assertNull(((NearException) t).getNearErrorData());
     }
 }

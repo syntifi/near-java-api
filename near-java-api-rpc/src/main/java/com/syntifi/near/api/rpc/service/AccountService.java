@@ -3,13 +3,12 @@ package com.syntifi.near.api.rpc.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.crypto.key.encdec.Base58;
+import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.helper.Network;
 import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.NearClient;
-import com.syntifi.near.api.rpc.NearClientHelper;
-import com.syntifi.near.api.rpc.Network;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.api.rpc.model.accesskey.permission.FullAccessPermission;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
@@ -19,7 +18,6 @@ import com.syntifi.near.api.rpc.model.transaction.CreateAccountAction;
 import com.syntifi.near.api.rpc.model.transaction.FunctionCallAction;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransferAction;
-import com.syntifi.near.api.rpc.service.exception.NearServiceException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -44,7 +42,7 @@ public class AccountService {
      * Sends a {@link TransferAction} transaction calling a contract to create_account
      * and waits for result using  {@link NearClient#sendTransactionAwait(String)}
      *
-     * @param nearClient         the near service instance to use
+     * @param nearClient          the near service instance to use
      * @param mainDomain          network main domain (eg. near, testnet, ...)
      * @param newAccountId        human-readable id of new account
      * @param newAccountPublicKey public key of new account
@@ -54,13 +52,13 @@ public class AccountService {
      * @param creatorPrivateKey   signer/account creator privatekey
      * @return {@link TransactionAwait} object with the result
      * @throws GeneralSecurityException thrown if failed to sign the transaction
-     * @throws NearServiceException     any NEAR-RPC exception
+     * @throws NearException            any NEAR-RPC exception
      */
     public static TransactionAwait createNamedAccount(NearClient nearClient, String mainDomain, String newAccountId,
                                                       PublicKey newAccountPublicKey, BigInteger amountToNewAccount,
                                                       String creatorAccountId, PublicKey creatorPublicKey,
                                                       PrivateKey creatorPrivateKey)
-            throws GeneralSecurityException, NearServiceException {
+            throws GeneralSecurityException, NearException {
         List<Action> actions = AccountService.createActionArrayToCreateNamedAccount(newAccountId, newAccountPublicKey,
                 amountToNewAccount);
         return nearClient.sendTransactionAwait(BaseService.prepareTransactionForActionList(
@@ -81,13 +79,13 @@ public class AccountService {
      * @param creatorPrivateKey   signer/account creator privatekey
      * @return {@link TransactionAwait} object with the result
      * @throws GeneralSecurityException thrown if failed to sign the transaction
-     * @throws NearServiceException     any NEAR-RPC exception
+     * @throws NearException            any NEAR-RPC exception
      */
     public static TransactionAwait createNamedAccount(Network network, String newAccountId,
                                                       PublicKey newAccountPublicKey, BigInteger amountToNewAccount,
                                                       String creatorAccountId, PublicKey creatorPublicKey,
                                                       PrivateKey creatorPrivateKey) throws GeneralSecurityException {
-        NearClient nearClient = NearClientHelper.getClient(network);
+        NearClient nearClient = NearClient.usingNetwork(network);
 
         return AccountService.createNamedAccount(nearClient, network.getDomain(), newAccountId,
                 newAccountPublicKey, amountToNewAccount, creatorAccountId, creatorPublicKey,
@@ -99,7 +97,7 @@ public class AccountService {
      * with the needed actions to generate a named account and waits for result using
      * {@link NearClient#sendTransactionAwait(String)}
      *
-     * @param nearClient         the near service instance to use
+     * @param nearClient          the near service instance to use
      * @param mainDomain          network main domain (eg. near, testnet, ...)
      * @param newAccountId        human-readable id of new account
      * @param newAccountPublicKey public key of new account
@@ -109,7 +107,7 @@ public class AccountService {
      * @param creatorPrivateKey   signer/account creator privatekey
      * @return transaction hash
      * @throws GeneralSecurityException thrown if failed to sign the transaction
-     * @throws NearServiceException     any NEAR-RPC exception
+     * @throws NearException            any NEAR-RPC exception
      */
     public static EncodedHash createNamedAccountAsync(NearClient nearClient, String mainDomain, String newAccountId,
                                                       PublicKey newAccountPublicKey, BigInteger amountToNewAccount,
@@ -140,14 +138,14 @@ public class AccountService {
      * @param creatorPrivateKey   signer/account creator privatekey
      * @return transaction hash
      * @throws GeneralSecurityException thrown if failed to sign the transaction
-     * @throws NearServiceException     any NEAR-RPC exception
+     * @throws NearException            any NEAR-RPC exception
      */
     public static EncodedHash createNamedAccountAsync(Network network, String newAccountId,
-                                                     PublicKey newAccountPublicKey, BigInteger amountToNewAccount,
-                                                     String creatorAccountId, PublicKey creatorPublicKey,
-                                                     PrivateKey creatorPrivateKey)
-            throws GeneralSecurityException, NearServiceException {
-        NearClient nearClient = NearClientHelper.getClient(network);
+                                                      PublicKey newAccountPublicKey, BigInteger amountToNewAccount,
+                                                      String creatorAccountId, PublicKey creatorPublicKey,
+                                                      PrivateKey creatorPrivateKey)
+            throws GeneralSecurityException, NearException {
+        NearClient nearClient = NearClient.usingNetwork(network);
 
         List<Action> actions = AccountService.createActionArrayToCreateNamedAccount(newAccountId, newAccountPublicKey,
                 amountToNewAccount);
@@ -163,7 +161,7 @@ public class AccountService {
      * Sends a {@link TransferAction} transaction with the needed actions to generate a sub account
      * and waits for result using  {@link NearClient#sendTransactionAwait(String)}
      *
-     * @param nearClient        the near service instance to use
+     * @param nearClient         the near service instance to use
      * @param newAccountId       human-readable id of new account
      * @param amountToNewAccount the amount to transfer
      * @param creatorAccountId   human-readable id of creatot account
@@ -189,7 +187,7 @@ public class AccountService {
      * with the needed actions to generate a sub account and waits for result using
      * {@link NearClient#sendTransactionAwait(String)}
      *
-     * @param nearClient        the near service instance to use
+     * @param nearClient         the near service instance to use
      * @param newAccountId       human-readable id of new account
      * @param amountToNewAccount the amount to transfer
      * @param creatorAccountId   human-readable id of creatot account
@@ -214,13 +212,13 @@ public class AccountService {
      * Method to check that the human-readable account id follows the naming convention
      *
      * @param accountId human-readable account id
-     * @throws NearServiceException thows if the name deviates from the regex pattern
+     * @throws NearException thows if the name deviates from the regex pattern
      */
-    public static void checkAccountId(String accountId) throws NearServiceException {
+    public static void checkAccountId(String accountId) throws NearException {
         Pattern regex = Pattern.compile("^(([a-z\\d]+[-_])*[a-z\\d]+.)*([a-z\\d]+[-_])*[a-z\\d]+$");
         Matcher matcher = regex.matcher(accountId);
         if (matcher.groupCount() == 0 || matcher.group(0).length() < 2 || accountId.length() > 64) {
-            throw new NearServiceException("accountId does not follow the standard: minimum length is 2, " +
+            throw new NearException("accountId does not follow the standard: minimum length is 2, " +
                     "maximum length is 64, accountId consists of accountId parts separated by . ," +
                     "and accountId part consists of lowercase alphanumeric symbols separated by either _ or - ",
                     null);
@@ -254,7 +252,7 @@ public class AccountService {
     /**
      * Internal method to create a list of actions needed to generate a new subaccount
      *
-     * @param nearClient        the near service instance to use
+     * @param nearClient         the near service instance to use
      * @param amountToNewAccount the amount to transfer
      * @param creatorAccountId   human-readable id of creatot account
      * @param creatorPublicKey   signer/account creator public key

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.model.key.PublicKey;
+import com.syntifi.near.api.indexer.exception.NearIndexerException;
 import com.syntifi.near.api.indexer.model.RecentActivityAccessKey;
 import com.syntifi.near.api.indexer.model.RecentActivityArgAddKey;
 import com.syntifi.near.api.indexer.model.RecentActivityArgCreateAccount;
@@ -16,7 +17,6 @@ import com.syntifi.near.api.indexer.model.RecentActivityArgStake;
 import com.syntifi.near.api.indexer.model.RecentActivityArgTransfer;
 import com.syntifi.near.api.indexer.model.RecentActivityItem;
 import com.syntifi.near.api.indexer.model.RecentActivityPermission;
-import com.syntifi.near.api.indexer.service.exception.NearIndexerServiceException;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -90,7 +90,7 @@ public class RecentActivityItemDeserializer extends JsonDeserializer<RecentActiv
                     .beneficiaryId(argsNode.get("beneficiary_id").asText())
                     .build());
         } else {
-            throw new NearIndexerServiceException(
+            throw new NearIndexerException(
                     String.format("Action %s not mapped for deserialization", recentActivityItem.getActionKind()));
         }
 
