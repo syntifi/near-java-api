@@ -13,7 +13,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Network {
-    MAIN_NET("rpc.near.org", "api.kitwallet.app", "helper.near.org", "https://explorer.near.org/transactions/", "near"),
+    MAIN_NET("rpc.mainnet.near.org", "api.kitwallet.app", "helper.near.org", "https://explorer.near.org/transactions/", "near"),
     TEST_NET("rpc.testnet.near.org", "testnet-api.kitwallet.app", "helper.testnet.near.org", "https://explorer.testnet.near.org/transactions/", "testnet"),
     ARCHIVAL_TEST_NET("archival-rpc.testnet.near.org", "testnet-api.kitwallet.app", "helper.testnet.near.org", "https://explorer.testnet.near.org/transactions/", "testnet");
 
