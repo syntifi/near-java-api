@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.contract;
+package com.syntifi.near.api.rpc.service.contract.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.syntifi.near.api.common.model.common.Base64String;

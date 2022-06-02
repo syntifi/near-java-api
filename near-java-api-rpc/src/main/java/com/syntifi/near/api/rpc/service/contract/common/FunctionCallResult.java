@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.contract;
+package com.syntifi.near.api.rpc.service.contract.common;
 
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;

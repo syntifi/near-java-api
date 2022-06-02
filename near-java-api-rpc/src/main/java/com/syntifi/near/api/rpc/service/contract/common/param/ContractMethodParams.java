@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.contract;
+package com.syntifi.near.api.rpc.service.contract.common.param;
 
 /**
  * Signature for contract method parameters

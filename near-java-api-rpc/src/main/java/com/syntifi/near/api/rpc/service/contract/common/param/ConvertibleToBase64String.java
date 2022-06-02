@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.contract;
+package com.syntifi.near.api.rpc.service.contract.common.param;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.syntifi.near.api.common.model.common.Base64String;

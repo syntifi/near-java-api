@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service.contract.annotation;
+package com.syntifi.near.api.rpc.service.contract.common.annotation;
 
 
 import java.lang.annotation.ElementType;
@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface ContractMethod {
-    MethodType type();
+    ContractMethodType type();
     String name();
 }

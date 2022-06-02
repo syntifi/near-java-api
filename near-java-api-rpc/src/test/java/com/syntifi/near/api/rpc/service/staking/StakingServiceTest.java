@@ -1,11 +1,10 @@
 package com.syntifi.near.api.rpc.service.staking;
 
-import com.syntifi.near.api.common.key.AbstractKeyTest;
 import com.syntifi.near.api.rpc.service.AccountServiceTest;
-import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
-import com.syntifi.near.api.rpc.service.contract.ContractClient;
-import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
-import com.syntifi.near.api.rpc.service.contract.ContractMethodProxyClient;
+import com.syntifi.near.api.rpc.service.contract.common.param.AccountIdParam;
+import com.syntifi.near.api.rpc.service.contract.common.ContractClient;
+import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClient;
+import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
 import com.syntifi.near.api.rpc.service.contract.staking.StakingService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -15,9 +14,8 @@ import java.math.BigInteger;
 
 import static com.syntifi.near.api.rpc.NearClientTestnetHelper.nearClient;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class StakingServiceTest extends AbstractKeyTest {
+class StakingServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
 
