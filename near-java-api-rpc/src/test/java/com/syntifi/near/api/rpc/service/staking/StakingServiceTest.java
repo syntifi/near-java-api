@@ -1,25 +1,43 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc.service.staking;
 
-import com.syntifi.near.api.common.helper.Formats;
 import com.syntifi.near.api.common.key.AbstractKeyTest;
-import com.syntifi.near.api.common.model.key.PrivateKey;
-import com.syntifi.near.api.common.model.key.PublicKey;
-import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
-import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
+import com.syntifi.near.api.rpc.service.AccountServiceTest;
+import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
+import com.syntifi.near.api.rpc.service.contract.ContractClient;
+import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
+import com.syntifi.near.api.rpc.service.contract.ContractMethodProxyClient;
+import com.syntifi.near.api.rpc.service.contract.staking.StakingService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
-import java.security.GeneralSecurityException;
 
 import static com.syntifi.near.api.rpc.NearClientTestnetHelper.nearClient;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StakingServiceTest extends AbstractKeyTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
+
+    @Test
+    void testAccountTotalBalance_should_be_bigger_than_zero() {
+        String stakingPool = "stakesstone.pool.f863973.m0";
+        String accountId = "syntifi-alice.testnet";
+        StakingService service = ContractClient.createClientProxy(StakingService.class, new ContractMethodProxyClient());
+        FunctionCallResult<BigInteger> totalValue = service.getAccountTotalBalance(nearClient, stakingPool, AccountIdParam.builder().accountId(accountId).build());
+        assertEquals(1, totalValue.getResult().compareTo(BigInteger.valueOf(0L)));
+    }
+
+    @Test
+    void testAccountStakedBalance_should_be_bigger_than_zero() {
+        String stakingPool = "stakesstone.pool.f863973.m0";
+        String accountId = "syntifi-alice.testnet";
+        StakingService service = ContractClient.createClientProxy(StakingService.class, new ContractMethodProxyClient());
+        FunctionCallResult<BigInteger> totalValue = service.getAccountStakedBalance(nearClient, stakingPool, AccountIdParam.builder().accountId(accountId).build());
+        assertEquals(1, totalValue.getResult().compareTo(BigInteger.valueOf(0L)));
+    }
 
 /*    @Test
     void depositAndStakeToken_should_return_Success() throws GeneralSecurityException {

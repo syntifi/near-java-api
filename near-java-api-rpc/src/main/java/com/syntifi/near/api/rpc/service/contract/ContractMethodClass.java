@@ -7,6 +7,6 @@ package com.syntifi.near.api.rpc.service.contract;
  * @author Andre Bertolace
  * @since 0.2.0
  */
-public interface ContractMethod {
+public interface ContractMethodClass {
     String getMethodName();
 }

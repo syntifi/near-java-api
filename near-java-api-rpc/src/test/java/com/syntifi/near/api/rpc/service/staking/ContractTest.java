@@ -4,7 +4,7 @@ import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
-import com.syntifi.near.api.rpc.service.contract.staking.StakingContractFunctionCall;
+import com.syntifi.near.api.rpc.service.contract.staking.StakingService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +34,12 @@ public class ContractTest {
         LOGGER.debug("{}", result.getResult());
     }
 
-    @Test
+    /*@Test
     void callContractFunction_StakingContractFunctionCall_forAccountTotalBalance_return_value() throws IOException {
         FunctionCallResult<BigInteger> result =
-                StakingContractFunctionCall.forAccountTotalBalance(nearClient, "prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
+                StakingService.getAccountTotalBalance(nearClient, "prophet.pool.f863973.m0", new AccountIdParam("wallet-test.testnet"));
 
         LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
         LOGGER.debug("{}", result.getResult());
-    }
+    }*/
 }

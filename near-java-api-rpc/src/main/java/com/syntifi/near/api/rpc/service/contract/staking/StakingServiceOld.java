@@ -1,4 +1,4 @@
-package com.syntifi.near.api.rpc.service;
+package com.syntifi.near.api.rpc.service.contract.staking;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -10,6 +10,7 @@ import com.syntifi.near.api.rpc.model.transaction.Action;
 import com.syntifi.near.api.rpc.model.transaction.FunctionCallAction;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransferAction;
+import com.syntifi.near.api.rpc.service.BaseService;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -26,8 +27,8 @@ import java.util.List;
  * @since 0.2.0
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StakingService {
-
+public class StakingServiceOld {
+//TODO: MIGRATE THIS CLASS TO THE NEW StakingService
     /**
      * Sends a {@link TransferAction} function call to stake a certain amount to the given staking
      * pool and keeps waiting for result using {@link NearClient#sendTransactionAwait(String)}
@@ -45,7 +46,7 @@ public class StakingService {
                                                          BigInteger stakingAmount, String accountId,
                                                          PublicKey accountPubliKey, PrivateKey accountPrivateKey)
             throws GeneralSecurityException {
-        List<Action> actions = StakingService.createActionArrayToStakeWithStakingPool(stakingAmount);
+        List<Action> actions = StakingServiceOld.createActionArrayToStakeWithStakingPool(stakingAmount);
         return nearClient.sendTransactionAwait(BaseService.prepareTransactionForActionList(
                 nearClient, accountId, stakingPool, accountPubliKey, accountPrivateKey,
                 actions));
@@ -68,7 +69,7 @@ public class StakingService {
                                                  BigInteger stakingAmount, String accountId,
                                                  PublicKey accountPubliKey, PrivateKey accountPrivateKey)
             throws GeneralSecurityException {
-        List<Action> actions = StakingService.createActionArrayToUnstakeFromStakingPool(stakingAmount);
+        List<Action> actions = StakingServiceOld.createActionArrayToUnstakeFromStakingPool(stakingAmount);
         return nearClient.sendTransactionAwait(BaseService.prepareTransactionForActionList(
                 nearClient, accountId, stakingPool, accountPubliKey, accountPrivateKey,
                 actions));
@@ -92,7 +93,7 @@ public class StakingService {
                                                       PublicKey accountPubliKey, PrivateKey accountPrivateKey) throws GeneralSecurityException {
         NearClient nearClient = NearClient.usingNetwork(network);
 
-        return StakingService.depositAndStakeTokens(nearClient, stakingPool, stakingAmount, accountId,
+        return StakingServiceOld.depositAndStakeTokens(nearClient, stakingPool, stakingAmount, accountId,
                 accountPubliKey, accountPrivateKey);
     }
 
@@ -114,7 +115,7 @@ public class StakingService {
                                                          BigInteger stakingAmount, String accountId,
                                                          PublicKey accountPubliKey, PrivateKey accountPrivateKey)
             throws GeneralSecurityException {
-        List<Action> actions = StakingService.createActionArrayToStakeWithStakingPool(stakingAmount);
+        List<Action> actions = StakingServiceOld.createActionArrayToStakeWithStakingPool(stakingAmount);
         return EncodedHash.builder()
                 .encodedHash(
                         nearClient.sendTransactionAsync(BaseService.prepareTransactionForActionList(
@@ -142,7 +143,7 @@ public class StakingService {
                                                          PublicKey accountPubliKey, PrivateKey accountPrivateKey) throws GeneralSecurityException {
         NearClient nearClient = NearClient.usingNetwork(network);
 
-        return StakingService.depositAndStakeTokensAsync(nearClient, stakingPool, stakingAmount, accountId,
+        return StakingServiceOld.depositAndStakeTokensAsync(nearClient, stakingPool, stakingAmount, accountId,
                 accountPubliKey, accountPrivateKey);
     }
 

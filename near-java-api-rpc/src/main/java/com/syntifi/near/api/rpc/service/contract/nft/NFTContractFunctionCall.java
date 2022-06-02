@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.helper.Formats;
 import com.syntifi.near.api.rpc.NearClient;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
-import com.syntifi.near.api.rpc.service.contract.ContractMethod;
-import com.syntifi.near.api.rpc.service.contract.ContractMethodCaller;
+import com.syntifi.near.api.rpc.service.contract.ContractMethodClass;
+import com.syntifi.near.api.rpc.service.contract.ContractViewMethodCaller;
 import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContract;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContractMetadata;
@@ -37,8 +37,8 @@ public class NFTContractFunctionCall {
      * @throws IOException thrown if failed to deserialize result to target class
      */
     public static void loadContractMetadata(NearClient nearClient, NFTContract contract) throws IOException {
-        contract.setMetadata(ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.NFT_METADATA, NFTContractMetadata.class, nearClient, contract.getContractId(), null));
+        contract.setMetadata(ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.NFT_METADATA, NFTContractMetadata.class, nearClient, contract.getContractId(), null));
     }
 
     /**
@@ -51,8 +51,8 @@ public class NFTContractFunctionCall {
      * @throws IOException thrown if failed to deserialize result to target class
      */
     public static FunctionCallResult<NFTTokenList> forTokensForOwner(NearClient nearClient, String contractAccountId, NFTTokensForOwnerParam nftTokensForOwnerParam) throws IOException {
-        return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.NFT_TOKENS_FOR_OWNER, NFTTokenList.class, nearClient, contractAccountId, nftTokensForOwnerParam);
+        return ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.NFT_TOKENS_FOR_OWNER, NFTTokenList.class, nearClient, contractAccountId, nftTokensForOwnerParam);
     }
 
     /**
@@ -65,8 +65,8 @@ public class NFTContractFunctionCall {
      * @throws IOException thrown if failed to deserialize result to target class
      */
     public static FunctionCallResult<JsonNode> forTokens(NearClient nearClient, String contractAccountId, NFTTokensParam nftTokensParam) throws IOException {
-        return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.NFT_TOKENS, JsonNode.class, nearClient, contractAccountId, nftTokensParam);
+        return ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.NFT_TOKENS, JsonNode.class, nearClient, contractAccountId, nftTokensParam);
     }
 
     /**
@@ -78,8 +78,8 @@ public class NFTContractFunctionCall {
      * @throws IOException thrown if failed to deserialize result to target class
      */
     public static FunctionCallResult<String> forTotalSupply(NearClient nearClient, String contractAccountId) throws IOException {
-        return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.NFT_TOTAL_SUPPLY, String.class, nearClient, contractAccountId, null);
+        return ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.NFT_TOTAL_SUPPLY, String.class, nearClient, contractAccountId, null);
     }
 
     /**
@@ -91,17 +91,17 @@ public class NFTContractFunctionCall {
      * @return a typed function call result
      */
     public static FunctionCallResult<String> forSupplyForOwner(NearClient nearClient, String contractAccountId, AccountIdParam accountIdParam) throws IOException {
-        return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.NFT_SUPPLY_FOR_OWNER, String.class, nearClient, contractAccountId, accountIdParam);
+        return ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.NFT_SUPPLY_FOR_OWNER, String.class, nearClient, contractAccountId, accountIdParam);
     }
 
     /**
      * Contract method definitions
      */
-    public static class StakingMethodCaller extends ContractMethodCaller {
+    public static class StakingViewMethodCaller extends ContractViewMethodCaller {
         @Getter
         @AllArgsConstructor
-        public enum ViewMethod implements ContractMethod {
+        public enum ViewMethodClass implements ContractMethodClass {
             NFT_TOTAL_SUPPLY("nft_total_supply"),
             NFT_METADATA("nft_metadata"),
             NFT_SUPPLY_FOR_OWNER("nft_supply_for_owner"),

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.helper.Formats;
 import com.syntifi.near.api.rpc.NearClient;
 import com.syntifi.near.api.rpc.service.contract.AccountIdParam;
-import com.syntifi.near.api.rpc.service.contract.ContractMethod;
-import com.syntifi.near.api.rpc.service.contract.ContractMethodCaller;
+import com.syntifi.near.api.rpc.service.contract.ContractMethodClass;
+import com.syntifi.near.api.rpc.service.contract.ContractViewMethodCaller;
 import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,8 +45,8 @@ public class FTContractFunctionCall {
      * @throws IOException thrown if failed to deserialize result to target class
      */
     public static FunctionCallResult<JsonNode> forMetadata(NearClient nearClient, String contractAccountId) throws IOException {
-        return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.FT_METADATA, JsonNode.class, nearClient, contractAccountId, null);
+        return ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.FT_METADATA, JsonNode.class, nearClient, contractAccountId, null);
     }
 
     /**
@@ -59,8 +59,8 @@ public class FTContractFunctionCall {
      * @throws IOException thrown if failed to deserialize result to target class
      */
     public static FunctionCallResult<JsonNode> forBalanceOf(NearClient nearClient, String contractAccountId, AccountIdParam accountIdParam) throws IOException {
-        return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.FT_BALANCE_OF, JsonNode.class, nearClient, contractAccountId, accountIdParam);
+        return ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.FT_BALANCE_OF, JsonNode.class, nearClient, contractAccountId, accountIdParam);
     }
 
     /**
@@ -73,17 +73,17 @@ public class FTContractFunctionCall {
      * @throws IOException thrown if failed to deserialize result to target class
      */
     public static FunctionCallResult<JsonNode> forTransferCall(NearClient nearClient, String contractAccountId, FTTransferParam ftTransferParam) throws IOException {
-        return ContractMethodCaller
-                .callFor(StakingMethodCaller.ViewMethod.FT_TRANSFER_CALL, JsonNode.class, nearClient, contractAccountId, ftTransferParam);
+        return ContractViewMethodCaller
+                .callFor(StakingViewMethodCaller.ViewMethodClass.FT_TRANSFER_CALL, JsonNode.class, nearClient, contractAccountId, ftTransferParam);
     }
 
     /**
      * Contract method definitions
      */
-    public static class StakingMethodCaller extends ContractMethodCaller {
+    public static class StakingViewMethodCaller extends ContractViewMethodCaller {
         @Getter
         @AllArgsConstructor
-        public enum ViewMethod implements ContractMethod {
+        public enum ViewMethodClass implements ContractMethodClass {
             FT_METADATA("ft_metadata"),
             FT_TRANSFER_CALL("ft_transfer_call"),
             FT_BALANCE_OF("ft_balance_of");

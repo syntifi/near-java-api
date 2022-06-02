@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author Andre Bertolace
  * @since 0.2.0
  */
-public abstract class ContractMethodCaller {
+public abstract class ContractViewMethodCaller {
 
     /**
      * Calls a contract for specific method
@@ -29,7 +29,7 @@ public abstract class ContractMethodCaller {
      * @return a typed FunctionCallResult for the requested contract method
      * @throws IOException thrown when fails to map json to result object
      */
-    public static <T> FunctionCallResult<T> callFor(ContractMethod method, Class<T> returnClass, NearClient nearClient, String contractAccountId, ContractMethodParams params) throws IOException {
+    public static <T> FunctionCallResult<T> callFor(ContractMethodClass method, Class<T> returnClass, NearClient nearClient, String contractAccountId, ContractMethodParams params) throws IOException {
         ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(method.getMethodName())

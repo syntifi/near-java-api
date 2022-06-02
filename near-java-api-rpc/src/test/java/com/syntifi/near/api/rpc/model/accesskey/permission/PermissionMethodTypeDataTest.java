@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class PermissionTypeDataTest {
+public class PermissionMethodTypeDataTest {
     @Test
     void getClassByName_validName_shouldReturn_correctClass() {
         String validClassName = PermissionTypeData.FULL_ACCESS.getName();
