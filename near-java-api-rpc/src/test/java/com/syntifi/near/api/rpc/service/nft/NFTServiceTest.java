@@ -42,7 +42,11 @@ public class NFTServiceTest {
 
     @Test
     void callContractFunction_NFTContractFunctionCall_forTokensForOwner_return_list() throws IOException, URISyntaxException {
-        NFTContract contract = new NFTContract("paras-token-v2.testnet");
+        // Other contracts to test
+        // deadmau55.mintspace2.testnet
+        // bananafratclub.mintspace2.testnet
+        // paras-token-v2.testnet
+        NFTContract contract = new NFTContract("bananafratclub.mintspace2.testnet");
 
         contract.setMetadata(service.getMetadata(nearClient, contract.getContractId()));
 

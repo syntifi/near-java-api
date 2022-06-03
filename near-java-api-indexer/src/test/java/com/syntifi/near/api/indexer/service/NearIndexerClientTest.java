@@ -62,7 +62,7 @@ public class NearIndexerClientTest {
 
     @Test
     void getAccountLikelyNFTs_valid() throws IOException {
-        Response<AccountIdList> value = nearIndexerClient.getAccountLikelyNFTs("wallet-test.testnet").execute();
+        Response<AccountIdList> value = nearIndexerClient.getAccountLikelyNFTs("syntifi-alice.testnet").execute();
 
         assertTrue(value.isSuccessful());
 
