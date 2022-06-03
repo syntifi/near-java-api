@@ -1,7 +1,7 @@
 package com.syntifi.near.api.rpc.service.contract.nft.model;
 
 
-import com.syntifi.near.api.rpc.service.contract.FunctionCallResult;
+import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

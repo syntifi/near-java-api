@@ -4,6 +4,7 @@ import com.syntifi.crypto.key.hash.Sha256;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.common.model.key.Signature;
+import com.syntifi.near.api.rpc.NearClient;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.api.rpc.model.block.Block;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
@@ -11,16 +12,26 @@ import com.syntifi.near.api.rpc.model.transaction.Action;
 import com.syntifi.near.api.rpc.model.transaction.SignedTransaction;
 import com.syntifi.near.api.rpc.model.transaction.Transaction;
 import com.syntifi.near.borshj.Borsh;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.security.GeneralSecurityException;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * Base service provides methods to sign transactions
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.2.0
+ */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BaseService {
     /**
      * Prepares the transaction to send with a given nonce
      *
-     * @param nearService      the near service instance to use
+     * @param nearClient      the near service instance to use
      * @param signerId         the signer id
      * @param receiverId       the receiver id
      * @param signerPublicKey  signer public key
@@ -30,11 +41,11 @@ public class BaseService {
      * @return the base64 encoded signed transaction string
      * @throws GeneralSecurityException thrown if failed to sign the transaction
      */
-    public static String prepareTransactionForActionList(NearService nearService, String signerId, String receiverId,
+    public static String prepareTransactionForActionList(NearClient nearClient, String signerId, String receiverId,
                                                          PublicKey signerPublicKey, PrivateKey signerPrivateKey,
                                                          List<Action> actionList, Long nonce)
             throws GeneralSecurityException {
-        Block block = nearService.getBlock(Finality.FINAL);
+        Block block = nearClient.getBlock(Finality.FINAL);
 
         Transaction transaction = Transaction
                 .builder()
@@ -67,7 +78,7 @@ public class BaseService {
     /**
      * Prepares the transaction to send and automatically queries for the next nonce
      *
-     * @param nearService      the near service instance to use
+     * @param nearClient      the near service instance to use
      * @param signerId         the signer id
      * @param receiverId       the receiver id
      * @param signerPublicKey  signer public key
@@ -76,11 +87,11 @@ public class BaseService {
      * @return the base64 encoded signed transaction string
      * @throws GeneralSecurityException thrown if failed to sign the transaction
      */
-    public static String prepareTransactionForActionList(NearService nearService, String signerId, String receiverId,
+    public static String prepareTransactionForActionList(NearClient nearClient, String signerId, String receiverId,
                                                          PublicKey signerPublicKey, PrivateKey signerPrivateKey,
                                                          List<Action> actionList) throws GeneralSecurityException {
-       AccessKey accessKey = nearService.viewAccessKey(Finality.FINAL, signerId, signerPublicKey.toEncodedBase58String());
-       return BaseService.prepareTransactionForActionList(nearService, signerId, receiverId,
+       AccessKey accessKey = nearClient.viewAccessKey(Finality.FINAL, signerId, signerPublicKey.toEncodedBase58String());
+       return BaseService.prepareTransactionForActionList(nearClient, signerId, receiverId,
                signerPublicKey, signerPrivateKey, actionList,accessKey.getNonce() + 1L);
     }
 }

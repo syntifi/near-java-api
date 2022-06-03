@@ -7,10 +7,11 @@ package com.syntifi.near.api.common.exception;
  * @author Andre Bertolace
  * @since 0.0.1
  */
-public class NoSuchTypeException extends RuntimeException {
+public class NoSuchTypeException extends NearException {
     public NoSuchTypeException(String message) {
         super(message);
     }
+
     public NoSuchTypeException(String message, Throwable t) {
         super(message, t);
     }

@@ -33,12 +33,12 @@ public class Signature extends KeySig implements Borsh {
     }
 
     @JsonCreator
-    public static Signature getPublicKeyFromJson(String base58String) {
+    public static Signature getSignatureFromJson(String base58String) {
         return fromEncodedBase58String(base58String, Signature.class);
     }
 
     @JsonValue
-    public String getJsonPublicKey() {
+    public String getJsonSignature() {
         return this.toEncodedBase58String();
     }
 }
