@@ -4,6 +4,8 @@ import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.rpc.NearClient;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethodType;
 import com.syntifi.near.api.rpc.service.contract.common.param.ContractMethodParams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -15,6 +17,8 @@ import java.io.IOException;
  * @since 0.2.0
  */
 public class ContractMethodProxyClient implements ContractMethodProxy {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContractMethodProxyClient.class);
 
     /**
      * Effectively calls the contract method with all needed data
@@ -32,6 +36,16 @@ public class ContractMethodProxyClient implements ContractMethodProxy {
     @Override
     public <T> FunctionCallResult<T> invoke(NearClient nearClient, String contractAccountId, String methodName, ContractMethodType methodType,
                                             ContractMethodParams arguments, Class<T> returnClass) throws IOException {
+
+        LOGGER.debug("Invoking {}", methodName);
+        LOGGER.debug("*** Contract Id: {}", contractAccountId);
+        LOGGER.debug("*** Method Type: {}", methodType.toString());
+        if (arguments != null) {
+            LOGGER.debug("*** Arguments Class: {}", arguments.getClass().getSimpleName());
+            LOGGER.debug("****** Decoded data: {}", arguments.toJsonBase64String().getDecodedString());
+            LOGGER.debug("****** Encoded data: {}", arguments.toJsonBase64String().getEncodedString());
+        }
+        LOGGER.debug("*** Return Class: {}", returnClass.getSimpleName());
         if (methodType == ContractMethodType.CALL) {
             return null;
         } else if (methodType == ContractMethodType.VIEW) {

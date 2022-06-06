@@ -14,5 +14,4 @@ import com.syntifi.near.api.rpc.service.contract.common.param.ContractMethodPara
 public interface ContractMethodProxy {
     <T> FunctionCallResult<T> invoke(NearClient nearClient, String contractAccountId, String methodName, ContractMethodType methodType,
                                      ContractMethodParams arguments, Class<T> returnClass) throws Throwable;
-
 }
