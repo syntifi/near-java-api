@@ -9,22 +9,17 @@ import com.syntifi.near.api.rpc.service.contract.nft.NFTService;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContract;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTToken;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenList;
+import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenMediaURL;
 import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensForOwnerParam;
 import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensParam;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class NFTServiceTest {
@@ -48,7 +43,7 @@ public class NFTServiceTest {
     }
 
     @Test
-    void callContractFunction_NFTContractFunctionCall_forTokensForOwner_return_list() throws IOException {
+    void callContractFunction_NFTContractFunctionCall_forTokensForOwner_return_list() {
         // Other contracts to test
         // deadmau55.mintspace2.testnet
         // bananafratclub.mintspace2.testnet
@@ -68,22 +63,12 @@ public class NFTServiceTest {
             assertNotNull(token.getTokenId());
 
             assertDoesNotThrow(() -> token.getMediaOrReferenceURL(contract));
-            URL url = token.getMediaOrReferenceURL(contract);
-            LOGGER.debug("Token Media: {}", url.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-
-            // TODO: It may fail (site removed data or other reason)
-            //assertEquals(200, conn.getResponseCode());
-            conn.getResponseCode();
-
-            String contentType = conn.getContentType();
-
-            if (contentType.contains("application/json")) {
-                LOGGER.debug("Content is JSON");
+            NFTTokenMediaURL nftTokenMediaURL = token.getMediaOrReferenceURL(contract);
+            LOGGER.debug("Token Media: {} of type {}", nftTokenMediaURL.getUrl().toString(), nftTokenMediaURL.getType().toString());
+            if (nftTokenMediaURL.getUrl() == null) {
+                assertEquals(NFTTokenMediaURL.Type.EMPTY, nftTokenMediaURL.getType());
             } else {
-                LOGGER.debug("content type: {}", contentType);
+                assertNotEquals(NFTTokenMediaURL.Type.EMPTY, nftTokenMediaURL.getType());
             }
         }
     }

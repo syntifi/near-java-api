@@ -39,31 +39,37 @@ public class NFTToken {
      *
      * You can parse correctly to an image or reference json by checking the response content-type
      *
-     * 1 - First no media and no reference -> no url nor object -> returns null
-     * 2 - has media (ignore reference in this case) -> returns String with url
-     * 3 - has reference (only considered if media is null) -> returns String with url for off-chain data JSON
+     * 1 - First no media and no reference - no url nor object - returns null
+     * 2 - has media (ignore reference in this case) - returns String with url
+     * 3 - has reference (only considered if media is null) - returns String with url for off-chain data JSON
      *
      * @param contract the token contract
      * @return the media url
      * @throws NearException if fails to parse the url
      */
     @JsonIgnore
-    public URL getMediaOrReferenceURL(NFTContract contract) throws NearException {
-        URL returnURL;
+    public NFTTokenMediaURL getMediaOrReferenceURL(NFTContract contract) throws NearException {
+        NFTTokenMediaURL returnURL = new NFTTokenMediaURL();
 
         try {
-            URI uri = null;
+            URI uri;
             String baseUri = contract.getMetadata().getResult().getBaseUri();
 
             if (metadata.getMedia() != null && (Strings.isURL(metadata.getMedia()) || metadata.getMedia().startsWith("data:image"))) {
                 uri = new URI((baseUri != null ? baseUri + "/" : "") + metadata.getMedia());
+                returnURL.setType(NFTTokenMediaURL.Type.MEDIA);
             } else if (metadata.getMedia() != null) {
                 uri = new URI((baseUri != null ? baseUri + "/" : "") + metadata.getMedia());
+                returnURL.setType(NFTTokenMediaURL.Type.MEDIA);
             } else if (metadata.getReference() != null) {
                 uri = new URI((baseUri != null ? baseUri + "/" : "") + metadata.getReference());
+                returnURL.setType(NFTTokenMediaURL.Type.REFERENCE);
+            } else {
+                uri = null;
+                returnURL.setType(NFTTokenMediaURL.Type.EMPTY);
             }
 
-            returnURL = (uri == null) ? null : uri.normalize().toURL();
+            returnURL.setUrl((uri == null) ? null : uri.normalize().toURL());
         } catch (MalformedURLException | URISyntaxException e) {
             throw new NearException("Invalid url for media/reference", e);
         }
