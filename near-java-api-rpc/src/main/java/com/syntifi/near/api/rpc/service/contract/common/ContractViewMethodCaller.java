@@ -26,18 +26,18 @@ public class ContractViewMethodCaller {
      * @param returnClass       the type of result object
      * @param nearClient        the near service to use
      * @param contractAccountId the contract account id
-     * @param params            the method parameters
+     * @param params            the method parameters encoded in Base64
      * @param <T>               type of the result object
      * @return a typed FunctionCallResult for the requested contract method
      * @throws IOException thrown when fails to map json to result object
      */
     public static <T> FunctionCallResult<T> call(NearClient nearClient, String contractAccountId, String methodName,
-                                                 ContractMethodParams params, Class<T> returnClass) throws IOException {
+                                                 Base64String params, Class<T> returnClass) throws IOException {
         ContractFunctionCallResult contractFunctionCallResult = FunctionCall.builder()
                 .finality(Finality.OPTIMISTIC)
                 .methodName(methodName)
                 .accountId(contractAccountId)
-                .args(params != null ? params.toJsonBase64String() : Base64String.fromDecodedString(""))
+                .args(params)
                 .build()
                 .call(nearClient);
         return new FunctionCallResult<>(contractFunctionCallResult, returnClass);

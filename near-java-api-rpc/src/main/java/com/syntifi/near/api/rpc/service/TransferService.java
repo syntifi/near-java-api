@@ -86,7 +86,7 @@ public class TransferService {
                                                         PublicKey signerPublicKey, PrivateKey signerPrivateKey,
                                                         List<Action> actionList)
             throws GeneralSecurityException {
-        return nearClient.sendTransactionAwait(BaseService.prepareTransactionForActionList(
+        return nearClient.sendTransactionAwait(TransactionService.prepareTransactionForActionList(
                 nearClient, signerId, receiverId, signerPublicKey, signerPrivateKey, actionList ));
     }
 
@@ -108,7 +108,7 @@ public class TransferService {
             throws GeneralSecurityException {
         return EncodedHash.builder()
                 .encodedHash(nearClient.sendTransactionAsync(
-                        BaseService.prepareTransactionForActionList(nearClient, signerId,
+                        TransactionService.prepareTransactionForActionList(nearClient, signerId,
                                 receiverId, signerPublicKey, signerPrivateKey, actionList)))
                 .build();
     }

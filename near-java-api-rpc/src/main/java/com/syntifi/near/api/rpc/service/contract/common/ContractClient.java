@@ -1,15 +1,27 @@
 package com.syntifi.near.api.rpc.service.contract.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.common.exception.NearException;
+import com.syntifi.near.api.common.model.common.Base64String;
+import com.syntifi.near.api.common.model.key.PrivateKey;
+import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.NearClient;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethod;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethodType;
+import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameter;
+import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameterType;
 import com.syntifi.near.api.rpc.service.contract.common.param.ContractMethodParams;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Base creator of ContractClients
@@ -33,6 +45,15 @@ public abstract class ContractClient {
         throw new NearException("Contract method must have an annotation specifying the method type and name");
     }
 
+    public static ContractParameter getAnnotation(Parameter parameter) {
+        for (Annotation annotation : parameter.getAnnotations()) {
+            if (annotation instanceof ContractParameter) {
+                return (ContractParameter) annotation;
+            }
+        }
+        throw new NearException("Contract parameter is expected have an annotation specifying its name");
+    }
+
     public static String getMethodName(Method method) {
         final ContractMethod contractMethod = getAnnotation(method);
         return contractMethod.name();
@@ -41,6 +62,16 @@ public abstract class ContractClient {
     public static ContractMethodType getMethodType(Method method) {
         final ContractMethod contractMethod = getAnnotation(method);
         return contractMethod.type();
+    }
+
+    public static String getParameterName(Annotation annotation) {
+        final ContractParameter contractParameter = (ContractParameter) annotation;
+        return contractParameter.value();
+    }
+
+    public static ContractParameterType[] getParameterType(Annotation annotation) {
+        final ContractParameter contractParameter = (ContractParameter) annotation;
+        return contractParameter.type();
     }
 
     private static Object proxyObjectMethods(Method method, Object proxyObject, Object[] args) {
@@ -71,16 +102,65 @@ public abstract class ContractClient {
         return (T) Proxy.newProxyInstance(proxyInterface.getClassLoader(), new Class<?>[]{proxyInterface}, (proxy, method, args) -> {
             if (isDeclaringClassAnObject(method)) return proxyObjectMethods(method, proxy, args);
 
-            // TODO: Improve on how to get the variables needed for the call
             final NearClient nearClient = (NearClient) args[0];
-            final String countractAccountId = (String) args[1];
-            final ContractMethodParams arguments = args.length > 2 ? (ContractMethodParams) args[2] : null;
+            final String contractAccountId = (String) args[1];
             final String methodName = getMethodName(method);
             final ContractMethodType methodType = getMethodType(method);
-            final Class<?> returnType = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
 
-            return client.invoke(nearClient, countractAccountId, methodName, methodType, arguments, returnType);
-
+            if (args.length < 3) {
+                final Class<?> returnType = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+                Base64String arguments = Base64String.fromDecodedString("");
+                return client.invoke(nearClient, contractAccountId, methodName, methodType, arguments, returnType);
+            } else if (args[2] instanceof ContractMethodParams) {
+                final Class<?> returnType = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+                ContractMethodParams contractParameter = (ContractMethodParams) args[2];
+                Base64String arguments = contractParameter.toJsonBase64String();
+                return client.invoke(nearClient, contractAccountId, methodName, methodType, arguments, returnType);
+            } else {
+                PrivateKey privateKey = null;
+                PublicKey publicKey = null;
+                String accountId = null;
+                BigInteger deposit = BigInteger.valueOf(0L);
+                ObjectMapper mapper = new ObjectMapper();
+                ObjectNode arguments = mapper.createObjectNode();
+                Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+                for (int i = 2; i < args.length; i++) {
+                    Object arg = args[i];
+                    String parameterName = getParameterName(parameterAnnotations[i][0]);
+                    List<ContractParameterType> parameterType = Arrays.asList(getParameterType(parameterAnnotations[i][0]));
+                    if (parameterType.contains(ContractParameterType.ARGUMENT)) {
+                        if (arg instanceof String) {
+                            arguments.put(parameterName, (String) arg);
+                        } else if (arg instanceof BigInteger) {
+                            arguments.put(parameterName, (BigInteger) arg);
+                        } else if (arg instanceof Long) {
+                            arguments.put(parameterName, (Long) arg);
+                        } else {
+                            throw new NearException("Argument not supported in the ContractClient call");
+                        }
+                    }
+                    if (parameterType.contains(ContractParameterType.PRIVATE_KEY)) {
+                        privateKey = (PrivateKey) arg;
+                    }
+                    if (parameterType.contains(ContractParameterType.PUBLIC_KEY)) {
+                        publicKey = (PublicKey) arg;
+                    }
+                    if (parameterType.contains(ContractParameterType.ACCOUNT_ID)) {
+                        accountId = (String) arg;
+                    }
+                    if (parameterType.contains(ContractParameterType.DEPOSIT)) {
+                        deposit = (BigInteger) arg;
+                    }
+                }
+                if (privateKey != null) {
+                    return client.invoke(nearClient, contractAccountId, methodName, methodType,
+                            accountId, publicKey, privateKey, arguments, deposit);
+                } else {
+                    final Class<?> returnType = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+                    return client.invoke(nearClient, contractAccountId, methodName, methodType,
+                            Base64String.fromDecodedString(arguments.toString()), returnType);
+                }
+            }
         });
     }
 }

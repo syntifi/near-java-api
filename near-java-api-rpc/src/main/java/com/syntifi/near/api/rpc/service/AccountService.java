@@ -61,7 +61,7 @@ public class AccountService {
             throws GeneralSecurityException, NearException {
         List<Action> actions = AccountService.createActionArrayToCreateNamedAccount(newAccountId, newAccountPublicKey,
                 amountToNewAccount);
-        return nearClient.sendTransactionAwait(BaseService.prepareTransactionForActionList(
+        return nearClient.sendTransactionAwait(TransactionService.prepareTransactionForActionList(
                 nearClient, creatorAccountId, mainDomain, creatorPublicKey, creatorPrivateKey,
                 actions));
     }
@@ -118,7 +118,7 @@ public class AccountService {
                 amountToNewAccount);
 
         return EncodedHash.builder()
-                .encodedHash(nearClient.sendTransactionAsync(BaseService.prepareTransactionForActionList(
+                .encodedHash(nearClient.sendTransactionAsync(TransactionService.prepareTransactionForActionList(
                         nearClient, creatorAccountId, mainDomain, creatorPublicKey, creatorPrivateKey,
                         actions)))
                 .build();
@@ -151,7 +151,7 @@ public class AccountService {
                 amountToNewAccount);
 
         return EncodedHash.builder()
-                .encodedHash(nearClient.sendTransactionAsync(BaseService.prepareTransactionForActionList(
+                .encodedHash(nearClient.sendTransactionAsync(TransactionService.prepareTransactionForActionList(
                         nearClient, creatorAccountId, network.getDomain(), creatorPublicKey, creatorPrivateKey,
                         actions)))
                 .build();
@@ -177,7 +177,7 @@ public class AccountService {
         List<Action> actions = AccountService.createActionArrayToCreateSubAccount(nearClient, amountToNewAccount,
                 creatorAccountId, creatorPublicKey);
 
-        return nearClient.sendTransactionAwait(BaseService.prepareTransactionForActionList(
+        return nearClient.sendTransactionAwait(TransactionService.prepareTransactionForActionList(
                 nearClient, creatorAccountId, newAccountId, creatorPublicKey, creatorPrivateKey,
                 actions));
     }
@@ -202,7 +202,7 @@ public class AccountService {
         List<Action> actions = AccountService.createActionArrayToCreateSubAccount(nearClient, amountToNewAccount,
                 creatorAccountId, creatorPublicKey);
         return EncodedHash.builder()
-                .encodedHash(nearClient.sendTransactionAsync(BaseService.prepareTransactionForActionList(
+                .encodedHash(nearClient.sendTransactionAsync(TransactionService.prepareTransactionForActionList(
                         nearClient, creatorAccountId, newAccountId, creatorPublicKey, creatorPrivateKey,
                         actions)))
                 .build();

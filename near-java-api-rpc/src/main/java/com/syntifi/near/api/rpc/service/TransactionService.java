@@ -27,7 +27,7 @@ import java.util.List;
  * @since 0.2.0
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class BaseService {
+public class TransactionService {
     /**
      * Prepares the transaction to send with a given nonce
      *
@@ -91,7 +91,7 @@ public class BaseService {
                                                          PublicKey signerPublicKey, PrivateKey signerPrivateKey,
                                                          List<Action> actionList) throws GeneralSecurityException {
        AccessKey accessKey = nearClient.viewAccessKey(Finality.FINAL, signerId, signerPublicKey.toEncodedBase58String());
-       return BaseService.prepareTransactionForActionList(nearClient, signerId, receiverId,
+       return TransactionService.prepareTransactionForActionList(nearClient, signerId, receiverId,
                signerPublicKey, signerPrivateKey, actionList,accessKey.getNonce() + 1L);
     }
 }
