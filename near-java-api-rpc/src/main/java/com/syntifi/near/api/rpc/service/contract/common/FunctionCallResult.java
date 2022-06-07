@@ -1,9 +1,12 @@
 package com.syntifi.near.api.rpc.service.contract.common;
 
+import com.syntifi.crypto.key.encdec.Hex;
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -18,6 +21,9 @@ import java.io.IOException;
 @Getter
 @Setter
 public class FunctionCallResult<R> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FunctionCallResult.class);
+
     private ContractFunctionCallResult contractFunctionCallResult;
     private R result;
 
@@ -32,6 +38,9 @@ public class FunctionCallResult<R> {
     public FunctionCallResult(ContractFunctionCallResult contractFunctionCallResult, Class<R> clazz) throws IOException {
         this.contractFunctionCallResult = contractFunctionCallResult;
         if (contractFunctionCallResult.getResult() != null) {
+            LOGGER.debug("Mapping result data to {}", clazz.getSimpleName());
+            LOGGER.trace("Hex string from result data bytes: {}", Hex.encode(contractFunctionCallResult.getResult()));
+            LOGGER.trace("String from result data bytes: {}", new String(contractFunctionCallResult.getResult()));
             result = NearObjectMapper.INSTANCE.readValue(contractFunctionCallResult.getResult(), clazz);
         }
     }

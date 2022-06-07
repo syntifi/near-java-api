@@ -3,7 +3,7 @@ package com.syntifi.near.api.rpc.service.contract.nft.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.helper.Strings;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +12,7 @@ import lombok.ToString;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * NFT Token data
@@ -23,43 +24,56 @@ import java.net.URISyntaxException;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties(value = {"approved_account_ids"})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NFTToken {
-
-    private static final String DEFAULT_MEDIA_URL = "https://cloudflare-ipfs.com/ipfs/%s";
 
     @JsonProperty("token_id")
     private String tokenId;
     @JsonProperty("owner_id")
     private String ownerId;
-    @JsonProperty("royalty")
-    private JsonNode royalty;
-    @JsonProperty("split_owners")
-    private JsonNode splitOwners;
-    @JsonProperty("minter")
-    private String minter;
-    @JsonProperty("loan")
-    private JsonNode loan;
-    @JsonProperty("composeable_stats")
-    private JsonNode composeableStats;
-    @JsonProperty("origin_key")
-    private JsonNode originKey;
-
+    @JsonProperty("metadata")
     private NFTTokenMetadata metadata;
 
+    /**
+     * Get the token media or media reference url given a contract
+     *
+     * You can parse correctly to an image or reference json by checking the response content-type
+     *
+     * 1 - First no media and no reference - no url nor object - returns null
+     * 2 - has media (ignore reference in this case) - returns String with url
+     * 3 - has reference (only considered if media is null) - returns String with url for off-chain data JSON
+     *
+     * @param contract the token contract
+     * @return the media url
+     * @throws NearException if fails to parse the url
+     */
     @JsonIgnore
-    public String getMediaUrl(NFTContract contract) throws URISyntaxException, MalformedURLException {
-        URI uri;
-        if (metadata.getMedia() == null) {
-            uri = null; // no url if no media
-        } else if (Strings.isURL(metadata.getMedia()) || metadata.getMedia().startsWith("data:image")) {
-            uri = new URI(metadata.getMedia());
-        } else if (contract.getMetadata().getResult().getBaseUri() != null) {
-            uri = new URI(contract.getMetadata().getResult().getBaseUri() + "/" + metadata.getMedia());
-        } else {
-            uri = new URI(String.format(DEFAULT_MEDIA_URL, metadata.getMedia()));
+    public NFTTokenMediaURL getMediaOrReferenceURL(NFTContract contract) throws NearException {
+        NFTTokenMediaURL returnURL = new NFTTokenMediaURL();
+
+        try {
+            URI uri;
+            String baseUri = contract.getMetadata().getResult().getBaseUri();
+
+            if (metadata.getMedia() != null && (Strings.isURL(metadata.getMedia()) || metadata.getMedia().startsWith("data:image"))) {
+                uri = new URI((baseUri != null ? baseUri + "/" : "") + metadata.getMedia());
+                returnURL.setType(NFTTokenMediaURL.Type.MEDIA);
+            } else if (metadata.getMedia() != null) {
+                uri = new URI((baseUri != null ? baseUri + "/" : "") + metadata.getMedia());
+                returnURL.setType(NFTTokenMediaURL.Type.MEDIA);
+            } else if (metadata.getReference() != null) {
+                uri = new URI((baseUri != null ? baseUri + "/" : "") + metadata.getReference());
+                returnURL.setType(NFTTokenMediaURL.Type.REFERENCE);
+            } else {
+                uri = null;
+                returnURL.setType(NFTTokenMediaURL.Type.EMPTY);
+            }
+
+            returnURL.setUrl((uri == null) ? null : uri.normalize().toURL());
+        } catch (MalformedURLException | URISyntaxException e) {
+            throw new NearException("Invalid url for media/reference", e);
         }
 
-        return uri == null ? null : uri.normalize().toURL().toString();
+        return returnURL;
     }
 }

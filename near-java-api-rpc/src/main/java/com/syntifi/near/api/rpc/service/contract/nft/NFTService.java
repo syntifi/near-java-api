@@ -8,8 +8,10 @@ import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMetho
 import com.syntifi.near.api.rpc.service.contract.common.param.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContractMetadata;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenList;
+import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenMetadata;
 import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensForOwnerParam;
 import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensParam;
+import com.syntifi.near.api.rpc.service.contract.nft.param.TokenIdParam;
 
 /**
  * Contract function call object for NFTs
@@ -29,6 +31,16 @@ public interface NFTService {
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "nft_metadata")
     FunctionCallResult<NFTContractMetadata> getMetadata(NearClient nearClient, String contractAccountId);
+
+    /**
+     * Gets NFT metadata
+     *
+     * @param nearClient        near rpc client to use
+     * @param contractAccountId the contract's account id
+     * @return a {@link FunctionCallResult} for the call
+     */
+    @ContractMethod(type = ContractMethodType.VIEW, name = "nft_token_metadata")
+    FunctionCallResult<NFTTokenMetadata> getTokenMetadata(NearClient nearClient, String contractAccountId, TokenIdParam tokenIdParam);
 
     /**
      * Gets tokens for the given owner
