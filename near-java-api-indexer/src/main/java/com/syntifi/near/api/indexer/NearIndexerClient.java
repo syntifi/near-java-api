@@ -1,5 +1,6 @@
 package com.syntifi.near.api.indexer;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.helper.Network;
 import com.syntifi.near.api.common.service.NearObjectMapper;
 import com.syntifi.near.api.indexer.model.AccountIdList;
@@ -24,7 +25,6 @@ import java.util.List;
  * @since 0.2.0
  */
 public interface NearIndexerClient {
-
     /**
      * Fetches all likely NFTs given an accountId
      *
@@ -44,7 +44,15 @@ public interface NearIndexerClient {
     Call<AccountIdList> getAccountLikelyFTs(@Path("accountId") String accountId);
 
     /**
-     * Fetches staing deposits for an account
+     * Fetches staking pool ids
+     *
+     * @return a list with all staking pool ids
+     */
+    @GET("stakingPools")
+    Call<List<String>> getStakingPools();
+
+    /**
+     * Fetches staking deposits for an account
      *
      * @param accountId the account to search information for
      * @return a retrofit call for a list of StakingDeposits

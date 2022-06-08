@@ -1,5 +1,6 @@
 package com.syntifi.near.api.indexer.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.indexer.model.AccountIdList;
 import com.syntifi.near.api.indexer.model.NearValue;
 import com.syntifi.near.api.indexer.model.RecentActivity;
@@ -84,6 +85,14 @@ public class NearIndexerClientTest {
         assertNotNull(accountIdList);
 
         accountIdList.forEach(i -> LOGGER.debug("{}", i));
+    }
+
+    @Test
+    void getStakingPools_with_data_and_more_than_zero_items() throws IOException {
+        Response<List<String>> result = nearIndexerClient.getStakingPools().execute();
+
+        assertNotNull(result.body());
+        assertTrue(result.body().size() > 0);
     }
 
     @Test
