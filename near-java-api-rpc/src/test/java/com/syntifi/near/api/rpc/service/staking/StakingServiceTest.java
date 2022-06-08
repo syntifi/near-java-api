@@ -84,8 +84,34 @@ class StakingServiceTest extends AbstractKeyTest {
     }
 
     @Test
+    void testFarms_should_not_be_null() {
+        String stakingPool = "validator2.factory01.littlefarm.testnet";
+        String accountId = "syntifi-alice.testnet";
+        FunctionCallResult<JsonNode> totalValue = service.viewFarms(nearClient, stakingPool, accountId, 0L, 10L);
+        assertNotNull(totalValue.getResult());
+    }
+
+    @Test
+    void testFarm_should_not_be_null() {
+        String stakingPool = "validator2.factory01.littlefarm.testnet";
+        String accountId = "syntifi-alice.testnet";
+        String farmId = "token1.littlefarm.testnet";
+        FunctionCallResult<JsonNode> totalValue = service.viewFarm(nearClient, stakingPool, accountId, 0L);
+        assertNotNull(totalValue.getResult());
+    }
+
+    @Test
+    void testUnclaimedReward_should_not_be_null() {
+        String stakingPool = "validator2.factory01.littlefarm.testnet";
+        String accountId = "syntifi-alice.testnet";
+        FunctionCallResult<BigInteger> totalValue = service.viewUnclaimedReward(nearClient, stakingPool, accountId, 0L);
+        assertNotNull(totalValue.getResult());
+    }
+
+
+    @Test
     void depositAndStake_should_return_Success() {
-        String stakingPool = "stakesstone.pool.f863973.m0";
+        String stakingPool = "validator2.factory01.littlefarm.testnet";
         BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
         String accountId = "syntifi-alice.testnet";
         PrivateKey privateKey = aliceNearPrivateKey;

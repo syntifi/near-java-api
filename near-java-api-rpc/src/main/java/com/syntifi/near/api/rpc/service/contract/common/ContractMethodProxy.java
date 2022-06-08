@@ -19,14 +19,55 @@ import java.math.BigInteger;
  * @since 0.2.0
  */
 public interface ContractMethodProxy {
+    /**
+     * Proxy invoke the contracts view methods by sending the ContractMethodParams
+     *
+     * @param nearClient        near client instance
+     * @param contractAccountId contract id
+     * @param methodName        view method to call
+     * @param methodType        view or call
+     * @param arguments         the {@link ContractMethodParams} object for the call
+     * @param returnClass       return object class
+     * @param <T>               type
+     * @return                  a functioncallresult object with type T
+     * @throws Throwable
+     */
     <T> FunctionCallResult<T> invoke(NearClient nearClient, String contractAccountId, String methodName,
                                      ContractMethodType methodType, ContractMethodParams arguments,
                                      Class<T> returnClass) throws Throwable;
 
+    /**
+     * Proxy invoke the contracts view methods by sending the Base64String
+     *
+     * @param nearClient        near client instance
+     * @param contractAccountId contract id
+     * @param methodName        view method to call
+     * @param methodType        view or call
+     * @param arguments         contract arguments
+     * @param returnClass       return object class
+     * @param <T>               type
+     * @return                  a functioncallresult object with type T
+     * @throws Throwable
+     */
     <T> FunctionCallResult<T> invoke(NearClient nearClient, String contractAccountId, String methodName,
                                      ContractMethodType methodType, Base64String arguments,
                                      Class<T> returnClass) throws Throwable;
 
+    /**
+     * Proxy invoke the contracts call methods via signed transactions
+     *
+     * @param nearClient        near client instance
+     * @param contractAccountId contract id
+     * @param methodName        view method to call
+     * @param methodType        view or call
+     * @param accountId         user accountId
+     * @param publicKey         user publicKey
+     * @param privateKey        user privateKey to sign the contract
+     * @param arguments         contract arguments
+     * @param deposit           transaction deposit
+     * @return                  a transactionAwait
+     * @throws Throwable
+     */
     TransactionAwait invoke(NearClient nearClient, String contractAccountId, String methodName,
                             ContractMethodType methodType, String accountId, PublicKey publicKey,
                             PrivateKey privateKey, ObjectNode arguments, BigInteger deposit) throws Throwable;
