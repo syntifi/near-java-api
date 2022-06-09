@@ -1,6 +1,11 @@
 package com.syntifi.near.api.rpc.service.nft;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.syntifi.near.api.common.key.AbstractKeyTest;
+import com.syntifi.near.api.common.model.key.PrivateKey;
+import com.syntifi.near.api.common.model.key.PublicKey;
+import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
+import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.service.contract.common.ContractClient;
 import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClient;
 import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
@@ -16,13 +21,16 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
+
 import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class NFTServiceTest {
+public class NFTServiceTest extends AbstractKeyTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NFTServiceTest.class);
 
@@ -88,5 +96,20 @@ public class NFTServiceTest {
                 AccountIdParam.builder().accountId("wallet-test.testnet").build());
 
         LOGGER.debug("{}", result.getResult());
+    }
+
+    @Test
+    void callContractFunction_NFTContractFunctionCall_transfer() {
+        String nftContract = "bananafratclub.mintspace2.testnet";
+        String receiverAccountId = "syntifi-alice.testnet";
+        String accountId = "syntifi-bob.testnet";
+        String tokenId = "235";
+        PrivateKey privateKey = bobNearPrivateKey;
+        PublicKey publicKey = bobNearPublicKey;
+        BigInteger deposit = BigInteger.ONE; // one yocto
+
+        TransactionAwait transactionAwait = service.callTransfer(nearClient, nftContract, receiverAccountId, tokenId, accountId, publicKey, privateKey, deposit);
+
+        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
 }

@@ -12,6 +12,7 @@ import com.syntifi.near.api.rpc.service.contract.common.ContractClient;
 import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClient;
 import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
 import com.syntifi.near.api.rpc.service.contract.staking.StakingService;
+import com.syntifi.near.api.rpc.service.contract.staking.model.RewardFee;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +80,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testRewardFeeFraction_should_not_be_null() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<JsonNode> totalValue = service.viewRewardFeeFraction(nearClient, stakingPool, accountId);
+        FunctionCallResult<RewardFee> totalValue = service.viewRewardFeeFraction(nearClient, stakingPool, accountId);
         assertNotNull(totalValue.getResult());
     }
 

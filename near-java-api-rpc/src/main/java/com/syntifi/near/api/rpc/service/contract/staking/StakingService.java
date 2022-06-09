@@ -10,6 +10,7 @@ import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMetho
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethodType;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameter;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameterType;
+import com.syntifi.near.api.rpc.service.contract.staking.model.RewardFee;
 
 import java.math.BigInteger;
 
@@ -103,8 +104,8 @@ public interface StakingService {
      * @return a json node of the form {"numerator": numeric, "denominator": numeric}
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_reward_fee_fraction")
-    FunctionCallResult<JsonNode> viewRewardFeeFraction(NearClient nearClient, String contractAccountId,
-                                                       @ContractParameter("account_id") String accountId);
+    FunctionCallResult<RewardFee> viewRewardFeeFraction(NearClient nearClient, String contractAccountId,
+                                                        @ContractParameter("account_id") String accountId);
 
     /**
      * Returns the details for all farms for the given contractAccountId
@@ -155,7 +156,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -173,7 +174,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -190,7 +191,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -207,7 +208,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -224,7 +225,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -242,7 +243,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -259,7 +260,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -276,7 +277,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
