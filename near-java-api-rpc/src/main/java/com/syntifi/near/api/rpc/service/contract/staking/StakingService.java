@@ -10,6 +10,7 @@ import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMetho
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethodType;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameter;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameterType;
+import com.syntifi.near.api.rpc.service.contract.staking.model.RewardFee;
 
 import java.math.BigInteger;
 
@@ -31,7 +32,7 @@ public interface StakingService {
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_account_total_balance")
-    FunctionCallResult<BigInteger> getAccountTotalBalance(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<BigInteger> viewAccountTotalBalance(NearClient nearClient, String contractAccountId,
                                                            @ContractParameter("account_id") String accountId);
 
     /**
@@ -43,11 +44,11 @@ public interface StakingService {
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_account_staked_balance")
-    FunctionCallResult<BigInteger> getAccountStakedBalance(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<BigInteger> viewAccountStakedBalance(NearClient nearClient, String contractAccountId,
                                                             @ContractParameter("account_id") String accountId);
 
     /**
-     * Contract function view call to view the account unstaked balance
+     * Contract function view call to get the account unstaked balance
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
@@ -55,7 +56,7 @@ public interface StakingService {
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_account_unstaked_balance")
-    FunctionCallResult<BigInteger> getAccountUnstakedBalance(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<BigInteger> viewAccountUnstakedBalance(NearClient nearClient, String contractAccountId,
                                                               @ContractParameter("account_id") String accountId);
 
     /**
@@ -79,7 +80,7 @@ public interface StakingService {
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_total_staked_balance")
-    FunctionCallResult<BigInteger> getTotalStakedBalance(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<BigInteger> viewTotalStakedBalance(NearClient nearClient, String contractAccountId,
                                                           @ContractParameter("account_id") String accountId);
 
     /**
@@ -91,7 +92,7 @@ public interface StakingService {
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_owner_id")
-    FunctionCallResult<String> getOwnerId(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<String> viewOwnerId(NearClient nearClient, String contractAccountId,
                                            @ContractParameter("account_id") String accountId);
 
     /**
@@ -103,8 +104,8 @@ public interface StakingService {
      * @return a json node of the form {"numerator": numeric, "denominator": numeric}
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_reward_fee_fraction")
-    FunctionCallResult<JsonNode> getRewardFeeFraction(NearClient nearClient, String contractAccountId,
-                                                       @ContractParameter("account_id") String accountId);
+    FunctionCallResult<RewardFee> viewRewardFeeFraction(NearClient nearClient, String contractAccountId,
+                                                        @ContractParameter("account_id") String accountId);
 
     /**
      * Returns the details for all farms for the given contractAccountId
@@ -117,7 +118,7 @@ public interface StakingService {
      * @return json nodes of the form {"name": String, "token_id": String, "amount": numeric, "start_date":numeric, "end_date": numeric}
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_farms")
-    FunctionCallResult<JsonNode> getFarms(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<JsonNode> viewFarms(NearClient nearClient, String contractAccountId,
                                            @ContractParameter("account_id") String accountId,
                                            @ContractParameter("from_index") Long fromIndex,
                                            @ContractParameter("limit") Long limit);
@@ -132,7 +133,7 @@ public interface StakingService {
      * @return a json node of the form {"name": String, "token_id": String, "amount": numeric, "start_date":numeric, "end_date": numeric}
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_farm")
-    FunctionCallResult<JsonNode> getFarm(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<JsonNode> viewFarm(NearClient nearClient, String contractAccountId,
                                           @ContractParameter("account_id") String accountId,
                                           @ContractParameter("farm_id") Long farmId);
 
@@ -146,7 +147,7 @@ public interface StakingService {
      * @return the unclaimed reward
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_unclaimed_reward")
-    FunctionCallResult<BigInteger> getUnclaimedReward(NearClient nearClient, String contractAccountId,
+    FunctionCallResult<BigInteger> viewUnclaimedReward(NearClient nearClient, String contractAccountId,
                                                        @ContractParameter("account_id") String accountId,
                                                        @ContractParameter("farm_id") Long farmId);
 
@@ -155,7 +156,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -173,7 +174,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -190,7 +191,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -207,7 +208,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -224,7 +225,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -242,7 +243,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -259,7 +260,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
@@ -276,7 +277,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param amount            amount to depoist
+     * @param amount            amount to deposit
      * @param accountId         the arguments for the view method
      * @param publicKey         the arguments for the view method
      * @param privateKey        the arguments for the view method
