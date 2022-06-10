@@ -1,6 +1,12 @@
 package com.syntifi.near.api.rpc.service.ft;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.syntifi.near.api.common.helper.Formats;
+import com.syntifi.near.api.common.key.AbstractKeyTest;
+import com.syntifi.near.api.common.model.key.PrivateKey;
+import com.syntifi.near.api.common.model.key.PublicKey;
+import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
+import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.service.contract.common.param.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.common.ContractClient;
 import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClient;
@@ -11,28 +17,59 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class FTServiceTest {
+public class FTServiceTest extends AbstractKeyTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FTServiceTest.class);
 
     private static final FTService service = ContractClient.createClientProxy(FTService.class, new ContractMethodProxyClient());
 
     @Test
-    void callContractFunction_FTContractFunctionCall_forBalanceOf_return_list() {
-        FunctionCallResult<JsonNode> result = service.getBalanceOf(nearClient, "meta.pool.testnet", new AccountIdParam("wallet-test.testnet"));
-
-        LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
-        LOGGER.debug("{}", result.getResult());
+    void testTotalSupply_should_be_greater_than_zero() {
+        String tokenId = "ft.demo.testnet";
+        FunctionCallResult<String> totalAmount = service.getTotalSupply(nearClient, tokenId);
+        assertNotNull(totalAmount.getResult());
     }
 
     @Test
-    void callContractFunction_FTContractFunctionCall_forMetadata_return_list() {
-        FunctionCallResult<JsonNode> result = service.getMetadata(nearClient, "paras-marketplace-v2.testnet");
+    void testBalanceOf_should_not_be_null() {
+        String tokenId = "ft.demo.testnet";
+        String accountId = "syntifi-alice.testnet";
+        FunctionCallResult<BigInteger> result = service.getBalanceOf(nearClient, tokenId, accountId);
+        assertNotNull(result.getResult());
+    }
 
-        LOGGER.debug("{}", result.getContractFunctionCallResult().getResult());
-        LOGGER.debug("{}", result.getResult());
+    @Test
+    void testMetadata_should_not_be_null() {
+        String tokenId = "ft.demo.testnet";
+        FunctionCallResult<JsonNode> result = service.getMetadata(nearClient, tokenId);
+        assertNotNull(result.getResult());
+    }
+
+    @Test
+    void testTransfer_should_be_success() {
+        String tokenId = "ft.demo.testnet";
+        String accountId = "syntifi-alice.testnet";
+        String amount = "100000000";
+        PrivateKey privateKey = aliceNearPrivateKey;
+        PublicKey publicKey = aliceNearPublicKey;
+        TransactionAwait result = service.callTransfer(nearClient, tokenId, amount, tokenId, accountId, publicKey, privateKey);
+        assertInstanceOf(SuccessValueStatus.class, result.getStatus());
+    }
+
+
+    @Test
+    void testTransferCall_should_be_success() {
+        String tokenId = "ft.demo.testnet";
+        String accountId = "syntifi-alice.testnet";
+        String amount = "100000000";
+        PrivateKey privateKey = aliceNearPrivateKey;
+        PublicKey publicKey = aliceNearPublicKey;
+        TransactionAwait result = service.callTransferCall(nearClient, tokenId, amount, tokenId, accountId, "msg", publicKey, privateKey);
+        assertInstanceOf(SuccessValueStatus.class, result.getStatus());
     }
 }

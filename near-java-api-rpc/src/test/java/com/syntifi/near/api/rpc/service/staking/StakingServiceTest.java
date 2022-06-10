@@ -30,7 +30,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testAccountTotalBalance_should_be_bigger_than_zero() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<BigInteger> totalValue = service.viewAccountTotalBalance(nearClient, stakingPool, accountId);
+        FunctionCallResult<BigInteger> totalValue = service.getAccountTotalBalance(nearClient, stakingPool, accountId);
         assertEquals(1, totalValue.getResult().compareTo(BigInteger.valueOf(0L)));
     }
 
@@ -39,7 +39,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testAccountUnstakedBalance_should_be_bigger_than_zero() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<BigInteger> totalValue = service.viewAccountUnstakedBalance(nearClient, stakingPool, accountId);
+        FunctionCallResult<BigInteger> totalValue = service.getAccountUnstakedBalance(nearClient, stakingPool, accountId);
         assertEquals(1, totalValue.getResult().compareTo(BigInteger.valueOf(0L)));
     }
 
@@ -47,7 +47,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testAccountStakedBalance_should_be_bigger_than_zero() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<BigInteger> totalValue = service.viewAccountStakedBalance(nearClient, stakingPool, accountId);
+        FunctionCallResult<BigInteger> totalValue = service.getAccountStakedBalance(nearClient, stakingPool, accountId);
         assertEquals(1, totalValue.getResult().compareTo(BigInteger.valueOf(0L)));
     }
 
@@ -63,7 +63,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testTotalStakedBalance_should_be_bigger_than_zero() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<BigInteger> totalValue = service.viewTotalStakedBalance(nearClient, stakingPool, accountId);
+        FunctionCallResult<BigInteger> totalValue = service.getTotalStakedBalance(nearClient, stakingPool, accountId);
         assertNotNull(totalValue.getResult());
     }
 
@@ -71,7 +71,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testOwnerId_should_not_be_null() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<String> totalValue = service.viewOwnerId(nearClient, stakingPool, accountId);
+        FunctionCallResult<String> totalValue = service.getOwnerId(nearClient, stakingPool, accountId);
         assertNotNull(totalValue.getResult());
     }
 
@@ -79,7 +79,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testRewardFeeFraction_should_not_be_null() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<JsonNode> totalValue = service.viewRewardFeeFraction(nearClient, stakingPool, accountId);
+        FunctionCallResult<JsonNode> totalValue = service.getRewardFeeFraction(nearClient, stakingPool, accountId);
         assertNotNull(totalValue.getResult());
     }
 
@@ -87,7 +87,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testFarms_should_not_be_null() {
         String stakingPool = "validator2.factory01.littlefarm.testnet";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<JsonNode> totalValue = service.viewFarms(nearClient, stakingPool, accountId, 0L, 10L);
+        FunctionCallResult<JsonNode> totalValue = service.getFarms(nearClient, stakingPool, accountId, 0L, 10L);
         assertNotNull(totalValue.getResult());
     }
 
@@ -96,7 +96,7 @@ class StakingServiceTest extends AbstractKeyTest {
         String stakingPool = "validator2.factory01.littlefarm.testnet";
         String accountId = "syntifi-alice.testnet";
         String farmId = "token1.littlefarm.testnet";
-        FunctionCallResult<JsonNode> totalValue = service.viewFarm(nearClient, stakingPool, accountId, 0L);
+        FunctionCallResult<JsonNode> totalValue = service.getFarm(nearClient, stakingPool, accountId, 0L);
         assertNotNull(totalValue.getResult());
     }
 
@@ -104,7 +104,7 @@ class StakingServiceTest extends AbstractKeyTest {
     void testUnclaimedReward_should_not_be_null() {
         String stakingPool = "validator2.factory01.littlefarm.testnet";
         String accountId = "syntifi-alice.testnet";
-        FunctionCallResult<BigInteger> totalValue = service.viewUnclaimedReward(nearClient, stakingPool, accountId, 0L);
+        FunctionCallResult<BigInteger> totalValue = service.getUnclaimedReward(nearClient, stakingPool, accountId, 0L);
         assertNotNull(totalValue.getResult());
     }
 

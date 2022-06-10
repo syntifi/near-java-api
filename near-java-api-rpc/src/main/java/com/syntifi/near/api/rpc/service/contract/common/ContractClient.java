@@ -120,7 +120,7 @@ public abstract class ContractClient {
                 PrivateKey privateKey = null;
                 PublicKey publicKey = null;
                 String accountId = null;
-                BigInteger deposit = BigInteger.valueOf(0L);
+                BigInteger deposit = BigInteger.valueOf(1L);
                 ObjectMapper mapper = new ObjectMapper();
                 ObjectNode arguments = mapper.createObjectNode();
                 Annotation[][] parameterAnnotations = method.getParameterAnnotations();
