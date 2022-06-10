@@ -4,7 +4,6 @@ import com.syntifi.near.api.common.model.common.Base64String;
 import com.syntifi.near.api.rpc.NearClient;
 import com.syntifi.near.api.rpc.model.contract.ContractFunctionCallResult;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
-import com.syntifi.near.api.rpc.service.contract.common.param.ContractMethodParams;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

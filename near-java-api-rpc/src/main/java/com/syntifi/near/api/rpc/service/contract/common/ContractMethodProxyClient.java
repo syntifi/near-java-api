@@ -11,9 +11,7 @@ import com.syntifi.near.api.rpc.model.transaction.FunctionCallAction;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.service.TransactionService;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethodType;
-import com.syntifi.near.api.rpc.service.contract.common.param.ContractMethodParams;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -26,12 +24,6 @@ import java.util.List;
  * @since 0.2.0
  */
 public class ContractMethodProxyClient implements ContractMethodProxy {
-
-    @Override
-    public <T> FunctionCallResult<T> invoke(NearClient nearClient, String contractAccountId, String methodName, ContractMethodType methodType,
-                                            ContractMethodParams arguments, Class<T> returnClass) throws Throwable {
-        return invoke(nearClient, contractAccountId, methodName, methodType, arguments.toJsonBase64String(), returnClass);
-    }
 
     @Override
     public <T> FunctionCallResult<T> invoke(NearClient nearClient, String contractAccountId, String methodName, ContractMethodType methodType,

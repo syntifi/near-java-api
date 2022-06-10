@@ -11,7 +11,6 @@ import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMetho
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethodType;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameter;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameterType;
-import com.syntifi.near.api.rpc.service.contract.common.param.ContractMethodParams;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -21,7 +20,6 @@ import java.lang.reflect.Proxy;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Base creator of ContractClients
@@ -110,11 +108,6 @@ public abstract class ContractClient {
             if (args.length < 3) {
                 final Class<?> returnType = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
                 Base64String arguments = Base64String.fromDecodedString("");
-                return client.invoke(nearClient, contractAccountId, methodName, methodType, arguments, returnType);
-            } else if (args[2] instanceof ContractMethodParams) {
-                final Class<?> returnType = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
-                ContractMethodParams contractParameter = (ContractMethodParams) args[2];
-                Base64String arguments = contractParameter.toJsonBase64String();
                 return client.invoke(nearClient, contractAccountId, methodName, methodType, arguments, returnType);
             } else {
                 PrivateKey privateKey = null;

@@ -1,13 +1,7 @@
 package com.syntifi.near.api.rpc.service.ft;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.syntifi.near.api.common.helper.Formats;
 import com.syntifi.near.api.common.key.AbstractKeyTest;
-import com.syntifi.near.api.common.model.key.PrivateKey;
-import com.syntifi.near.api.common.model.key.PublicKey;
-import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
-import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
-import com.syntifi.near.api.rpc.service.contract.common.param.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.common.ContractClient;
 import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClient;
 import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
@@ -16,11 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.math.BigInteger;
 
 import static com.syntifi.near.api.rpc.NearClientArchivalNetHelper.nearClient;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FTServiceTest extends AbstractKeyTest {
 
@@ -49,10 +42,10 @@ public class FTServiceTest extends AbstractKeyTest {
         FunctionCallResult<JsonNode> result = service.getMetadata(nearClient, tokenId);
         assertNotNull(result.getResult());
     }
-
+/*
     @Test
     void testTransfer_should_be_success() {
-        String tokenId = "ft.demo.testnet";
+        String tokenId = "demo.testnet";
         String accountId = "syntifi-alice.testnet";
         String amount = "100000000";
         PrivateKey privateKey = aliceNearPrivateKey;
@@ -72,4 +65,5 @@ public class FTServiceTest extends AbstractKeyTest {
         TransactionAwait result = service.callTransferCall(nearClient, tokenId, amount, tokenId, accountId, "msg", publicKey, privateKey);
         assertInstanceOf(SuccessValueStatus.class, result.getStatus());
     }
+ */
 }

@@ -10,13 +10,9 @@ import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMetho
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractMethodType;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameter;
 import com.syntifi.near.api.rpc.service.contract.common.annotation.ContractParameterType;
-import com.syntifi.near.api.rpc.service.contract.common.param.AccountIdParam;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContractMetadata;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenList;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenMetadata;
-import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensForOwnerParam;
-import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensParam;
-import com.syntifi.near.api.rpc.service.contract.nft.param.TokenIdParam;
 
 import java.math.BigInteger;
 
@@ -47,29 +43,62 @@ public interface NFTService {
      * @return a {@link FunctionCallResult} for the call
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "nft_token_metadata")
-    FunctionCallResult<NFTTokenMetadata> getTokenMetadata(NearClient nearClient, String contractAccountId, TokenIdParam tokenIdParam);
+    FunctionCallResult<NFTTokenMetadata> getTokenMetadata(NearClient nearClient, String contractAccountId,
+                                                          @ContractParameter("token_id") String tokenId);
 
     /**
      * Gets tokens for the given owner
      *
-     * @param nearClient             near rpc client to use
-     * @param contractAccountId      the contract's account id
-     * @param nftTokensForOwnerParam parameter object for method call
+     * @param nearClient near rpc client to use
+     * @param accountId  the contract's account id
+     * @param fromIndex  the starting index
+     * @param limit      limit
      * @return a {@link FunctionCallResult} for the call
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "nft_tokens_for_owner")
-    FunctionCallResult<NFTTokenList> getTokensForOwner(NearClient nearClient, String contractAccountId, NFTTokensForOwnerParam nftTokensForOwnerParam);
+    FunctionCallResult<NFTTokenList> getTokensForOwner(NearClient nearClient, String contractAccountId,
+                                                       @ContractParameter("account_id") String accountId,
+                                                       @ContractParameter("from_index") String fromIndex,
+                                                       @ContractParameter("limit") Integer limit);
+
+    /**
+     * Gets tokens for the given owner
+     *
+     * @param nearClient near rpc client to use
+     * @param accountId  the contract's account id
+     * @param fromIndex  the starting index
+     * @return a {@link FunctionCallResult} for the call
+     */
+    @ContractMethod(type = ContractMethodType.VIEW, name = "nft_tokens_for_owner")
+    FunctionCallResult<NFTTokenList> getTokensForOwner(NearClient nearClient, String contractAccountId,
+                                                       @ContractParameter("account_id") String accountId,
+                                                       @ContractParameter("from_index") String fromIndex);
 
     /**
      * Get tokens for given parameters
      *
      * @param nearClient        near rpc client to use
      * @param contractAccountId the contract's account id
-     * @param nftTokensParam    parameter object for method call
+     * @param fromIndex         the starting index
+     * @param limit             limit
      * @return a {@link FunctionCallResult} for the call
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "nft_tokens")
-    FunctionCallResult<JsonNode> getTokens(NearClient nearClient, String contractAccountId, NFTTokensParam nftTokensParam);
+    FunctionCallResult<JsonNode> getTokens(NearClient nearClient, String contractAccountId,
+                                           @ContractParameter("from_index") String fromIndex,
+                                           @ContractParameter("limit") Integer limit);
+
+    /**
+     * Get tokens for given parameters
+     *
+     * @param nearClient        near rpc client to use
+     * @param contractAccountId the contract's account id
+     * @param fromIndex         the starting index
+     * @return a {@link FunctionCallResult} for the call
+     */
+    @ContractMethod(type = ContractMethodType.VIEW, name = "nft_tokens")
+    FunctionCallResult<JsonNode> getTokens(NearClient nearClient, String contractAccountId,
+                                           @ContractParameter("from_index") String fromIndex);
 
     /**
      * Get total supply of NFT for given contract
@@ -86,11 +115,12 @@ public interface NFTService {
      *
      * @param nearClient        near rpc client to use
      * @param contractAccountId the contract's account id
-     * @param accountIdParam    parameter object for method call
+     * @param accountId         the user's account id
      * @return a {@link FunctionCallResult} for the call
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "nft_supply_for_owner")
-    FunctionCallResult<String> getSupplyForOwner(NearClient nearClient, String contractAccountId, AccountIdParam accountIdParam);
+    FunctionCallResult<String> getSupplyForOwner(NearClient nearClient, String contractAccountId,
+                                                 @ContractParameter("account_id") String accountId);
 
     /**
      * @param nearClient        the near service instance to use for the contract call
