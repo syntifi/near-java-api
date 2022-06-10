@@ -17,6 +17,7 @@ import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenList;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenMediaURL;
 import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensForOwnerParam;
 import com.syntifi.near.api.rpc.service.contract.nft.param.NFTTokensParam;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +100,7 @@ public class NFTServiceTest extends AbstractKeyTest {
     }
 
     @Test
+    @Disabled("Improve this test to go round with test NFT")
     void callContractFunction_NFTContractFunctionCall_transfer() {
         String nftContract = "bananafratclub.mintspace2.testnet";
         String receiverAccountId = "syntifi-alice.testnet";
