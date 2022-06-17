@@ -1,7 +1,7 @@
 package com.syntifi.near.api.rpc.model.transaction;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.syntifi.near.api.rpc.model.transaction.error.TxExecutionError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @JsonTypeName("Failure")
+@JsonIgnoreProperties(ignoreUnknown = true) // TODO: This must be mapped correctly
 public class FailureStatus implements Status {
 
     private TxExecutionError error;

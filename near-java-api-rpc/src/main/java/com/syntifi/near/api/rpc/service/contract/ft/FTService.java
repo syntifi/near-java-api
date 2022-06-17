@@ -1,5 +1,6 @@
 package com.syntifi.near.api.rpc.service.contract.ft;
 
+import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.NearClient;
@@ -54,6 +55,18 @@ public interface FTService {
     @ContractMethod(type = ContractMethodType.VIEW, name = "ft_metadata")
     FunctionCallResult<FTTokenMetadata> getMetadata(NearClient nearClient, String tokenId);
 
+    /**
+     * Synchronous contractCall to transfer ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @return TransactionAwait object
+     */
     @ContractMethod(type = ContractMethodType.CALL, name = "ft_transfer")
     TransactionAwait callTransfer(NearClient nearClient, String tokenId,
                                   @ContractParameter("amount") String amount,
@@ -62,6 +75,39 @@ public interface FTService {
                                   @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
                                   @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
 
+    /**
+     * Asynchronous contractCall to transfer ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @return EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "ft_transfer")
+    EncodedHash callTransferAsync(NearClient nearClient, String tokenId,
+                                  @ContractParameter("amount") String amount,
+                                  @ContractParameter(value = "receiver_id", type = {ContractParameterType.ARGUMENT}) String receiverId,
+                                  @ContractParameter(value = "account_id", type = {ContractParameterType.ACCOUNT_ID}) String accountId,
+                                  @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                  @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
+     * Synchronous contractCall to transfer ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @param memo       the optional memo
+     * @return TransactionAwait object
+     */
     @ContractMethod(type = ContractMethodType.CALL, name = "ft_transfer")
     TransactionAwait callTransfer(NearClient nearClient, String tokenId,
                                   @ContractParameter("amount") String amount,
@@ -71,6 +117,41 @@ public interface FTService {
                                   @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey,
                                   @ContractParameter(value = "memo") String memo);
 
+    /**
+     * Asynchronous contractCall to transfer ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @param memo       the optional memo
+     * @return EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "ft_transfer")
+    EncodedHash callTransferAsync(NearClient nearClient, String tokenId,
+                                  @ContractParameter("amount") String amount,
+                                  @ContractParameter(value = "receiver_id", type = {ContractParameterType.ARGUMENT}) String receiverId,
+                                  @ContractParameter(value = "account_id", type = {ContractParameterType.ACCOUNT_ID}) String accountId,
+                                  @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                  @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey,
+                                  @ContractParameter(value = "memo") String memo);
+
+    /**
+     * Synchronous contractCall to transfer_call ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param msg        the optional message
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @return TransactionAwait object
+     */
     @ContractMethod(type = ContractMethodType.CALL, name = "ft_transfer_call")
     TransactionAwait callTransferCall(NearClient nearClient, String tokenId,
                                       @ContractParameter("amount") String amount,
@@ -80,8 +161,68 @@ public interface FTService {
                                       @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
                                       @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
 
+    /**
+     * Asynchronous contractCall to transfer_call ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param msg        the optional message
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @return EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "ft_transfer_call")
+    EncodedHash callTransferCallAsync(NearClient nearClient, String tokenId,
+                                      @ContractParameter("amount") String amount,
+                                      @ContractParameter(value = "receiver_id", type = {ContractParameterType.ARGUMENT}) String receiverId,
+                                      @ContractParameter(value = "account_id", type = {ContractParameterType.ACCOUNT_ID}) String accountId,
+                                      @ContractParameter(value = "msg") String msg,
+                                      @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                      @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
+     * Synchronous contractCall to transfer_call ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param msg        the optional message
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @param memo       the optional memo
+     * @return TransactionAwait object
+     */
     @ContractMethod(type = ContractMethodType.CALL, name = "ft_transfer_call")
     TransactionAwait callTransferCall(NearClient nearClient, String tokenId,
+                                      @ContractParameter("amount") String amount,
+                                      @ContractParameter(value = "receiver_id", type = {ContractParameterType.ARGUMENT}) String receiverId,
+                                      @ContractParameter(value = "account_id", type = {ContractParameterType.ACCOUNT_ID}) String accountId,
+                                      @ContractParameter(value = "msg") String msg,
+                                      @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                      @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey,
+                                      @ContractParameter(value = "memo") String memo);
+
+    /**
+     * Asynchronous contractCall to transfer_call ft
+     *
+     * @param nearClient near rpc client to use
+     * @param tokenId    the token's account id
+     * @param amount     the amount to transfer
+     * @param receiverId the receiver id
+     * @param accountId  the arguments for the view method
+     * @param msg        the optional message
+     * @param publicKey  the arguments for the view method
+     * @param privateKey the arguments for the view method
+     * @param memo       the optional memo
+     * @return EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "ft_transfer_call")
+    EncodedHash callTransferCallAsync(NearClient nearClient, String tokenId,
                                       @ContractParameter("amount") String amount,
                                       @ContractParameter(value = "receiver_id", type = {ContractParameterType.ARGUMENT}) String receiverId,
                                       @ContractParameter(value = "account_id", type = {ContractParameterType.ACCOUNT_ID}) String accountId,

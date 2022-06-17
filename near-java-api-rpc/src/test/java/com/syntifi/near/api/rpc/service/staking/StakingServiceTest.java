@@ -1,12 +1,15 @@
 package com.syntifi.near.api.rpc.service.staking;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.helper.Formats;
 import com.syntifi.near.api.common.key.AbstractKeyTest;
+import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
+import com.syntifi.near.api.rpc.model.transaction.TransactionStatus;
 import com.syntifi.near.api.rpc.service.AccountServiceTest;
 import com.syntifi.near.api.rpc.service.contract.common.ContractClient;
 import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClient;
@@ -20,9 +23,15 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 
 import static com.syntifi.near.api.rpc.NearClientTestnetHelper.nearClient;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class StakingServiceTest extends AbstractKeyTest {
+
+    private static final Integer ASYNC_MAX_TRIES = 5;
+    private static final Integer ASYNC_INTERVAL_IN_MILLI = 3000;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
     private static final StakingService service = ContractClient.createClientProxy(StakingService.class, new ContractMethodProxyClient());
@@ -121,6 +130,41 @@ class StakingServiceTest extends AbstractKeyTest {
         TransactionAwait transactionAwait = service.callDepositAndStake(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+    }
+
+
+    @Test
+    void depositAndStakeAsync_should_return_EncodedHash_and_complete_with_ok_status() throws InterruptedException {
+        String stakingPool = "validator2.factory01.littlefarm.testnet";
+        BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
+        String accountId = "syntifi-alice.testnet";
+        PrivateKey privateKey = aliceNearPrivateKey;
+        PublicKey publicKey = aliceNearPublicKey;
+
+        EncodedHash transactionEncodedHash = service.callDepositAndStakeAsync(nearClient, stakingPool,
+                amount, accountId, publicKey, privateKey);
+        assertNotNull(transactionEncodedHash);
+        assertNotNull(transactionEncodedHash.getEncodedHash());
+        assertDoesNotThrow(transactionEncodedHash::getDecodedHash);
+
+        LOGGER.debug("depositAndStakeAsync encodedHash {}", transactionEncodedHash);
+
+        int tries = 0;
+        TransactionStatus transactionStatus = null;
+        while (tries++ < ASYNC_MAX_TRIES) {
+            LOGGER.debug("depositAndStakeAsync getTransactionStatus loop {}", tries);
+            try {
+                transactionStatus = nearClient.getTransactionStatus(transactionEncodedHash.getEncodedHash(), accountId);
+                break;
+            } catch (NearException ne) {
+                LOGGER.debug("depositAndStakeAsync getTransactionStatus failed, sleeping for {}", ASYNC_INTERVAL_IN_MILLI);
+                Thread.sleep(ASYNC_INTERVAL_IN_MILLI);
+            }
+        }
+
+        assertNotNull(transactionStatus);
+        LOGGER.debug("depositAndStakeAsync transactionStatus {}", transactionStatus.getStatus());
+        assertInstanceOf(SuccessValueStatus.class, transactionStatus.getStatus());
     }
 
     @Test

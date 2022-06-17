@@ -41,8 +41,8 @@ public class Outcome {
 
     @JsonProperty("status")
     private Status status;
-    @JsonInclude(value = Include.NON_NULL)
 
+    @JsonInclude(value = Include.NON_NULL)
     @JsonProperty("metadata")
     private Metadata metadata;
 }

@@ -8,5 +8,5 @@ package com.syntifi.near.api.rpc.service.contract.common.annotation;
  * @since 0.2.0
  */
 public enum ContractMethodType {
-    VIEW, CALL
+    VIEW, CALL, CALL_ASYNC
 }

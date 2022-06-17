@@ -1,6 +1,7 @@
 package com.syntifi.near.api.rpc.service.contract.staking;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.NearClient;
@@ -28,7 +29,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_account_total_balance")
@@ -40,7 +41,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_account_staked_balance")
@@ -52,7 +53,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_account_unstaked_balance")
@@ -64,7 +65,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "is_account_unstaked_balance_available")
@@ -76,7 +77,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_total_staked_balance")
@@ -88,7 +89,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @return a typed function call result
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_owner_id")
@@ -100,7 +101,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @return a json node of the form {"numerator": numeric, "denominator": numeric}
      */
     @ContractMethod(type = ContractMethodType.VIEW, name = "get_reward_fee_fraction")
@@ -112,7 +113,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @param fromIndex         starting index
      * @param limit             limit
      * @return json nodes of the form {"name": String, "token_id": String, "amount": numeric, "start_date":numeric, "end_date": numeric}
@@ -128,7 +129,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @param farmId            farm Id
      * @return a json node of the form {"name": String, "token_id": String, "amount": numeric, "start_date":numeric, "end_date": numeric}
      */
@@ -142,7 +143,7 @@ public interface StakingService {
      *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
-     * @param accountId    the arguments for the view method
+     * @param accountId         the arguments for the view method
      * @param farmId            farm Id
      * @return the unclaimed reward
      */
@@ -170,6 +171,24 @@ public interface StakingService {
                                  @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
 
     /**
+     * Asynchronous contractCall to deposit an amount to the contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "deposit")
+    EncodedHash callDepositAsync(NearClient nearClient, String contractAccountId,
+                                 @ContractParameter(value = "amount", type = {ContractParameterType.DEPOSIT, ContractParameterType.ARGUMENT}) BigInteger amount,
+                                 @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                                 @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                 @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
      * Synchronous contractCall to withdraw an amount to the contractAccountId
      *
      * @param nearClient        the near service instance to use for the contract call
@@ -182,6 +201,23 @@ public interface StakingService {
      */
     @ContractMethod(type = ContractMethodType.CALL, name = "withdraw")
     TransactionAwait callWithdraw(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
+                                  @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                                  @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                  @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
+     * Asynchronous contractCall to withdraw an amount to the contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "withdraw")
+    EncodedHash callWithdrawAsync(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
                                   @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
                                   @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
                                   @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
@@ -204,6 +240,23 @@ public interface StakingService {
                                @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
 
     /**
+     * Asynchronous contractCall to stake an amount to the contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "stake")
+    EncodedHash callStakeAsync(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
+                               @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                               @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                               @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
      * Synchronous contractCall to unstake an amount to the contractAccountId
      *
      * @param nearClient        the near service instance to use for the contract call
@@ -216,6 +269,23 @@ public interface StakingService {
      */
     @ContractMethod(type = ContractMethodType.CALL, name = "unstake")
     TransactionAwait callUnstake(NearClient nearClient, String contractAccountId, @ContractParameter("amount") String amount,
+                                 @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                                 @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                 @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
+     * Asynchronous contractCall to unstake an amount to the contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "unstake")
+    EncodedHash callUnstakeAsync(NearClient nearClient, String contractAccountId, @ContractParameter("amount") String amount,
                                  @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
                                  @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
                                  @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
@@ -239,6 +309,24 @@ public interface StakingService {
                                          @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
 
     /**
+     * Asynchronous contractCall to deposit and stake an amount to the contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "deposit_and_stake")
+    EncodedHash callDepositAndStakeAsync(NearClient nearClient, String contractAccountId,
+                                         @ContractParameter(value = "amount", type = {ContractParameterType.DEPOSIT, ContractParameterType.ARGUMENT}) BigInteger amount,
+                                         @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                                         @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                         @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
      * Synchronous contractCall to stake all available balance in the contractAccountId
      *
      * @param nearClient        the near service instance to use for the contract call
@@ -251,6 +339,23 @@ public interface StakingService {
      */
     @ContractMethod(type = ContractMethodType.CALL, name = "stake_all")
     TransactionAwait callStakeAll(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
+                                  @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                                  @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                                  @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
+     * Asynchronous contractCall to stake all available balance in the contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "stake_all")
+    EncodedHash callStakeAllAsync(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
                                   @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
                                   @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
                                   @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
@@ -273,6 +378,23 @@ public interface StakingService {
                                @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
 
     /**
+     * Asynchronous contractCall to claim rewards from contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "claim")
+    EncodedHash callClaimAsync(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
+                               @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                               @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                               @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
      * Synchronous contractCall to ping contractAccountId
      *
      * @param nearClient        the near service instance to use for the contract call
@@ -285,6 +407,23 @@ public interface StakingService {
      */
     @ContractMethod(type = ContractMethodType.CALL, name = "ping")
     TransactionAwait callPing(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
+                              @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                              @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                              @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
+
+    /**
+     * Asynchronous contractCall to ping contractAccountId
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param amount            amount to deposit
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @return a EncodedHash object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "ping")
+    EncodedHash callPingAsync(NearClient nearClient, String contractAccountId, @ContractParameter("amount") BigInteger amount,
                               @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
                               @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
                               @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey);
