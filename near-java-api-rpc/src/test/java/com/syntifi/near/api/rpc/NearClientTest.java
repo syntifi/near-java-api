@@ -3,6 +3,7 @@ package com.syntifi.near.api.rpc;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.exception.NoSuchTypeException;
+import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.jsonrpc4j.exception.NearExceptionResolver;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
@@ -1187,6 +1188,28 @@ public class NearClientTest {
         Throwable t = assertThrows(NearException.class, () -> nearClient.getBlock(invalidBlockHash));
 
         LOGGER.debug("Threw {}", t.getClass().getSimpleName());
+    }
+
+    @Test
+    void getTransactionStatus_bySwapWithdrawHash_should_work() {
+        EncodedHash encodedHash = EncodedHash.builder().encodedHash("F8VYtmexjeaKzgAoF4BvqVcnPov4cqXUeV1hpEysSS57").build();
+
+        LOGGER.debug("Calling getTransactionStatus with hash {}", encodedHash.getEncodedHash());
+
+        TransactionStatus transactionStatus = nearClient.getTransactionStatus(encodedHash.getEncodedHash(), "syntifi-alice.testnet");
+
+        LOGGER.debug("Result is {}", transactionStatus.getStatus());
+    }
+
+    @Test
+    void getTransactionStatus_bySwapDepositHash_should_work() {
+        EncodedHash encodedHash = EncodedHash.builder().encodedHash("GcKT9Vg2jpAvVRbZf8s6GCpPJFw9RwmDFpb6rAB5nkwU").build();
+
+        LOGGER.debug("Calling getTransactionStatus with hash {}", encodedHash.getEncodedHash());
+
+        TransactionStatus transactionStatus = nearClient.getTransactionStatus(encodedHash.getEncodedHash(), "syntifi-alice.testnet");
+
+        LOGGER.debug("Result is {}", transactionStatus.getStatus());
     }
 
     @Test
