@@ -128,6 +128,8 @@ public abstract class ContractClient {
                             arguments.put(parameterName, (BigInteger) arg);
                         } else if (arg instanceof Long) {
                             arguments.put(parameterName, (Long) arg);
+                        } else if (arg instanceof Integer) {
+                            arguments.put(parameterName, (Integer) arg);
                         } else {
                             throw new NearException("Argument not supported in the ContractClient call");
                         }
@@ -145,13 +147,18 @@ public abstract class ContractClient {
                         deposit = (BigInteger) arg;
                     }
                 }
-                if (privateKey != null) {
-                    return client.invoke(nearClient, contractAccountId, methodName, methodType,
-                            accountId, publicKey, privateKey, arguments, deposit);
-                } else {
+                if (methodType.equals(ContractMethodType.VIEW)) {
                     final Class<?> returnType = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
                     return client.invoke(nearClient, contractAccountId, methodName, methodType,
                             Base64String.fromDecodedString(arguments.toString()), returnType);
+                } else if (methodType.equals(ContractMethodType.CALL)) {
+                    return client.invoke(nearClient, contractAccountId, methodName, methodType,
+                            accountId, publicKey, privateKey, arguments, deposit);
+                } else if (methodType.equals(ContractMethodType.CALL_ASYNC)) {
+                    return client.invokeAsync(nearClient, contractAccountId, methodName, methodType,
+                            accountId, publicKey, privateKey, arguments, deposit);
+                } else {
+                    throw new NearException("Unknown contract method type");
                 }
             }
         });

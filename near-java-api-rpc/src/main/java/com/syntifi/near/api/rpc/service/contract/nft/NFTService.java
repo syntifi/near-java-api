@@ -1,6 +1,7 @@
 package com.syntifi.near.api.rpc.service.contract.nft;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.NearClient;
@@ -123,6 +124,8 @@ public interface NFTService {
                                                  @ContractParameter("account_id") String accountId);
 
     /**
+     * Synchronous contractCall to transfer nft
+     *
      * @param nearClient        the near service instance to use for the contract call
      * @param contractAccountId the contract's account id
      * @param receiverAccountId the receiver account id
@@ -141,4 +144,26 @@ public interface NFTService {
                                   @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
                                   @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey,
                                   @ContractParameter(type = ContractParameterType.DEPOSIT) BigInteger deposit);
+
+    /**
+     * Asynchronous contractCall to transfer nft
+     *
+     * @param nearClient        the near service instance to use for the contract call
+     * @param contractAccountId the contract's account id
+     * @param receiverAccountId the receiver account id
+     * @param tokenId           the token id to transfer
+     * @param accountId         the arguments for the view method
+     * @param publicKey         the arguments for the view method
+     * @param privateKey        the arguments for the view method
+     * @param deposit           the deposit for the transfer (1 yocto)
+     * @return a {@link EncodedHash} object
+     */
+    @ContractMethod(type = ContractMethodType.CALL_ASYNC, name = "nft_transfer")
+    EncodedHash callTransferAsync(NearClient nearClient, String contractAccountId,
+                             @ContractParameter("receiver_id") String receiverAccountId,
+                             @ContractParameter("token_id") String tokenId,
+                             @ContractParameter(type = ContractParameterType.ACCOUNT_ID) String accountId,
+                             @ContractParameter(type = ContractParameterType.PUBLIC_KEY) PublicKey publicKey,
+                             @ContractParameter(type = ContractParameterType.PRIVATE_KEY) PrivateKey privateKey,
+                             @ContractParameter(type = ContractParameterType.DEPOSIT) BigInteger deposit);
 }

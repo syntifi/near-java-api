@@ -77,6 +77,36 @@ public class NFTServiceTest extends AbstractKeyTest {
     }
 
     @Test
+    void callContractFunction_NFTContractFunctionCall_forTokensForOwner_with_limit_return_list() {
+        // Other contracts to test
+        // deadmau55.mintspace2.testnet
+        // bananafratclub.mintspace2.testnet
+        // paras-token-v2.testnet
+        NFTContract contract = new NFTContract("paras-token-v2.testnet");
+
+        contract.setMetadata(service.getMetadata(nearClient, contract.getContractId()));
+
+        FunctionCallResult<NFTTokenList> tokenList = service.getTokensForOwner(nearClient,
+                contract.getContractId(), "wallet-test.testnet", "0", 1);
+
+        LOGGER.debug("{}", tokenList.getContractFunctionCallResult().getResult());
+        for (NFTToken token : tokenList.getResult()) {
+            LOGGER.debug("Token: {}", token);
+            assertNotNull(token);
+            assertNotNull(token.getTokenId());
+
+            assertDoesNotThrow(() -> token.getMediaOrReferenceURL(contract));
+            NFTTokenMediaURL nftTokenMediaURL = token.getMediaOrReferenceURL(contract);
+            LOGGER.debug("Token Media: {} of type {}", nftTokenMediaURL.getUrl().toString(), nftTokenMediaURL.getType().toString());
+            if (nftTokenMediaURL.getUrl() == null) {
+                assertEquals(NFTTokenMediaURL.Type.EMPTY, nftTokenMediaURL.getType());
+            } else {
+                assertNotEquals(NFTTokenMediaURL.Type.EMPTY, nftTokenMediaURL.getType());
+            }
+        }
+    }
+
+    @Test
     void callContractFunction_NFTContractFunctionCall_forMetadata_return_list() {
         NFTContract contract = new NFTContract("paras-token-v2.testnet");
         contract.setMetadata(service.getMetadata(nearClient, contract.getContractId()));
