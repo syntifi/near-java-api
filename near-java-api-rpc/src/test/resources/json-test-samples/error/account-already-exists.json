@@ -1,0 +1,10 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "AccountAlreadyExists": {
+        "account_id": "account"
+      }
+    }
+  }
+}

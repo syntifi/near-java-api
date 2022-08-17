@@ -1,0 +1,7 @@
+{
+  "InvalidTxError": {
+    "InvalidSignerId": {
+      "signer_id": "id"
+    }
+  }
+}

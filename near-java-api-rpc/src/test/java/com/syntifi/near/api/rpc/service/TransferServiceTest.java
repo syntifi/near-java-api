@@ -9,9 +9,7 @@ import com.syntifi.near.api.common.model.key.Signature;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.api.rpc.model.block.Block;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
-import com.syntifi.near.api.rpc.model.transaction.SignedTransaction;
-import com.syntifi.near.api.rpc.model.transaction.Transaction;
-import com.syntifi.near.api.rpc.model.transaction.TransferAction;
+import com.syntifi.near.api.rpc.model.transaction.*;
 import com.syntifi.near.borshj.Borsh;
 import org.junit.jupiter.api.Test;
 
@@ -83,7 +81,7 @@ public class TransferServiceTest extends AbstractKeyTest {
         assertTrue(publicKey.getPublicKey().verify(hashedTx, signedTransactionDec.getSignature().getData()));
     }
 
-/*    @Test
+    @Test
     void sent100toBobAwait_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         String signerId = "syntifi-alice.testnet";
         String receiverId = "syntifi-bob.testnet";
@@ -91,8 +89,8 @@ public class TransferServiceTest extends AbstractKeyTest {
         PrivateKey privateKey = aliceNearPrivateKey;
         PublicKey publicKey = aliceNearPublicKey;
 
-        TransactionAwait transactionAwait = TransactionService
-                .sendTransferActionAwait(nearService, signerId, receiverId, publicKey, privateKey, amount);
+        TransactionAwait transactionAwait = TransferService
+                .sendTransferActionAwait(nearClient, signerId, receiverId, publicKey, privateKey, amount);
 
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
@@ -101,16 +99,16 @@ public class TransferServiceTest extends AbstractKeyTest {
     void sent100toAliceAwait_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         String signerId = "syntifi-bob.testnet";
         String receiverId = "syntifi-alice.testnet";
-        BigInteger amount = new BigInteger("100", 10);
+        BigInteger amount = new BigInteger("0", 10);
         PrivateKey privateKey = bobNearPrivateKey;
         PublicKey publicKey = bobNearPublicKey;
 
-        TransactionAwait transactionAwait = TransactionService
-                .sendTransferActionAwait(nearService, signerId, receiverId, publicKey, privateKey, amount);
+        TransactionAwait transactionAwait = TransferService
+                .sendTransferActionAwait(nearClient, signerId, receiverId, publicKey, privateKey, amount);
 
         assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
     }
-*/
+
     @Test
     void sent100toBobAsync_should_getStatus_SuccessValueStatus() throws GeneralSecurityException {
         String signerId = "syntifi-alice.testnet";

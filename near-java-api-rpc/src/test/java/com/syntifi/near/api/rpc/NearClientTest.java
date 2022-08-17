@@ -1,5 +1,7 @@
 package com.syntifi.near.api.rpc;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.syntifi.near.api.common.exception.NearException;
 import com.syntifi.near.api.common.exception.NoSuchTypeException;
@@ -30,6 +32,8 @@ import com.syntifi.near.api.rpc.model.protocol.ProtocolConfig;
 import com.syntifi.near.api.rpc.model.transaction.Receipt;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransactionStatus;
+import com.syntifi.near.api.rpc.model.transaction.error.TxExecutionError;
+import com.syntifi.near.api.rpc.model.transaction.error.tx.InvalidTxError;
 import org.json.JSONException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -464,8 +468,8 @@ public class NearClientTest {
     }
 
     //TODO: Check implement the code to run this test
-    // Failures at: https://docs.near.org/docs/roles/integrator/errors/error-implementation
-/*    @Test
+    // Errors at:  https://docs.near.org/integrator/errors/introduction#near-platform-errors
+    @Test
     void loadedFromExample_transactionStatusFailure()
             throws IOException, JSONException {
 
@@ -478,7 +482,7 @@ public class NearClientTest {
 
         JSONAssert.assertEquals(inputJson, getPrettyJson(transactionStatus), false);
     }
-*/
+
     @Test
     void getTransactionStatus_transactionStatus_notNull() {
         String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";
@@ -1240,5 +1244,36 @@ public class NearClientTest {
         assertInstanceOf(NearException.class, t);
 
         assertNull(((NearException) t).getNearErrorData());
+    }
+
+    @Test
+    void loadTxExecutionError_ActionError_AccountAlreadyExist() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/account-already-exists.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        JSONAssert.assertEquals(inputJson, expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidSignerId() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/invalid-signer-id.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
     }
 }
