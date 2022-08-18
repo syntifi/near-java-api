@@ -8,8 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 /**
- * TX signer_id is not a valid [`AccountId`]
+ * TX receiver_id is not a valid AccountId
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -19,9 +20,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("InvalidSignerId")
+@JsonTypeName("InvalidReceiverId")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class InvalidSignerId implements InvalidTxError {
-    @JsonProperty("signer_id")
-    String signerId;
+public class InvalidReceiverId implements InvalidTxError {
+    @JsonProperty("receiver_id")
+    String receiverId;
 }

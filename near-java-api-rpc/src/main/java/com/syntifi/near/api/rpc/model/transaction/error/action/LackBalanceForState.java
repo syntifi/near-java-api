@@ -22,7 +22,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeName("LackBalanceForState")
-public class LackBalanceForState implements ActionErrorKind {
+public class LackBalanceForState implements ActionErrorKind{
     @JsonProperty("account_id")
     String accountId;
 

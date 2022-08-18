@@ -8,8 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 /**
- * TX signer_id is not a valid [`AccountId`]
+ * The size of serialized transaction exceeded the limit.
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -19,9 +21,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("InvalidSignerId")
+@JsonTypeName("TransactionSizeEsceeded")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class InvalidSignerId implements InvalidTxError {
-    @JsonProperty("signer_id")
-    String signerId;
+public class TransactionSizeExceeded implements InvalidTxError {
+    BigInteger size;
+
+    BigInteger limit;
 }

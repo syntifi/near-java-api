@@ -8,8 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 /**
- * TX signer_id is not a valid [`AccountId`]
+ * Transaction nonce is larger than the upper bound given by the block height
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -19,9 +20,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("InvalidSignerId")
+@JsonTypeName("NonceTooLarge")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class InvalidSignerId implements InvalidTxError {
-    @JsonProperty("signer_id")
-    String signerId;
+public class NonceTooLarge implements InvalidTxError {
+    @JsonProperty("tx_nonce")
+    Long txNonce;
+
+    @JsonProperty("ak_nonce")
+    Long akNonce;
 }

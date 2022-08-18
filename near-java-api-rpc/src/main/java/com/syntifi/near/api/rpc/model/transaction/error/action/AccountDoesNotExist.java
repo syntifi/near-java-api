@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("AccountAlreadyExists")
+@JsonTypeName("AccountDoesNotExist")
 public class AccountDoesNotExist implements ActionErrorKind {
     @JsonProperty("account_id")
     String accountId;

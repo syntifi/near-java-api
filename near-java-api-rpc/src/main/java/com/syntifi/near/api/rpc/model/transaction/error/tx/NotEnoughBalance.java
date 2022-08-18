@@ -3,13 +3,16 @@ package com.syntifi.near.api.rpc.model.transaction.error.tx;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.syntifi.near.api.rpc.model.transaction.error.action.ActionErrorKind;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 /**
- * TX signer_id is not a valid [`AccountId`]
+ * Account does not have enough balance to cover TX cost
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -19,9 +22,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("InvalidSignerId")
+@JsonTypeName("NotEnoughBalance")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class InvalidSignerId implements InvalidTxError {
+public class NotEnoughBalance implements InvalidTxError {
     @JsonProperty("signer_id")
     String signerId;
+
+    BigInteger balance;
+
+    BigInteger cost;
 }

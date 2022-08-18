@@ -9,13 +9,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * TX signer_id is not found in a storage
+ *
+ * @author Alexandre Carvalho
+ * @author Andre Bertolace
+ * @since 0.3.0
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeName("SignerDoesNotExist")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class SignerDoesNotExist extends InvalidTxError {
+public class SignerDoesNotExist implements InvalidTxError {
     @JsonProperty("signer_id")
     String signerId;
 }

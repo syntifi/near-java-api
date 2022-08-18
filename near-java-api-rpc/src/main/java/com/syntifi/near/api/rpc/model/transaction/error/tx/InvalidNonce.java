@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * TX signer_id is not a valid [`AccountId`]
+ * Transaction nonce must be `account[access_key].nonce + 1`.
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -19,9 +19,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("InvalidSignerId")
+@JsonTypeName("InvalidNonce")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class InvalidSignerId implements InvalidTxError {
-    @JsonProperty("signer_id")
-    String signerId;
+public class InvalidNonce implements InvalidTxError {
+    @JsonProperty("tx_nonce")
+    Long txNonce;
+
+    @JsonProperty("ak_nonce")
+    Long akNonce;
 }

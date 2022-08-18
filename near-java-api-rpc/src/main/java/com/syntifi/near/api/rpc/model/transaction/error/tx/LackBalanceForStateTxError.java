@@ -8,8 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 /**
- * TX signer_id is not a valid [`AccountId`]
+ * Signer account doesn't have enough balance after transaction.
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -19,9 +21,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("InvalidSignerId")
+@JsonTypeName("LackBalanceForState")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class InvalidSignerId implements InvalidTxError {
+public class LackBalanceForStateTxError implements InvalidTxError {
     @JsonProperty("signer_id")
     String signerId;
+
+    BigInteger amount;
 }

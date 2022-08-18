@@ -1,15 +1,13 @@
 package com.syntifi.near.api.rpc.model.transaction.error.tx;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * TX signer_id is not a valid [`AccountId`]
+ * Transaction has expired
  *
  * @author Alexandre Carvalho
  * @author Andre Bertolace
@@ -17,11 +15,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("InvalidSignerId")
+@JsonTypeName("Expired")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
-public class InvalidSignerId implements InvalidTxError {
-    @JsonProperty("signer_id")
-    String signerId;
+public class Expired implements InvalidTxError {
 }
