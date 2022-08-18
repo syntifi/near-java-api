@@ -1216,64 +1216,7 @@ public class NearClientTest {
         LOGGER.debug("Result is {}", transactionStatus.getStatus());
     }
 
-    @Test
-    void loadError_validInput_doesHaveErrorData() throws IOException {
-        NearExceptionResolver nearExceptionResolver = new NearExceptionResolver();
 
-        String validErrorJson = loadJsonFromResourceFile(
-                "json-test-samples/error/valid-error.json");
 
-        Throwable t = nearExceptionResolver
-                .resolveException((ObjectNode) OBJECT_MAPPER.readTree(validErrorJson));
 
-        assertInstanceOf(NearException.class, t);
-
-        assertNotNull(((NearException) t).getNearErrorData());
-    }
-
-    @Test
-    void loadError_invalidInput_doesNotHaveErrorData() throws IOException {
-        NearExceptionResolver nearExceptionResolver = new NearExceptionResolver();
-
-        String invalidErrorJson = loadJsonFromResourceFile(
-                "json-test-samples/error/invalid-error.json");
-
-        Throwable t = nearExceptionResolver
-                .resolveException((ObjectNode) OBJECT_MAPPER.readTree(invalidErrorJson));
-
-        assertInstanceOf(NearException.class, t);
-
-        assertNull(((NearException) t).getNearErrorData());
-    }
-
-    @Test
-    void loadTxExecutionError_ActionError_AccountAlreadyExist() throws IOException, JSONException {
-        String inputJson = loadJsonFromResourceFile(
-                "json-test-samples/error/account-already-exists.json");
-
-        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
-
-        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
-
-        String expectedJson = getPrettyJson(error);
-
-        JSONAssert.assertEquals(inputJson, expectedJson, true);
-    }
-
-    @Test
-    void loadTxExecutionError_InvalidTxError_InvalidSignerId() throws IOException, JSONException {
-        String inputJson = loadJsonFromResourceFile(
-                "json-test-samples/error/invalid-signer-id.json");
-
-        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
-
-        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
-
-        String expectedJson = getPrettyJson(error);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
-                expectedJson, true);
-    }
 }

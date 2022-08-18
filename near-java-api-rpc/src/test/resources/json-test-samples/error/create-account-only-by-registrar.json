@@ -1,0 +1,12 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "CreateAccountOnlyByRegistrar": {
+        "account_id": "account",
+        "predecessor_id": "account",
+        "registrar_account_id": "account"
+      }
+    }
+  }
+}

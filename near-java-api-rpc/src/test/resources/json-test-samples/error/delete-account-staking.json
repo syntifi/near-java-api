@@ -1,0 +1,10 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "DeleteAccountStaking": {
+        "account_id": "account"
+      }
+    }
+  }
+}

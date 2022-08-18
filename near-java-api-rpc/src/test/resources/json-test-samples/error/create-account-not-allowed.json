@@ -1,0 +1,11 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "CreateAccountNotAllowed": {
+        "account_id": "account",
+        "predecessor_id": "account"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "InsufficientStake": {
+        "account_id": "account",
+        "stake": 10,
+        "minimum_stake": 100
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "LackBalanceForState": {
+        "account_id": "account",
+        "amount": 10
+      }
+    }
+  }
+}

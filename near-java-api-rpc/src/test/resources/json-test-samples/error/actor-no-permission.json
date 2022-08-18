@@ -1,0 +1,11 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "ActorNoPermission": {
+        "account_id": "account",
+        "actor_id": "actor"
+      }
+    }
+  }
+}

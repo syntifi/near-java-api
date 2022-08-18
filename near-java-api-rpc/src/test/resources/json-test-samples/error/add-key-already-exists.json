@@ -1,0 +1,11 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "AddKeyAlreadyExists": {
+        "account_id": "account",
+        "public_key": "ed25519:3iNqnvBgxJPXCxu6hNdvJso1PEAc1miAD35KQMBCA3aL"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "ActionError": {
+    "index": 1,
+    "kind": {
+      "TriesToStake": {
+        "account_id": "account",
+        "stake": 10,
+        "locked": 10,
+        "balance": 10
+      }
+    }
+  }
+}
