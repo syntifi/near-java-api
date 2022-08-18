@@ -1,0 +1,7 @@
+{
+  "InvalidTxError": {
+    "SignerDoesNotExist": {
+      "signer_id": "id"
+    }
+  }
+}

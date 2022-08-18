@@ -238,5 +238,192 @@ public class NearErrorTest {
                 expectedJson, true);
     }
 
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidNonce() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/invalid-nonce.json");
 
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidReceivedId() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/invalid-receiver-id.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_LackBalanceForStateTxError() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/lack-balance-for-state-tx-error.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_NonceTooLarge() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/nonce-too-large.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_NotEnoughBalance() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/not-enough-balance.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_SignerDoesNotExist() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/signer-does-not-exist.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_TransactionSizeExceeded() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/transaction-size-exceeded.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_CostOverflow() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/cost-overflow.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_Expired() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/expired.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidChain() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/invalid-chain.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidSignature() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/invalid-signature.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
 }

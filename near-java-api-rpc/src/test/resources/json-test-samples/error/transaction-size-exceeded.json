@@ -1,0 +1,8 @@
+{
+  "InvalidTxError": {
+    "TransactionSizeExceeded": {
+      "size": 10,
+      "limit": 10
+    }
+  }
+}

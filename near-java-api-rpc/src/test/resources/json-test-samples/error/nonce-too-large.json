@@ -1,0 +1,8 @@
+{
+  "InvalidTxError": {
+    "NonceTooLarge": {
+      "tx_nonce": 1,
+      "ak_nonce": 1
+    }
+  }
+}

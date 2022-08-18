@@ -1,0 +1,9 @@
+{
+  "InvalidTxError": {
+    "NotEnoughBalance": {
+      "signer_id": "id",
+      "balance": 10,
+      "cost": 10
+    }
+  }
+}

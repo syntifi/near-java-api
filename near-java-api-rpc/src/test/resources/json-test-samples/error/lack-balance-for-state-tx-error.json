@@ -1,0 +1,8 @@
+{
+  "InvalidTxError": {
+    "LackBalanceForState": {
+      "signer_id": "id",
+      "amount": 10
+    }
+  }
+}

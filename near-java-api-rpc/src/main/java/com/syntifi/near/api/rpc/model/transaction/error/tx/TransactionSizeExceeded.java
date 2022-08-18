@@ -21,7 +21,7 @@ import java.math.BigInteger;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("TransactionSizeEsceeded")
+@JsonTypeName("TransactionSizeExceeded")
 @JsonDeserialize //This is needed to override the Polymorphic deserializers
 public class TransactionSizeExceeded implements InvalidTxError {
     BigInteger size;

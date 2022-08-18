@@ -1,0 +1,7 @@
+{
+  "InvalidTxError": {
+    "InvalidReceiverId": {
+      "receiver_id": "id"
+    }
+  }
+}
