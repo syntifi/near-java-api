@@ -1,0 +1,9 @@
+{
+  "InvalidTxError": {
+    "InvalidAccessKeyError": {
+      "MethodNameMismatch": {
+        "method_name": "name"
+      }
+    }
+  }
+}

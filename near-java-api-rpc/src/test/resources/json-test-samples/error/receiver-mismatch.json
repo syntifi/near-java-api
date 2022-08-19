@@ -1,0 +1,10 @@
+{
+  "InvalidTxError": {
+    "InvalidAccessKeyError": {
+      "ReceiverMismatch": {
+        "tx_receiver": "tx",
+        "ak_receiver": "ak"
+      }
+    }
+  }
+}

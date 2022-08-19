@@ -409,7 +409,6 @@ public class NearErrorTest {
                 expectedJson, true);
     }
 
-
     @Test
     void loadTxExecutionError_InvalidTxError_InvalidSignature() throws IOException, JSONException {
         String inputJson = loadJsonFromResourceFile(
@@ -424,6 +423,166 @@ public class NearErrorTest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_ActionsValidation_DeleteActionMustBeFinal() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/delete-action-must-be-final.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("ActionsValidation").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_ActionsValidation_TotalPrepaidGasExceeded() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/total-prepaid-gas-exceeded.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("ActionsValidation").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_ActionsValidation_TotalNumberOfActionsExceeded() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/total-number-actions-exceeded.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("ActionsValidation").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidAccessKeyError_AccessKeyNotFound() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/access-key-not-found.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("InvalidAccessKeyError").toString(),
+                expectedJson, true);
+    }
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidAccessKeyError_ReceiverMismatch() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/receiver-mismatch.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("InvalidAccessKeyError").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidAccessKeyError_MethodNameMismatch() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/method-name-mismatch.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("InvalidAccessKeyError").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidAccessKeyError_RequiresFullAccess() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/requires-full-access.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("InvalidAccessKeyError").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidAccessKeyError_NotEnoughAllowance() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/not-enough-allowance.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("InvalidAccessKeyError").toString(),
+                expectedJson, true);
+    }
+
+
+    @Test
+    void loadTxExecutionError_InvalidTxError_InvalidAccessKeyError_DepositWithFunctionCall() throws IOException, JSONException {
+        String inputJson = loadJsonFromResourceFile(
+                "json-test-samples/error/deposit-with-functioncall.json");
+
+        assertDoesNotThrow(() -> OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class));
+
+        TxExecutionError error = OBJECT_MAPPER.readValue(inputJson, TxExecutionError.class);
+
+        String expectedJson = getPrettyJson(error);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JSONAssert.assertEquals(objectMapper.readTree(inputJson).get("InvalidTxError").get("InvalidAccessKeyError").toString(),
                 expectedJson, true);
     }
 }

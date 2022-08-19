@@ -1,0 +1,10 @@
+{
+  "InvalidTxError": {
+    "ActionsValidation": {
+      "TotalNumberOfActionsExceeded": {
+        "total_number_of_actions": 10,
+        "limit": 10
+      }
+    }
+  }
+}

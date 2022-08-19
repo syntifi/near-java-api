@@ -1,0 +1,12 @@
+{
+  "InvalidTxError": {
+    "InvalidAccessKeyError": {
+      "NotEnoughAllowance": {
+        "public_key": "ed25519:3iNqnvBgxJPXCxu6hNdvJso1PEAc1miAD35KQMBCA3aL",
+        "account_id": "account",
+        "balance": 10,
+        "cost": 10
+      }
+    }
+  }
+}

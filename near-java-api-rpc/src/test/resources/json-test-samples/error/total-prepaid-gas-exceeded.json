@@ -1,0 +1,10 @@
+{
+  "InvalidTxError": {
+    "ActionsValidation": {
+      "TotalPrepaidGasExceeded": {
+        "total_prepaid_gas": 10,
+        "limit": 10
+      }
+    }
+  }
+}
