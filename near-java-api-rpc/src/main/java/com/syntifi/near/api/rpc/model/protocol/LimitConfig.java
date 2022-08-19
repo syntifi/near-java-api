@@ -100,4 +100,8 @@ public class LimitConfig {
 
     @JsonProperty("wasmer2_stack_limit")
     private long wasmer2StackLimit;
+
+    @JsonProperty("account_id_validity_rules_version")
+    private int accountIdValidityRulesVersion;
+
 }

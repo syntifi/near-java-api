@@ -1,6 +1,7 @@
 package com.syntifi.near.api.rpc.model.network;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.syntifi.near.api.common.model.key.PublicKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,4 +46,10 @@ public class NodeStatus {
 
     @JsonProperty("validator_account_id")
     private String validatorAccountId;
+
+    @JsonProperty("node_key")
+    private PublicKey nodeKey;
+
+    @JsonProperty("uptime_sec")
+    private long uptimeSec;
 }

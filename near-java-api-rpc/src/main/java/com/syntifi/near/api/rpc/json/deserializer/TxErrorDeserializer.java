@@ -1,6 +1,6 @@
 package com.syntifi.near.api.rpc.json.deserializer;
 
-import com.syntifi.near.api.rpc.model.transaction.error.TxExecutionError;
+import com.syntifi.near.api.rpc.model.transaction.error.tx.InvalidTxError;
 
 /**
  * Serializer to handle the polymorphic terms of type TxExecutionError
@@ -9,6 +9,9 @@ import com.syntifi.near.api.rpc.model.transaction.error.TxExecutionError;
  * @author Andre Bertolace
  * @since 0.3.0
  */
-public class TxErrorDeserializer extends SubTypesDeserializer<TxExecutionError> {
+public class TxErrorDeserializer extends SubTypesDeserializer<InvalidTxError> {
+    public TxErrorDeserializer() {
+        super(InvalidTxError.class);
+    }
 }
 

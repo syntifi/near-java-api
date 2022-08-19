@@ -26,13 +26,14 @@ import java.util.stream.Collectors;
 public class SubTypesDeserializer<T> extends JsonDeserializer<T> {
     private final Map<String, Class<?>> propertyNameToType;
 
-    public SubTypesDeserializer() {
-        this.propertyNameToType = Arrays.stream(InvalidTxError.class.getAnnotation(JsonSubTypes.class).value())
+    public SubTypesDeserializer(Class<T> typeParameterClass)  {
+        this.propertyNameToType = Arrays.stream(typeParameterClass.getAnnotation(JsonSubTypes.class).value())
                 .collect(Collectors.toMap(JsonSubTypes.Type::name, JsonSubTypes.Type::value,
                         (a, b) -> a, HashMap::new));
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         ObjectMapper objectMapper = (ObjectMapper) jsonParser.getCodec();
         ObjectNode object = objectMapper.readTree(jsonParser);

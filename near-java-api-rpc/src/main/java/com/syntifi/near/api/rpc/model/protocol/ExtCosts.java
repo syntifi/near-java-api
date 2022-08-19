@@ -184,4 +184,23 @@ public class ExtCosts {
 
     @JsonProperty("validator_total_stake_base")
     private long validatorTotalStakeBase;
+
+    @JsonProperty("alt_bn128_g1_multiexp_base")
+    private long altBn128G1MutiexpBase;
+
+    @JsonProperty("alt_bn128_g1_multiexp_element")
+    private long altBn128G1MutiexpElement;
+
+    @JsonProperty("alt_bn128_g1_sum_base")
+    private long altBn128G1SumBase;
+
+    @JsonProperty("alt_bn128_g1_sum_element")
+    private long altBn128G1SumElement;
+
+    @JsonProperty("alt_bn128_pairing_check_base")
+    private long altBn128PairingCheckBase;
+
+    @JsonProperty("alt_bn128_pairing_check_element")
+    private long altBn128PairingCheckElement;
+
 }

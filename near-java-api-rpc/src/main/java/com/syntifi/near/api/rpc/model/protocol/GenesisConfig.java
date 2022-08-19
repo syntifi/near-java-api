@@ -24,6 +24,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonInclude(value = Include.NON_NULL)
 public class GenesisConfig {
     @JsonProperty("protocol_version")
     private long protocolVersion;
@@ -121,4 +122,17 @@ public class GenesisConfig {
 
     @JsonProperty("minimum_stake_ratio")
     private Collection<Long> minimumStakeRatio;
+
+    @JsonProperty("max_kickout_stake_perc")
+    private short maxKickoutStakePerc;
+
+    @JsonProperty("num_chunk_only_producer_seats")
+    private long numChunckOnlyProducerSeats;
+
+    @JsonProperty("minimum_validators_per_shard")
+    private long minimumValidatorsPerShard;
+
+    @JsonProperty("use_production_config")
+    private boolean useProductionConfig;
+
 }
