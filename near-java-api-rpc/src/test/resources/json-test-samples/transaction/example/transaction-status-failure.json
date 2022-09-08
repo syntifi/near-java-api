@@ -113,7 +113,6 @@
   },
   "transaction": {
     "actions": [
-      "CreateAccount",
       {
         "Transfer": {
           "deposit": "1"

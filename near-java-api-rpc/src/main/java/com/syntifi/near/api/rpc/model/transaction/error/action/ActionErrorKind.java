@@ -20,6 +20,7 @@ import com.syntifi.near.api.rpc.model.transaction.error.action.*;
         @JsonSubTypes.Type(value = CreateAccountOnlyByRegistrar.class, name = "CreateAccountOnlyByRegistrar"),
         @JsonSubTypes.Type(value = DeleteAccountStaking.class, name = "DeleteAccountStaking"),
         @JsonSubTypes.Type(value = DeleteKeyDoesNotExist.class, name = "DeleteKeyDoesNotExist"),
+        @JsonSubTypes.Type(value = FunctionCallError.class, name = "FunctionCallError"),
         @JsonSubTypes.Type(value = InsufficientStake.class, name = "InsufficientStake"),
         @JsonSubTypes.Type(value = LackBalanceForState.class, name = "LackBalanceForState"),
         @JsonSubTypes.Type(value = TriesToStake.class, name = "TriesToStake"),

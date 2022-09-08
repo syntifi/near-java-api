@@ -16,8 +16,15 @@ import com.syntifi.near.borshj.annotation.BorshSubTypes;
  */
 @JsonTypeInfo(use = Id.NAME, include = As.WRAPPER_OBJECT)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TransferAction.class, name = "Transfer"),
-        @JsonSubTypes.Type(value = FunctionCallAction.class, name = "FunctionCall")})
+        @JsonSubTypes.Type(value = CreateAccountAction.class, name = "CreateAccount"),
+        @JsonSubTypes.Type(value = DeployContractAction.class, name = "DeployContract"),
+        @JsonSubTypes.Type(value = FunctionCallAction.class, name = "FunctionCall"),
+        @JsonSubTypes.Type(value = StakeAction.class, name = "Stake"),
+        @JsonSubTypes.Type(value = AddKeyAction.class, name = "AddKey"),
+        @JsonSubTypes.Type(value = DeleteKeyAction.class, name = "DeleteKey"),
+        @JsonSubTypes.Type(value = DeleteAccountAction.class, name = "DeleteAccount"),
+        @JsonSubTypes.Type(value = TransferAction.class, name = "Transfer")
+})
 @BorshSubTypes({
         @BorshSubTypes.BorshSubType(when = Action.CREATE_ACCOUNT, use = CreateAccountAction.class),
         @BorshSubTypes.BorshSubType(when = Action.DEPLOY_CONTRACT, use = DeployContractAction.class),

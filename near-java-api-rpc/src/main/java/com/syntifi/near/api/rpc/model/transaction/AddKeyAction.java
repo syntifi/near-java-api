@@ -1,6 +1,7 @@
 package com.syntifi.near.api.rpc.model.transaction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.model.accesskey.AccessKey;
 import com.syntifi.near.borshj.annotation.BorshField;
@@ -22,10 +23,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonTypeName("AddKey")
 public class AddKeyAction implements Action {
     @BorshField(order = 1)
+    @JsonProperty("public_key")
     private PublicKey publicKey;
 
     @BorshField(order = 2)
+    @JsonProperty("access_key")
     private AccessKey accessKey;
 }

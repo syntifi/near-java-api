@@ -1,5 +1,6 @@
 package com.syntifi.near.api.rpc.model.protocol;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,7 +25,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonInclude(value = Include.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public class GenesisConfig {
     @JsonProperty("protocol_version")
     private long protocolVersion;

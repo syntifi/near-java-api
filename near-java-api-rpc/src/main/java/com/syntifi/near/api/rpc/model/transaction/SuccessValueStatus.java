@@ -20,8 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonTypeName("SuccessValue")
-public class SuccessValueStatus implements Status {
+public class SuccessValueStatus {
     @JsonValue
     private String successValue;
 }

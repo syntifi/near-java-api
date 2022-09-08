@@ -9,7 +9,7 @@ import com.syntifi.near.api.common.key.AbstractKeyTest;
 import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
-import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
+import com.syntifi.near.api.rpc.model.transaction.Status;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class AccountServiceTest extends AbstractKeyTest {
         TransactionAwait transactionAwait = TransferService
                 .sendTransferActionAwait(nearClient, signerId, Hex.encode(newPublicKey.getData()),
                         publicKey, privateKey, amount);
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        assertInstanceOf(Status.class, transactionAwait.getStatus());
     }
 
     @Test

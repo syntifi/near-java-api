@@ -1,5 +1,6 @@
 package com.syntifi.near.api.rpc.model.transaction;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Builder
+@JsonTypeName("CreateAccount")
 public class CreateAccountAction implements Action {
 }

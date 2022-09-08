@@ -1,7 +1,8 @@
 package com.syntifi.near.api.rpc.model.transaction;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
+import com.syntifi.near.api.rpc.model.transaction.error.TxExecutionError;
+import lombok.*;
 
 /**
  * Status
@@ -10,9 +11,20 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * @author Andre Bertolace
  * @since 0.0.1
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-@JsonSubTypes({@JsonSubTypes.Type(value = SuccessReceiptIdStatus.class, name = "SuccessReceiptId"),
-        @JsonSubTypes.Type(value = SuccessValueStatus.class, name = "SuccessValue"),
-        @JsonSubTypes.Type(value = FailureStatus.class, name = "Failure")})
-public interface Status {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Status {
+
+    @JsonProperty("Failure")
+    public TxExecutionError failure;
+
+    @JsonProperty("SuccessValue")
+    public SuccessValueStatus successValue;
+
+    @JsonProperty("SuccessReceiptId")
+    public SuccessReceiptIdStatus successReceiptId;
 }

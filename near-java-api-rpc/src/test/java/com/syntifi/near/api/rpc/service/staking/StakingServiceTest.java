@@ -7,7 +7,7 @@ import com.syntifi.near.api.common.key.AbstractKeyTest;
 import com.syntifi.near.api.common.model.common.EncodedHash;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
-import com.syntifi.near.api.rpc.model.transaction.SuccessValueStatus;
+import com.syntifi.near.api.rpc.model.transaction.Status;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
 import com.syntifi.near.api.rpc.model.transaction.TransactionStatus;
 import com.syntifi.near.api.rpc.service.AccountServiceTest;
@@ -129,7 +129,7 @@ class StakingServiceTest extends AbstractKeyTest {
 
         TransactionAwait transactionAwait = service.callDepositAndStake(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        assertInstanceOf(Status.class, transactionAwait.getStatus());
     }
 
 
@@ -164,7 +164,7 @@ class StakingServiceTest extends AbstractKeyTest {
 
         assertNotNull(transactionStatus);
         LOGGER.debug("depositAndStakeAsync transactionStatus {}", transactionStatus.getStatus());
-        assertInstanceOf(SuccessValueStatus.class, transactionStatus.getStatus());
+        assertInstanceOf(Status.class, transactionStatus.getStatus());
     }
 
     @Test
@@ -177,7 +177,7 @@ class StakingServiceTest extends AbstractKeyTest {
 
         TransactionAwait transactionAwait = service.callUnstake(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        assertInstanceOf(Status.class, transactionAwait.getStatus());
     }
 
     @Test
@@ -190,7 +190,7 @@ class StakingServiceTest extends AbstractKeyTest {
 
         TransactionAwait transactionAwait = service.callDeposit(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        assertInstanceOf(Status.class, transactionAwait.getStatus());
     }
 
     @Test
@@ -203,7 +203,7 @@ class StakingServiceTest extends AbstractKeyTest {
 
         TransactionAwait transactionAwait = service.callStake(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        assertInstanceOf(Status.class, transactionAwait.getStatus());
     }
 
 /*    @Test

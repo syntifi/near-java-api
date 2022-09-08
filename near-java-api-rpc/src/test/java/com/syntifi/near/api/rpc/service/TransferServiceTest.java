@@ -92,7 +92,7 @@ public class TransferServiceTest extends AbstractKeyTest {
         TransactionAwait transactionAwait = TransferService
                 .sendTransferActionAwait(nearClient, signerId, receiverId, publicKey, privateKey, amount);
 
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        assertInstanceOf(Status.class, transactionAwait.getStatus());
     }
 
     @Test
@@ -106,7 +106,7 @@ public class TransferServiceTest extends AbstractKeyTest {
         TransactionAwait transactionAwait = TransferService
                 .sendTransferActionAwait(nearClient, signerId, receiverId, publicKey, privateKey, amount);
 
-        assertInstanceOf(SuccessValueStatus.class, transactionAwait.getStatus());
+        assertInstanceOf(Status.class, transactionAwait.getStatus());
     }
 
     @Test
