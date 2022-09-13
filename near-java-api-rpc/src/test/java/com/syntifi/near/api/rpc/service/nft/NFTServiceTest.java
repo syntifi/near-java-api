@@ -13,6 +13,7 @@ import com.syntifi.near.api.rpc.service.contract.nft.model.NFTContract;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTToken;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenList;
 import com.syntifi.near.api.rpc.service.contract.nft.model.NFTTokenMediaURL;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -28,6 +29,12 @@ public class NFTServiceTest extends AbstractKeyTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(NFTServiceTest.class);
 
     private static final NFTService service = ContractClient.createClientProxy(NFTService.class, new ContractMethodProxyClient());
+
+    // INFO: There must be a delay for the blockchain to process each call
+    @BeforeEach
+    void wait_for_network() throws InterruptedException {
+        Thread.sleep(1000);
+    }
 
     @Test
     void callContractFunction_NFTContractFunctionCall_forTotalSupply_return_list() {

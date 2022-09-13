@@ -1,6 +1,5 @@
 package com.syntifi.near.api.rpc.service.ft;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.syntifi.near.api.common.key.AbstractKeyTest;
 import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
@@ -11,6 +10,7 @@ import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClien
 import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
 import com.syntifi.near.api.rpc.service.contract.ft.FTService;
 import com.syntifi.near.api.rpc.service.contract.ft.model.FTTokenMetadata;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -27,6 +27,12 @@ public class FTServiceTest extends AbstractKeyTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(FTServiceTest.class);
 
     private static final FTService service = ContractClient.createClientProxy(FTService.class, new ContractMethodProxyClient());
+
+    // INFO: There must be a delay for the blockchain to process each call
+    @BeforeEach
+    void wait_for_network() throws InterruptedException {
+        Thread.sleep(1000);
+    }
 
     @Test
     void testTotalSupply_should_be_greater_than_zero() {

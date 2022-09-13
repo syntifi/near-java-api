@@ -11,6 +11,7 @@ import com.syntifi.near.api.common.model.key.PrivateKey;
 import com.syntifi.near.api.common.model.key.PublicKey;
 import com.syntifi.near.api.rpc.model.transaction.Status;
 import com.syntifi.near.api.rpc.model.transaction.TransactionAwait;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AccountServiceTest extends AbstractKeyTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
 
+    // INFO: There must be a delay for the blockchain to process each call
+    @BeforeEach
+    void wait_for_network() throws InterruptedException {
+        Thread.sleep(5000);
+    }
+
     @Test
     void createImplicitAccountFromMnemonic_should_getStatus_SuccessValueStatus() throws GeneralSecurityException, IOException, MnemonicException.MnemonicLengthException {
         MnemonicCode mnemonicCode = new MnemonicCode(Language.EN);
@@ -40,10 +47,10 @@ public class AccountServiceTest extends AbstractKeyTest {
         LOGGER.debug(Hex.encode(newPublicKey.getData()));
         LOGGER.debug("=============> Privatekey ");
         LOGGER.debug(Hex.encode(newPrivateKey.getData()));
-        String signerId = "syntifi-alice.testnet";
+        String signerId = "syntifi-bob.testnet";
         BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
-        PrivateKey privateKey = aliceNearPrivateKey;
-        PublicKey publicKey = aliceNearPublicKey;
+        PrivateKey privateKey = bobNearPrivateKey;
+        PublicKey publicKey = bobNearPublicKey;
         TransactionAwait transactionAwait = TransferService
                 .sendTransferActionAwait(nearClient, signerId, Hex.encode(newPublicKey.getData()),
                         publicKey, privateKey, amount);

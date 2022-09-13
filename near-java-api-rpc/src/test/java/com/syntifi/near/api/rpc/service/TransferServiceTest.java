@@ -11,6 +11,7 @@ import com.syntifi.near.api.rpc.model.block.Block;
 import com.syntifi.near.api.rpc.model.identifier.Finality;
 import com.syntifi.near.api.rpc.model.transaction.*;
 import com.syntifi.near.borshj.Borsh;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
@@ -25,6 +26,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TransferServiceTest extends AbstractKeyTest {
+
+    // INFO: There must be a delay for the blockchain to process each call
+    @BeforeEach
+    void wait_for_network() throws InterruptedException {
+        Thread.sleep(1000);
+    }
 
     @Test
     void serializeSignAndDeserializeVerifyTransaction_should_match() throws GeneralSecurityException {

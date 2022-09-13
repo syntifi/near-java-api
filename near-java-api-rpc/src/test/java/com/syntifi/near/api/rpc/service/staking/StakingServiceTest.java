@@ -16,7 +16,7 @@ import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClien
 import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
 import com.syntifi.near.api.rpc.service.contract.staking.StakingService;
 import com.syntifi.near.api.rpc.service.contract.staking.model.RewardFee;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 
 import static com.syntifi.near.api.rpc.NearClientTestnetHelper.nearClient;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StakingServiceTest extends AbstractKeyTest {
 
@@ -36,6 +33,12 @@ class StakingServiceTest extends AbstractKeyTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceTest.class);
     private static final StakingService service = ContractClient.createClientProxy(StakingService.class, new ContractMethodProxyClient());
+
+    // INFO: There must be a delay for the blockchain to process each call
+    @BeforeEach
+    void wait_for_network() throws InterruptedException {
+        Thread.sleep(1000);
+    }
 
     @Test
     void testAccountTotalBalance_should_be_bigger_than_zero() {
