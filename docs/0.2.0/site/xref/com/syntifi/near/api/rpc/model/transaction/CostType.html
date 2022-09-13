@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>CostType xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../../../../apidocs/com/syntifi/near/api/rpc/model/transaction/CostType.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.syntifi.near.api.rpc.model.transaction;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> * CostType</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * @author Alexandre Carvalho</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> * @author Andre Bertolace</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * @since 0.0.1</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">public</strong> enum <a name="CostType" href="../../../../../../../com/syntifi/near/api/rpc/model/transaction/CostType.html#CostType">CostType</a> {
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>      BASE,
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>      CONTRACT_LOADING_BASE,
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>      CONTRACT_LOADING_BYTES,
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>      CONTRACT_COMPILE_BASE,
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>      CONTRACT_COMPILE_BYTES,
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>      FUNCTION_CALL,
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>      LOG_BASE,
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      LOG_BYTE,
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>      NEW_RECEIPT,
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      READ_CACHED_TRIE_NODE,
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>      READ_MEMORY_BASE,
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>      READ_MEMORY_BYTE,
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>      READ_REGISTER_BASE,
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      READ_REGISTER_BYTE,
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      STAKE,
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      STORAGE_READ_BASE,
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      STORAGE_READ_KEY_BYTE,
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      STORAGE_READ_VALUE_BYTE,
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      STORAGE_REMOVE_BASE,
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      STORAGE_REMOVE_KEY_BYTE,
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      STORAGE_REMOVE_RET_VALUE_BYTE,
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      STORAGE_HAS_KEY_BASE,
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      STORAGE_HAS_KEY_BYTE,
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      STORAGE_WRITE_BASE,
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      STORAGE_WRITE_EVICTED_BYTE,
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      STORAGE_WRITE_KEY_BYTE,
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      STORAGE_WRITE_VALUE_BYTE,
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      TOUCHING_TRIE_NODE,
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      UTF8_DECODING_BASE,
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      UTF8_DECODING_BYTE,
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      WASM_INSTRUCTION,
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      WRITE_MEMORY_BASE,
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>      WRITE_MEMORY_BYTE,
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      WRITE_REGISTER_BASE,
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      WRITE_REGISTER_BYTE,
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      TRANSFER,
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      PROMISE_RETURN
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2022. All rights reserved.</div>
+</body>
+</html>
