@@ -44,7 +44,7 @@ This project used the following references:
 ### 1. [Set-up a connection](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceHelper.java#L21)
 
 ``` java
-nearService = NearService.usingPeer("archival-rpc.testnet.near.org");
+nearClient = NearService.usingPeer("archival-rpc.testnet.near.org");
 ```
 
 
@@ -62,7 +62,7 @@ If permission of the key is FunctionCall, it will return more details such as th
 String accountId = "client.chainlink.testnet";
 String publicKey = "ed25519:H9k5eiU4xXS3M4z8HzKJSLaZdqGdGwBG49o7orNC4eZW";
 
-AccessKey accessKey = nearService.viewAccessKey(Finality.FINAL, accountId, publicKey);
+AccessKey accessKey = nearClient.viewAccessKey(Finality.FINAL, accountId, publicKey);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L610-L613)
@@ -70,14 +70,14 @@ AccessKey accessKey = nearService.viewAccessKey(Finality.FINAL, accountId, publi
 String accountId = "client.chainlink.testnet";
 String publicKey = "ed25519:H9k5eiU4xXS3M4z8HzKJSLaZdqGdGwBG49o7orNC4eZW";
 
-AccessKey accessKey = nearService.viewAccessKey(78443365, accountId, publicKey);
+AccessKey accessKey = nearClient.viewAccessKey(78443365, accountId, publicKey);
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L595-L599)
 ``` java
 String accountId = "client.chainlink.testnet";
 String publicKey = "ed25519:H9k5eiU4xXS3M4z8HzKJSLaZdqGdGwBG49o7orNC4eZW";
 
-AccessKey accessKey = nearService.viewAccessKey("8bVg8wugs2QHqXr42oEsCYyH7jvR9pLaAP35dFqx2evU", accountId, publicKey);
+AccessKey accessKey = nearClient.viewAccessKey("8bVg8wugs2QHqXr42oEsCYyH7jvR9pLaAP35dFqx2evU", accountId, publicKey);
 ```
 
 
@@ -89,20 +89,20 @@ Returns all access keys for a given account.
 ``` java
 String accountId = "client.chainlink.testnet";
 
-AccessKeyList accessKeyList = nearService.viewAccessKeyList(Finality.FINAL, accountId);
+AccessKeyList accessKeyList = nearClient.viewAccessKeyList(Finality.FINAL, accountId);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L660-L662)
 ``` java
 String accountId = "client.chainlink.testnet";
 
-AccessKeyList accessKeyList = nearService.viewAccessKeyList(78772585, accountId);
+AccessKeyList accessKeyList = nearClient.viewAccessKeyList(78772585, accountId);
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L646-L649)
 ``` java
 String accountId = "client.chainlink.testnet";
 
-AccessKeyList accessKeyList = nearService.viewAccessKeyList("DwFpDPiQXBaX6Vw3aKazQ4nXjgzw1uk6XpUkfTSJrbXf", accountId);
+AccessKeyList accessKeyList = nearClient.viewAccessKeyList("DwFpDPiQXBaX6Vw3aKazQ4nXjgzw1uk6XpUkfTSJrbXf", accountId);
 ```
 
 
@@ -117,7 +117,7 @@ Key[] keys = new Key[1];
 Key key0 = new Key("example-acct.testnet", "ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM");
 keys[0] = key0;
 
-AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(Finality.FINAL, keys);
+AccessKeyChanges accessKeyChanges = nearClient.viewSingleAccessKeyChanges(Finality.FINAL, keys);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L718-L723)
@@ -127,7 +127,7 @@ Key[] keys = new Key[1];
 Key key0 = new Key("example-acct.testnet", "ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM");
 keys[0] = key0;
 
-AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges(78433961, keys);
+AccessKeyChanges accessKeyChanges = nearClient.viewSingleAccessKeyChanges(78433961, keys);
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L702-L709)
 ``` java
@@ -136,7 +136,7 @@ Key[] keys = new Key[1];
 Key key0 = new Key("example-acct.testnet", "ed25519:25KEc7t7MQohAJ4EDThd2vkksKkwangnuJFzcoiXj9oM");
 keys[0] = key0;
 
-AccessKeyChanges accessKeyChanges = nearService.viewSingleAccessKeyChanges("Cr82U81VqHgCz9LzZjPivh9t16e8es6aFCv9qvDMMH88", keys);
+AccessKeyChanges accessKeyChanges = nearClient.viewSingleAccessKeyChanges("Cr82U81VqHgCz9LzZjPivh9t16e8es6aFCv9qvDMMH88", keys);
 ```
 
 
@@ -150,7 +150,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "client.chainlink.testnet";
 
-AccessKeyChanges accessKeyChanges = nearService.viewAllAccessKeyChanges(Finality.FINAL, accountIds);
+AccessKeyChanges accessKeyChanges = nearClient.viewAllAccessKeyChanges(Finality.FINAL, accountIds);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L791-L795)
@@ -159,7 +159,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "client.chainlink.testnet";
 
-AccessKeyChanges accessKeyChanges = nearService.viewAllAccessKeyChanges(78433518, accountIds);
+AccessKeyChanges accessKeyChanges = nearClient.viewAllAccessKeyChanges(78433518, accountIds);
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L776-L782)
 ``` java
@@ -167,7 +167,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "client.chainlink.testnet";
 
-AccessKeyChanges accessKeyChanges = nearService.viewAllAccessKeyChanges("Ais9kPbHvk6XmEYptoEpBtyFW77V16TZNHHnYtmXWr1d",accountIds);
+AccessKeyChanges accessKeyChanges = nearClient.viewAllAccessKeyChanges("Ais9kPbHvk6XmEYptoEpBtyFW77V16TZNHHnYtmXWr1d",accountIds);
 ```
 
 
@@ -180,16 +180,16 @@ Returns basic account information.
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L815)
 
 ``` java
-Account account = nearService.viewAccount(Finality.FINAL, "nearkat.testnet");
+Account account = nearClient.viewAccount(Finality.FINAL, "nearkat.testnet");
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L833)
 ``` java
-Account account = nearService.viewAccount(78439658, "nearkat.testnet");
+Account account = nearClient.viewAccount(78439658, "nearkat.testnet");
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L822)
 ``` java
-Account account = nearService.viewAccount("5hyGx7LiGaeRiAN4RrKcGomi1QXHqZwKXFQf6xTmvUgb", "nearkat.testnet");
+Account account = nearClient.viewAccount("5hyGx7LiGaeRiAN4RrKcGomi1QXHqZwKXFQf6xTmvUgb", "nearkat.testnet");
 ```
 
 
@@ -203,7 +203,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "nearkat.testnet";
 
-AccountChanges accountChanges = nearService.viewAccountChanges(Finality.FINAL, accountIds);
+AccountChanges accountChanges = nearClient.viewAccountChanges(Finality.FINAL, accountIds);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L890-L894)
@@ -212,7 +212,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "nearkat.testnet";
 
-AccountChanges accountChanges = nearService.viewAccountChanges(78440142, accountIds);
+AccountChanges accountChanges = nearClient.viewAccountChanges(78440142, accountIds);
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L872-L877)
 ``` java
@@ -220,7 +220,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "nearkat.testnet";
 
-AccountChanges accountChanges = nearService.viewAccountChanges("7vWp2djKLoJ3RE1sr8RzSKQtyzKpe2wZ7NCcDuFNuL7j", accountIds);
+AccountChanges accountChanges = nearClient.viewAccountChanges("7vWp2djKLoJ3RE1sr8RzSKQtyzKpe2wZ7NCcDuFNuL7j", accountIds);
 ```
 
 
@@ -230,16 +230,16 @@ Returns the contract code (Wasm binary) deployed to the account. Please note tha
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L918)
 
 ``` java
-ContractCode contractCode = nearService.viewContractCode(Finality.FINAL, "guest-book.testnet");
+ContractCode contractCode = nearClient.viewContractCode(Finality.FINAL, "guest-book.testnet");
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L937)
 ``` java
-ContractCode contractCode = nearService.viewContractCode(78440518, "guest-book.testnet");
+ContractCode contractCode = nearClient.viewContractCode(78440518, "guest-book.testnet");
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L925-L926)
 ``` java
-ContractCode contractCode = nearService.viewContractCode("uLxyauKPhSk1tebYKi3k69pHSaT2ZLzWy4JwtGm52pu", "guest-book.testnet");
+ContractCode contractCode = nearClient.viewContractCode("uLxyauKPhSk1tebYKi3k69pHSaT2ZLzWy4JwtGm52pu", "guest-book.testnet");
 ```
 
 
@@ -249,16 +249,16 @@ Returns the state (key value pairs) of a contract based on the key prefix (base6
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L963-L964)
 
 ``` java
-ContractState contractState = nearService.viewContractState(Finality.FINAL, "guest-book.testnet", "");
+ContractState contractState = nearClient.viewContractState(Finality.FINAL, "guest-book.testnet", "");
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L990-L991)
 ``` java
-ContractState contractState = nearService.viewContractState(78440679, "guest-book.testnet", "");
+ContractState contractState = nearClient.viewContractState(78440679, "guest-book.testnet", "");
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L974-L975)
 ``` java
-ContractState contractState = nearService.viewContractState("342bkjvnzoZ7FGRE5BwDVkzSRUYXAScTz3GsDB9sEHXg", "guest-book.testnet", "");
+ContractState contractState = nearClient.viewContractState("342bkjvnzoZ7FGRE5BwDVkzSRUYXAScTz3GsDB9sEHXg", "guest-book.testnet", "");
 ```
 
 
@@ -272,7 +272,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "guest-book.testnet";
 
-ContractStateChanges contractStateChanges = nearService.viewContractStateChanges(Finality.FINAL, accountIds, "");
+ContractStateChanges contractStateChanges = nearClient.viewContractStateChanges(Finality.FINAL, accountIds, "");
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L1052-L1056)
@@ -281,7 +281,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "guest-book.testnet";
 
-ContractStateChanges contractStateChanges = nearService.viewContractStateChanges(78441183, accountIds, "");
+ContractStateChanges contractStateChanges = nearClient.viewContractStateChanges(78441183, accountIds, "");
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L1033-L1039)
 ``` java
@@ -289,7 +289,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "guest-book.testnet";
 
-ContractStateChanges contractStateChanges = nearService.viewContractStateChanges("5KgQ8uu17bhUPnMUbkmciHxbpFvsbhwdkJu4ptRfR7Zn", accountIds, "");
+ContractStateChanges contractStateChanges = nearClient.viewContractStateChanges("5KgQ8uu17bhUPnMUbkmciHxbpFvsbhwdkJu4ptRfR7Zn", accountIds, "");
 ```
 
 
@@ -303,7 +303,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "dev-1602714453032-7566969";
 
-ContractCodeChanges contractCodeChanges = nearService.viewContractCodeChanges(Finality.FINAL, accountIds);
+ContractCodeChanges contractCodeChanges = nearClient.viewContractCodeChanges(Finality.FINAL, accountIds);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L1115-L1119)
@@ -312,7 +312,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "dev-1602714453032-7566969";
 
-ContractCodeChanges contractCodeChanges = nearService.viewContractCodeChanges(78441560, accountIds);
+ContractCodeChanges contractCodeChanges = nearClient.viewContractCodeChanges(78441560, accountIds);
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L1096-L1102)
 ``` java
@@ -320,7 +320,7 @@ String[] accountIds = new String[1];
 
 accountIds[0] = "dev-1602714453032-7566969";
 
-ContractCodeChanges contractCodeChanges = nearService.viewContractCodeChanges("HpsjZvjtuxarKRsXGVrgB6qtuCcHRgx3Xof1gfT2Jfj7", accountIds);
+ContractCodeChanges contractCodeChanges = nearClient.viewContractCodeChanges("HpsjZvjtuxarKRsXGVrgB6qtuCcHRgx3Xof1gfT2Jfj7", accountIds);
 ```
 
 
@@ -330,7 +330,7 @@ Allows you to call a contract method as a [view function](https://docs.near.org/
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L1145-L1150)
 
 ``` java
-ContractFunctionCallResult contractFunctionCallResult = nearService
+ContractFunctionCallResult contractFunctionCallResult = nearClient
         .callContractFunction(
                 Finality.FINAL,
                 "guest-book.testnet",
@@ -340,7 +340,7 @@ ContractFunctionCallResult contractFunctionCallResult = nearService
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L1189-L1193)
 ``` java
-ContractFunctionCallResult contractFunctionCallResult = nearService
+ContractFunctionCallResult contractFunctionCallResult = nearClient
         .callContractFunction(79272492,
                 "guest-book.testnet",
                 "getMessages",
@@ -348,7 +348,7 @@ ContractFunctionCallResult contractFunctionCallResult = nearService
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L1157-L1162)
 ``` java
-ContractFunctionCallResult contractFunctionCallResult = nearService
+ContractFunctionCallResult contractFunctionCallResult = nearClient
         .callContractFunction(
                 "J5QTB4Stz3iwtHvgr5KnVzNUgzm4J1bE5Et6JWrJPC8o",
                 "guest-book.testnet",
@@ -366,16 +366,16 @@ Queries network and returns block for given height or hash. You can also use fin
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L79)
 
 ``` java
-Block block = nearService.getBlock(Finality.FINAL);
+Block block = nearClient.getBlock(Finality.FINAL);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L110)
 ``` java
-Block block = nearService.getBlock(78770817);
+Block block = nearClient.getBlock(78770817);
 ```
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L86)
 ``` java
-Block block = nearService.getBlock("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
+Block block = nearClient.getBlock("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
 ```
 
 
@@ -385,17 +385,17 @@ Returns changes in block for given block height or hash. You can also use finali
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L134)
 
 ``` java
-BlockChanges blockChanges = nearService.getBlockChanges(Finality.FINAL);
+BlockChanges blockChanges = nearClient.getBlockChanges(Finality.FINAL);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L152)
 ``` java
-BlockChanges blockChanges = nearService.getBlockChanges(78770674);
+BlockChanges blockChanges = nearClient.getBlockChanges(78770674);
 ```
 
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L141)
 ``` java
-BlockChanges blockChanges = nearService.getBlockChanges("BmEZnrmov6h6rMPpWkMV2JtU1C5LP563V5Y5yXwUW2N5");
+BlockChanges blockChanges = nearClient.getBlockChanges("BmEZnrmov6h6rMPpWkMV2JtU1C5LP563V5Y5yXwUW2N5");
 ```
 
 
@@ -405,17 +405,17 @@ Returns details of a specific chunk. You can run a block details query to get a 
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L176)
 
 ``` java
-Chunk chunk = nearService.getChunkDetails("9mdG2cRcV8Dsb1EoSjtya81NddjRB2stYCTVukZh7zzw");
+Chunk chunk = nearClient.getChunkDetails("9mdG2cRcV8Dsb1EoSjtya81NddjRB2stYCTVukZh7zzw");
 ```
 
 #### [By block height and shard id](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L198)
 ``` java
-Chunk chunk = nearService.getChunkDetails(78567387, 0);
+Chunk chunk = nearClient.getChunkDetails(78567387, 0);
 ```
 
 #### [By block hash and shard id](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L187)
 ``` java
-Chunk chunk = nearService.getChunkDetails("F1HXTzeYgYq28rgsHuKUrRbo5QTBGKFYG7rbxXkRZWXN", 0);
+Chunk chunk = nearClient.getChunkDetails("F1HXTzeYgYq28rgsHuKUrRbo5QTBGKFYG7rbxXkRZWXN", 0);
 ```
 
 
@@ -430,17 +430,17 @@ Returns gas price for a specific block_height or block_hash.
 ### [Null](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L306)
 
 ``` java
-GasPrice gasPrice = nearService.getGasPrice(null);
+GasPrice gasPrice = nearClient.getGasPrice(null);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L328)
 ``` java
-GasPrice gasPrice = nearService.getGasPrice(78770817);
+GasPrice gasPrice = nearClient.getGasPrice(78770817);
 ```
 
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L317)
 ``` java
-GasPrice gasPrice = nearService.getGasPrice("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
+GasPrice gasPrice = nearClient.getGasPrice("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
 ```
 
 
@@ -453,7 +453,7 @@ Returns current genesis configuration.
 ### [Example](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L352)
 
 ``` java
-GenesisConfig genesisConfig = nearService.getGenesisConfig();
+GenesisConfig genesisConfig = nearClient.getGenesisConfig();
 ```
 
 
@@ -463,17 +463,17 @@ Returns most recent protocol configuration or a specific queried block. Useful f
 #### [By finality](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L376)
 
 ``` java
-ProtocolConfig protocolConfig = nearService.getProtocolConfig(Finality.FINAL);
+ProtocolConfig protocolConfig = nearClient.getProtocolConfig(Finality.FINAL);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L398)
 ``` java
-ProtocolConfig protocolConfig = nearService.getProtocolConfig(78770817);
+ProtocolConfig protocolConfig = nearClient.getProtocolConfig(78770817);
 ```
 
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L387)
 ``` java
-ProtocolConfig protocolConfig = nearService.getProtocolConfig("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
+ProtocolConfig protocolConfig = nearClient.getProtocolConfig("FXTWzPjqWztjHfneqJb9cBDB2QLTY1Rja4GHrswAv1b9");
 ```
 
 
@@ -486,7 +486,7 @@ Returns general status of a given node (sync status, nearcore node version, prot
 ### [Example](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L241)
 
 ``` java
-NodeStatus nodeStatus = nearService.getNodeStatus();
+NodeStatus nodeStatus = nearClient.getNodeStatus();
 ```
 
 
@@ -496,7 +496,7 @@ Returns the current state of node network connections (active peers, transmitted
 ### [Example](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L222)
 
 ``` java
-NetworkInfo networkInfo = nearService.getNetworkInfo();
+NetworkInfo networkInfo = nearClient.getNetworkInfo();
 ```
 
 
@@ -506,21 +506,21 @@ Queries active validators on the network returning details and the state of vali
 ### [Null](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L262)
 
 ``` java
-ValidationStatus networkValidationStatus = nearService.getNetworkValidationStatus(null);
+ValidationStatus networkValidationStatus = nearClient.getNetworkValidationStatus(null);
 ```
 
 #### [By height](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L283-L286)
 ``` java
-Block lastBlock = nearService.getBlock(Finality.OPTIMISTIC);
+Block lastBlock = nearClient.getBlock(Finality.OPTIMISTIC);
 
-ValidationStatus networkValidationStatus = nearService.getNetworkValidationStatus(lastBlock.getHeader().getHeight());
+ValidationStatus networkValidationStatus = nearClient.getNetworkValidationStatus(lastBlock.getHeader().getHeight());
 ```
 
 #### [By hash](https://github.com/syntifi/near-java-api/blob/main/src/test/java/com/syntifi/near/api/service/NearServiceTest.java#L271-L274)
 ``` java
-Block lastBlock = nearService.getBlock(Finality.FINAL);
+Block lastBlock = nearClient.getBlock(Finality.FINAL);
 
-ValidationStatus networkValidationStatus = nearService.getNetworkValidationStatus(lastBlock.getHeader().getHash());
+ValidationStatus networkValidationStatus = nearClient.getNetworkValidationStatus(lastBlock.getHeader().getHash());
 ```
 
 
@@ -538,7 +538,7 @@ String receiverId = "syntifi-alice.testnet";
 BigInteger amount = new BigInteger("100", 10);
 
 EncodedHash transactionAsync = TransactionService
-        .sendTransferActionAsync(nearService, signerId, receiverId, bobNearPublicKey, bobNearPrivateKey, amount);
+        .sendTransferActionAsync(nearClient, signerId, receiverId, bobNearPublicKey, bobNearPrivateKey, amount);
 ```
 
 
@@ -552,7 +552,7 @@ String receiverId = "syntifi-bob.testnet";
 BigInteger amount = new BigInteger("100", 10);
 
 TransactionAwait transactionAwait = TransactionService
-        .sendTransferActionAwait(nearService, signerId, receiverId, aliceNearPublicKey, aliceNearPrivateKey, amount);
+        .sendTransferActionAwait(nearClient, signerId, receiverId, aliceNearPublicKey, aliceNearPrivateKey, amount);
 ```
 
 
@@ -564,7 +564,7 @@ Queries status of a transaction by hash and returns the final transaction result
 String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";
 String accountId = "isonar.testnet";
 
-TransactionStatus transactionStatus = nearService.getTransactionStatus(transactionHash, accountId);
+TransactionStatus transactionStatus = nearClient.getTransactionStatus(transactionHash, accountId);
 ```
 
 
@@ -576,7 +576,7 @@ Queries status of a transaction by hash, returning the final transaction result 
 String transactionHash = "DwWUi6WbVHKTCDjVu4gmuQfryqjwTjrZ6ntRcKcGN6Gd";
 String accountId = "isonar.testnet";
 
-TransactionStatus transactionStatusWithReceipts = nearService.getTransactionStatusWithReceipts(transactionHash, accountId);
+TransactionStatus transactionStatusWithReceipts = nearClient.getTransactionStatusWithReceipts(transactionHash, accountId);
 ```
 
 
@@ -587,7 +587,7 @@ Fetches a receipt by it's ID (as is, without a status or execution outcome)
 ``` java        
 String receiptId = "8b9Vt1xH8DZecMda1YqUcMWA41NvknUJJVd2XEQikPRs";
 
-Receipt transactionReceipt = nearService.getTransactionReceipt(receiptId);
+Receipt transactionReceipt = nearClient.getTransactionReceipt(receiptId);
 ```
 
 
