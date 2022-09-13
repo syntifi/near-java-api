@@ -7,7 +7,7 @@
     <groupId>com.syntifi.near</groupId>
     <artifactId>near-java-api</artifactId>
     <packaging>pom</packaging>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <modules>
         <module>near-java-api-rpc</module>
@@ -63,7 +63,7 @@
         <junit.version>5.8.2</junit.version>
         <jsonassert.version>1.5.0</jsonassert.version>
         <borshj.version>0.1.0</borshj.version>
-        <crypto-keys.version>0.3.1</crypto-keys.version>
+        <crypto-keys.version>0.4.0</crypto-keys.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>

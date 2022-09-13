@@ -16,6 +16,7 @@ import com.syntifi.near.api.rpc.service.contract.common.ContractMethodProxyClien
 import com.syntifi.near.api.rpc.service.contract.common.FunctionCallResult;
 import com.syntifi.near.api.rpc.service.contract.staking.StakingService;
 import com.syntifi.near.api.rpc.service.contract.staking.model.RewardFee;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -171,9 +172,9 @@ class StakingServiceTest extends AbstractKeyTest {
     void unstake_should_return_Success() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         String amount = Formats.parseNearAmount("1");
-        String accountId = "syntifi-alice.testnet";
-        PrivateKey privateKey = aliceNearPrivateKey;
-        PublicKey publicKey = aliceNearPublicKey;
+        String accountId = "syntifi-bob.testnet";
+        PrivateKey privateKey = bobNearPrivateKey;
+        PublicKey publicKey = bobNearPublicKey;
 
         TransactionAwait transactionAwait = service.callUnstake(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
@@ -197,9 +198,9 @@ class StakingServiceTest extends AbstractKeyTest {
     void stake_should_return_Success() {
         String stakingPool = "stakesstone.pool.f863973.m0";
         BigInteger amount = new BigInteger(Formats.parseNearAmount("1"), 10);
-        String accountId = "syntifi-alice.testnet";
-        PrivateKey privateKey = aliceNearPrivateKey;
-        PublicKey publicKey = aliceNearPublicKey;
+        String accountId = "syntifi-bob.testnet";
+        PrivateKey privateKey = bobNearPrivateKey;
+        PublicKey publicKey = bobNearPublicKey;
 
         TransactionAwait transactionAwait = service.callStake(nearClient, stakingPool,
                 amount, accountId, publicKey, privateKey);
