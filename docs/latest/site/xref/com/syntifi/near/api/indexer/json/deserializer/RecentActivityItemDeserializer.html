@@ -13,18 +13,18 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> com.fasterxml.jackson.databind.JsonDeserializer;
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> com.fasterxml.jackson.databind.JsonNode;
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> com.syntifi.near.api.common.model.key.PublicKey;
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityAccessKey;
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgAddKey;
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgCreateAccount;
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgDeleteAccount;
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgDeleteKey;
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgDeployContract;
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgFunctionCall;
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgStake;
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgTransfer;
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityItem;
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityPermission;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.service.exception.NearIndexerServiceException;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.exception.NearIndexerException;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityAccessKey;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgAddKey;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgCreateAccount;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgDeleteAccount;
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgDeleteKey;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgDeployContract;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgFunctionCall;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgStake;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityArgTransfer;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityItem;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> com.syntifi.near.api.indexer.model.RecentActivityPermission;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.math.BigInteger;
@@ -98,7 +98,7 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>                      .beneficiaryId(argsNode.get(<span class="jxr_string">"beneficiary_id"</span>).asText())
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>                      .build());
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="NearIndexerServiceException" href="../../../../../../../com/syntifi/near/api/indexer/service/exception/NearIndexerServiceException.html#NearIndexerServiceException">NearIndexerServiceException</a>(
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="NearIndexerException" href="../../../../../../../com/syntifi/near/api/indexer/exception/NearIndexerException.html#NearIndexerException">NearIndexerException</a>(
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>                      String.format(<span class="jxr_string">"Action %s not mapped for deserialization"</span>, recentActivityItem.getActionKind()));
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          }
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  
