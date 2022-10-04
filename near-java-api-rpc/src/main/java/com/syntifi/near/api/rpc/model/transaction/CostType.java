@@ -8,11 +8,14 @@ package com.syntifi.near.api.rpc.model.transaction;
  * @since 0.0.1
  */
 public enum CostType {
+    ADD_KEY,
     BASE,
     CONTRACT_LOADING_BASE,
     CONTRACT_LOADING_BYTES,
     CONTRACT_COMPILE_BASE,
     CONTRACT_COMPILE_BYTES,
+    CREATE_ACCOUNT,
+    DEPLOY_CONTRACT,
     FUNCTION_CALL,
     LOG_BASE,
     LOG_BYTE,
